@@ -295,12 +295,13 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormChumon
             // 8.2.4.1 妥当な受注データ取得
             if (!GetValidDataAtSelect())
                 return;
+            //堀泰弘
 
             // 8.2.4.2 受注情報抽出
-            GenerateDataAtSelect();
+            generatedataatselect();
 
             // 8.2.4.3 受注抽出結果表示
-            SetSelectData();
+            setselectdata();
         }
 
         ///////////////////////////////
@@ -489,7 +490,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormChumon
                 {
                     //MessageBox.Show("顧客担当者名は50文字以下です");
                     messageDsp.DspMsg("M10014");
-                    textBoxClCharge.Focus();
+                    textBoxClCharge.Focus();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
                     return false;
                 }
             }
@@ -592,7 +593,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormChumon
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void buttonList_Click(object sender, EventArgs e)
