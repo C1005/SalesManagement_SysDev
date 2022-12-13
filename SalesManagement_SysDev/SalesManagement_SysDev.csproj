@@ -1,0 +1,477 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4F312C41-8A35-41B9-A847-2243F49D40F2}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>SalesManagement_SysDev</RootNamespace>
+    <AssemblyName>SalesManagement_SysDev</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\DataImport.cs" />
+    <Compile Include="Common\DataInputFormCheck.cs" />
+    <Compile Include="Common\MessageDsp.cs" />
+    <Compile Include="Entity\M_MajorCassification.cs" />
+    <Compile Include="Entity\M_Message.cs" />
+    <Compile Include="Entity\M_Product.cs" />
+    <Compile Include="Entity\T_OrderDetailProvisional.cs" />
+    <Compile Include="Entity\T_OrderProvisional.cs" />
+    <Compile Include="Forms\DbAccess\ArrivalDataAccess.cs" />
+    <Compile Include="Forms\DbAccess\ArrivalDetailDataAccess.cs" />
+    <Compile Include="Forms\DbAccess\ChumonDataAccess.cs" />
+    <Compile Include="Forms\DbAccess\ChumonDetailDataAccess.cs" />
+    <Compile Include="Forms\DbAccess\ClientDataAccess.cs" />
+    <Compile Include="Forms\DbAccess\EmployeeDataAccess.cs" />
+    <Compile Include="Forms\DbAccess\HattyuDataAccess.cs" />
+    <Compile Include="Forms\DbAccess\HattyuUpdateDataAccess.cs" />
+    <Compile Include="Forms\DbAccess\MajorCassificationDataAccess.cs" />
+    <Compile Include="Forms\DbAccess\MakerDataAccess.cs" />
+    <Compile Include="Forms\DbAccess\MessageDataAccess.cs" />
+    <Compile Include="Forms\DbAccess\OrderDataAccess.cs" />
+    <Compile Include="Forms\DbAccess\OrderDetailDataAccess.cs" />
+    <Compile Include="Forms\DbAccess\PositionDataAccess.cs" />
+    <Compile Include="Forms\DbAccess\ProductDataAccess.cs" />
+    <Compile Include="Forms\DbAccess\SaleDataAccess.cs" />
+    <Compile Include="Forms\DbAccess\SalesOfficeDataAccess.cs" />
+    <Compile Include="Forms\DbAccess\ShipmentDataAccess.cs" />
+    <Compile Include="Forms\DbAccess\ShipmentDetailDataAccess.cs" />
+    <Compile Include="Forms\DbAccess\SmallClassificationDataAccess.cs" />
+    <Compile Include="Forms\DbAccess\StockDataAccess.cs" />
+    <Compile Include="Forms\DbAccess\SyukkoDataAccess.cs" />
+    <Compile Include="Forms\DbAccess\SyukkoDetailDataAccess.cs" />
+    <Compile Include="Forms\DbAccess\WarehousingDataAccess.cs" />
+    <Compile Include="Forms\DbAccess\WarehousingDetailDataAccess.cs" />
+    <Compile Include="Forms\Master\FormClient\F_Client.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Master\FormClient\F_Client.Designer.cs">
+      <DependentUpon>F_Client.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Master\FormEmployee\F_Employee.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Master\FormEmployee\F_Employee.Designer.cs">
+      <DependentUpon>F_Employee.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Master\FormEmployee\F_Position.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Master\FormEmployee\F_Position.Designer.cs">
+      <DependentUpon>F_Position.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Master\FormEmployee\F_SalesOffice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Master\FormEmployee\F_SalesOffice.Designer.cs">
+      <DependentUpon>F_SalesOffice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Master\FormProduct\F_MajorCassification.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Master\FormProduct\F_MajorCassification.Designer.cs">
+      <DependentUpon>F_MajorCassification.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Master\FormProduct\F_Maker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Master\FormProduct\F_Maker.Designer.cs">
+      <DependentUpon>F_Maker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Master\FormProduct\F_Product.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Master\FormProduct\F_Product.Designer.cs">
+      <DependentUpon>F_Product.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Master\FormProduct\F_SmallClassification.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Master\FormProduct\F_SmallClassification.Designer.cs">
+      <DependentUpon>F_SmallClassification.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Master\FormStock\F_Stock.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Master\FormStock\F_Stock.Designer.cs">
+      <DependentUpon>F_Stock.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\NonMaster\FormArrival\F_Arrival.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\NonMaster\FormArrival\F_Arrival.Designer.cs">
+      <DependentUpon>F_Arrival.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\NonMaster\FormArrival\F_ArrivalConfirm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\NonMaster\FormArrival\F_ArrivalConfirm.Designer.cs">
+      <DependentUpon>F_ArrivalConfirm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\NonMaster\FormChumon\F_Chumon.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\NonMaster\FormChumon\F_Chumon.Designer.cs">
+      <DependentUpon>F_Chumon.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\NonMaster\FormChumon\F_ChumonConfirm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\NonMaster\FormChumon\F_ChumonConfirm.Designer.cs">
+      <DependentUpon>F_ChumonConfirm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\NonMaster\FormHattyu\F_Hattyu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\NonMaster\FormHattyu\F_Hattyu.Designer.cs">
+      <DependentUpon>F_Hattyu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\NonMaster\FormHattyu\F_HattyuUpdate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\NonMaster\FormHattyu\F_HattyuUpdate.Designer.cs">
+      <DependentUpon>F_HattyuUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\NonMaster\FormOrder\F_Order.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\NonMaster\FormOrder\F_Order.Designer.cs">
+      <DependentUpon>F_Order.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\NonMaster\FormOrder\F_OrderConfirm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\NonMaster\FormOrder\F_OrderConfirm.Designer.cs">
+      <DependentUpon>F_OrderConfirm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\NonMaster\FormSale\F_Sale.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\NonMaster\FormSale\F_Sale.Designer.cs">
+      <DependentUpon>F_Sale.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\NonMaster\FormShipment\F_Shipment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\NonMaster\FormShipment\F_Shipment.Designer.cs">
+      <DependentUpon>F_Shipment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\NonMaster\FormShipment\F_ShipmentConfirm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\NonMaster\FormShipment\F_ShipmentConfirm.Designer.cs">
+      <DependentUpon>F_ShipmentConfirm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\NonMaster\FormSyukko\F_Syukko.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\NonMaster\FormSyukko\F_Syukko.Designer.cs">
+      <DependentUpon>F_Syukko.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\NonMaster\FormSyukko\F_SyukkoConfirm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\NonMaster\FormSyukko\F_SyukkoConfirm.Designer.cs">
+      <DependentUpon>F_SyukkoConfirm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\NonMaster\FormWarehousing\F_Warehousing.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\NonMaster\FormWarehousing\F_Warehousing.Designer.cs">
+      <DependentUpon>F_Warehousing.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\NonMaster\FormWarehousing\F_WarehousingConfirm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\NonMaster\FormWarehousing\F_WarehousingConfirm.Designer.cs">
+      <DependentUpon>F_WarehousingConfirm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="F_Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="F_Login.Designer.cs">
+      <DependentUpon>F_Login.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\M_Client.cs" />
+    <Compile Include="Entity\M_Employee.cs" />
+    <Compile Include="Entity\M_Maker.cs" />
+    <Compile Include="Entity\M_Position.cs" />
+    <Compile Include="Entity\M_SalesOffice.cs" />
+    <Compile Include="Entity\M_SmallClassification.cs" />
+    <Compile Include="F_menu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="F_menu.Designer.cs">
+      <DependentUpon>F_menu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="F_start.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="F_start.Designer.cs">
+      <DependentUpon>F_start.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Entity\T_Arrival.cs" />
+    <Compile Include="Entity\T_ArrivalDetail.cs" />
+    <Compile Include="Entity\T_Chumon.cs" />
+    <Compile Include="Entity\T_ChumonDetail.cs" />
+    <Compile Include="Entity\T_Hattyu.cs" />
+    <Compile Include="Entity\T_HattyuDetail.cs" />
+    <Compile Include="Entity\T_LoginHistory.cs" />
+    <Compile Include="Entity\T_OperationHistory.cs" />
+    <Compile Include="Entity\T_Order.cs" />
+    <Compile Include="Entity\T_OrderDetail.cs" />
+    <Compile Include="Entity\T_Sale.cs" />
+    <Compile Include="Entity\T_SaleDetail.cs" />
+    <Compile Include="Entity\T_Shipment.cs" />
+    <Compile Include="Entity\T_ShipmentDetail.cs" />
+    <Compile Include="Entity\T_Stock.cs" />
+    <Compile Include="Entity\T_Syukko.cs" />
+    <Compile Include="Entity\T_SyukkoDetail.cs" />
+    <Compile Include="Entity\T_Warehousing.cs" />
+    <Compile Include="Entity\T_WarehousingDetail.cs" />
+    <Compile Include="SalesManagement_DevContext.cs" />
+    <EmbeddedResource Include="Forms\Master\FormClient\F_Client.resx">
+      <DependentUpon>F_Client.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Master\FormEmployee\F_Employee.resx">
+      <DependentUpon>F_Employee.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Master\FormEmployee\F_Position.resx">
+      <DependentUpon>F_Position.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Master\FormEmployee\F_SalesOffice.resx">
+      <DependentUpon>F_SalesOffice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Master\FormProduct\F_MajorCassification.resx">
+      <DependentUpon>F_MajorCassification.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Master\FormProduct\F_Maker.resx">
+      <DependentUpon>F_Maker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Master\FormProduct\F_Product.resx">
+      <DependentUpon>F_Product.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Master\FormProduct\F_SmallClassification.resx">
+      <DependentUpon>F_SmallClassification.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Master\FormStock\F_Stock.resx">
+      <DependentUpon>F_Stock.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\NonMaster\FormArrival\F_Arrival.resx">
+      <DependentUpon>F_Arrival.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\NonMaster\FormArrival\F_ArrivalConfirm.resx">
+      <DependentUpon>F_ArrivalConfirm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\NonMaster\FormChumon\F_Chumon.resx">
+      <DependentUpon>F_Chumon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\NonMaster\FormChumon\F_ChumonConfirm.resx">
+      <DependentUpon>F_ChumonConfirm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\NonMaster\FormHattyu\F_Hattyu.resx">
+      <DependentUpon>F_Hattyu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\NonMaster\FormHattyu\F_HattyuUpdate.resx">
+      <DependentUpon>F_HattyuUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\NonMaster\FormOrder\F_Order.resx">
+      <DependentUpon>F_Order.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\NonMaster\FormOrder\F_OrderConfirm.resx">
+      <DependentUpon>F_OrderConfirm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\NonMaster\FormSale\F_Sale.resx">
+      <DependentUpon>F_Sale.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\NonMaster\FormShipment\F_Shipment.resx">
+      <DependentUpon>F_Shipment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\NonMaster\FormShipment\F_ShipmentConfirm.resx">
+      <DependentUpon>F_ShipmentConfirm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\NonMaster\FormSyukko\F_Syukko.resx">
+      <DependentUpon>F_Syukko.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\NonMaster\FormSyukko\F_SyukkoConfirm.resx">
+      <DependentUpon>F_SyukkoConfirm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\NonMaster\FormWarehousing\F_Warehousing.resx">
+      <DependentUpon>F_Warehousing.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\NonMaster\FormWarehousing\F_WarehousingConfirm.resx">
+      <DependentUpon>F_WarehousingConfirm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="F_Login.resx">
+      <DependentUpon>F_Login.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="F_menu.resx">
+      <DependentUpon>F_menu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="F_start.resx">
+      <DependentUpon>F_start.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fixed_top_panel1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fixed_top_panel2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fixed_top_枠線.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fixed_その他.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fixed_トップ画面.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fixed_マスタ.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fixed_マスタ以外1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fixed_マスタ以外用ボタン.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fixed_マスタ用ボタン.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fixed_ログアウト.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fixed_ログイン.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fixed_一覧表示.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fixed_仮登録など.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fixed_画面移動.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fixed_確定画面類.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fixed_管理画面へ.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fixed_管理画面移動.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fixed_陥没panel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fixed_検索.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fixed_更新.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fixed_削除.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fixed_受注確定ボタン.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fixed_登録.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fixed_発注更新ボタン.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\営業所検索.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ロード画面.gif" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>このプロジェクトは、このコンピューター上にない NuGet パッケージを参照しています。それらのパッケージをダウンロードするには、[NuGet パッケージの復元] を使用します。詳細については、http://go.microsoft.com/fwlink/?LinkID=322105 を参照してください。見つからないファイルは {0} です。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+</Project>
