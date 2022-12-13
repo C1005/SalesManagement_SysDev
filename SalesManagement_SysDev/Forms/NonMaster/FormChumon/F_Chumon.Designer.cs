@@ -62,6 +62,8 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormChumon
             this.buttonLogout = new System.Windows.Forms.Button();
             this.buttonSearch = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.labelStateFlag = new System.Windows.Forms.Label();
+            this.labelFlag = new System.Windows.Forms.Label();
             this.panel10 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -69,6 +71,8 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormChumon
             this.label6 = new System.Windows.Forms.Label();
             this.labelEmName = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
+            this.buttonOrderSearch = new System.Windows.Forms.Button();
+            this.buttonEmployeeSearch = new System.Windows.Forms.Button();
             this.buttonCusSearch = new System.Windows.Forms.Button();
             this.buttonProductSearch = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -90,14 +94,10 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormChumon
             this.textBoxClID = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label2営業所ID = new System.Windows.Forms.Label();
-            this.dateTimePickerOrDate = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerChDate = new System.Windows.Forms.DateTimePicker();
             this.label受注ID = new System.Windows.Forms.Label();
             this.label顧客ID = new System.Windows.Forms.Label();
             this.label受注年月日 = new System.Windows.Forms.Label();
-            this.labelFlag = new System.Windows.Forms.Label();
-            this.labelStateFlag = new System.Windows.Forms.Label();
-            this.buttonOrderSearch = new System.Windows.Forms.Button();
-            this.buttonEmployeeSearch = new System.Windows.Forms.Button();
             this.panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewChumon)).BeginInit();
             this.panel5.SuspendLayout();
@@ -567,7 +567,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormChumon
             this.panel3.Controls.Add(this.textBoxClID);
             this.panel3.Controls.Add(this.label2);
             this.panel3.Controls.Add(this.label2営業所ID);
-            this.panel3.Controls.Add(this.dateTimePickerOrDate);
+            this.panel3.Controls.Add(this.dateTimePickerChDate);
             this.panel3.Controls.Add(this.label受注ID);
             this.panel3.Controls.Add(this.label顧客ID);
             this.panel3.Controls.Add(this.label受注年月日);
@@ -576,6 +576,28 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormChumon
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(1940, 272);
             this.panel3.TabIndex = 1375;
+            // 
+            // labelStateFlag
+            // 
+            this.labelStateFlag.AutoSize = true;
+            this.labelStateFlag.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.labelStateFlag.Location = new System.Drawing.Point(962, 188);
+            this.labelStateFlag.Name = "labelStateFlag";
+            this.labelStateFlag.Size = new System.Drawing.Size(52, 15);
+            this.labelStateFlag.TabIndex = 1451;
+            this.labelStateFlag.Text = "確定済";
+            this.labelStateFlag.Visible = false;
+            // 
+            // labelFlag
+            // 
+            this.labelFlag.AutoSize = true;
+            this.labelFlag.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.labelFlag.Location = new System.Drawing.Point(962, 210);
+            this.labelFlag.Name = "labelFlag";
+            this.labelFlag.Size = new System.Drawing.Size(52, 15);
+            this.labelFlag.TabIndex = 1450;
+            this.labelFlag.Text = "非表示";
+            this.labelFlag.Visible = false;
             // 
             // panel10
             // 
@@ -663,6 +685,38 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormChumon
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(140, 248);
             this.panel6.TabIndex = 1446;
+            // 
+            // buttonOrderSearch
+            // 
+            this.buttonOrderSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_その他;
+            this.buttonOrderSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonOrderSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonOrderSearch.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonOrderSearch.Location = new System.Drawing.Point(8, 187);
+            this.buttonOrderSearch.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.buttonOrderSearch.Name = "buttonOrderSearch";
+            this.buttonOrderSearch.Size = new System.Drawing.Size(123, 45);
+            this.buttonOrderSearch.TabIndex = 1433;
+            this.buttonOrderSearch.TabStop = false;
+            this.buttonOrderSearch.Text = "受注検索";
+            this.buttonOrderSearch.UseVisualStyleBackColor = true;
+            this.buttonOrderSearch.Click += new System.EventHandler(this.buttonOrderSearch_Click);
+            // 
+            // buttonEmployeeSearch
+            // 
+            this.buttonEmployeeSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_その他;
+            this.buttonEmployeeSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonEmployeeSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonEmployeeSearch.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonEmployeeSearch.Location = new System.Drawing.Point(8, 130);
+            this.buttonEmployeeSearch.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.buttonEmployeeSearch.Name = "buttonEmployeeSearch";
+            this.buttonEmployeeSearch.Size = new System.Drawing.Size(123, 45);
+            this.buttonEmployeeSearch.TabIndex = 1432;
+            this.buttonEmployeeSearch.TabStop = false;
+            this.buttonEmployeeSearch.Text = "社員検索";
+            this.buttonEmployeeSearch.UseVisualStyleBackColor = true;
+            this.buttonEmployeeSearch.Click += new System.EventHandler(this.buttonEmployeeSearch_Click);
             // 
             // buttonCusSearch
             // 
@@ -934,16 +988,16 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormChumon
             this.label2営業所ID.TabIndex = 1437;
             this.label2営業所ID.Text = "営業所ID";
             // 
-            // dateTimePickerOrDate
+            // dateTimePickerChDate
             // 
-            this.dateTimePickerOrDate.Checked = false;
-            this.dateTimePickerOrDate.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.dateTimePickerOrDate.Font = new System.Drawing.Font("MS UI Gothic", 11F);
-            this.dateTimePickerOrDate.Location = new System.Drawing.Point(818, 122);
-            this.dateTimePickerOrDate.Name = "dateTimePickerOrDate";
-            this.dateTimePickerOrDate.ShowCheckBox = true;
-            this.dateTimePickerOrDate.Size = new System.Drawing.Size(200, 26);
-            this.dateTimePickerOrDate.TabIndex = 1431;
+            this.dateTimePickerChDate.Checked = false;
+            this.dateTimePickerChDate.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.dateTimePickerChDate.Font = new System.Drawing.Font("MS UI Gothic", 11F);
+            this.dateTimePickerChDate.Location = new System.Drawing.Point(818, 122);
+            this.dateTimePickerChDate.Name = "dateTimePickerChDate";
+            this.dateTimePickerChDate.ShowCheckBox = true;
+            this.dateTimePickerChDate.Size = new System.Drawing.Size(200, 26);
+            this.dateTimePickerChDate.TabIndex = 1431;
             // 
             // label受注ID
             // 
@@ -980,60 +1034,6 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormChumon
             this.label受注年月日.Size = new System.Drawing.Size(109, 19);
             this.label受注年月日.TabIndex = 1434;
             this.label受注年月日.Text = "注文年月日";
-            // 
-            // labelFlag
-            // 
-            this.labelFlag.AutoSize = true;
-            this.labelFlag.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.labelFlag.Location = new System.Drawing.Point(962, 210);
-            this.labelFlag.Name = "labelFlag";
-            this.labelFlag.Size = new System.Drawing.Size(52, 15);
-            this.labelFlag.TabIndex = 1450;
-            this.labelFlag.Text = "非表示";
-            this.labelFlag.Visible = false;
-            // 
-            // labelStateFlag
-            // 
-            this.labelStateFlag.AutoSize = true;
-            this.labelStateFlag.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.labelStateFlag.Location = new System.Drawing.Point(962, 188);
-            this.labelStateFlag.Name = "labelStateFlag";
-            this.labelStateFlag.Size = new System.Drawing.Size(52, 15);
-            this.labelStateFlag.TabIndex = 1451;
-            this.labelStateFlag.Text = "確定済";
-            this.labelStateFlag.Visible = false;
-            // 
-            // buttonOrderSearch
-            // 
-            this.buttonOrderSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_その他;
-            this.buttonOrderSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonOrderSearch.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.buttonOrderSearch.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.buttonOrderSearch.Location = new System.Drawing.Point(8, 187);
-            this.buttonOrderSearch.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
-            this.buttonOrderSearch.Name = "buttonOrderSearch";
-            this.buttonOrderSearch.Size = new System.Drawing.Size(123, 45);
-            this.buttonOrderSearch.TabIndex = 1433;
-            this.buttonOrderSearch.TabStop = false;
-            this.buttonOrderSearch.Text = "受注検索";
-            this.buttonOrderSearch.UseVisualStyleBackColor = true;
-            this.buttonOrderSearch.Click += new System.EventHandler(this.buttonOrderSearch_Click);
-            // 
-            // buttonEmployeeSearch
-            // 
-            this.buttonEmployeeSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_その他;
-            this.buttonEmployeeSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonEmployeeSearch.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.buttonEmployeeSearch.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.buttonEmployeeSearch.Location = new System.Drawing.Point(8, 130);
-            this.buttonEmployeeSearch.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
-            this.buttonEmployeeSearch.Name = "buttonEmployeeSearch";
-            this.buttonEmployeeSearch.Size = new System.Drawing.Size(123, 45);
-            this.buttonEmployeeSearch.TabIndex = 1432;
-            this.buttonEmployeeSearch.TabStop = false;
-            this.buttonEmployeeSearch.Text = "社員検索";
-            this.buttonEmployeeSearch.UseVisualStyleBackColor = true;
-            this.buttonEmployeeSearch.Click += new System.EventHandler(this.buttonEmployeeSearch_Click);
             // 
             // F_Chumon
             // 
@@ -1114,7 +1114,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormChumon
         private System.Windows.Forms.TextBox textBoxClID;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label2営業所ID;
-        private System.Windows.Forms.DateTimePicker dateTimePickerOrDate;
+        private System.Windows.Forms.DateTimePicker dateTimePickerChDate;
         private System.Windows.Forms.Label label受注ID;
         private System.Windows.Forms.Label label顧客ID;
         private System.Windows.Forms.Label label受注年月日;
