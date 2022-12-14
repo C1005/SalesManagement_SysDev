@@ -2462,7 +2462,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormOrder
             if (provisionalMode == true)
             {
                 //仮登録
-                int lastPage = (int)Math.Ceiling(OrderProvisional.Count / (double)pageSize) - 1;
+                int lastPage = (int)Math.Ceiling(OrderProvisional.Count / (double)pageSize);
 
                 if (pageNo >= lastPage)
                     textBoxPageNo.Text = lastPage.ToString();
@@ -2471,7 +2471,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormOrder
             }
             else
             {
-                int lastPage = (int)Math.Ceiling(filteredList.Count / (double)pageSize) - 1;
+                int lastPage = (int)Math.Ceiling(filteredList.Count / (double)pageSize);
 
                 if (pageNo >= lastPage)
                     textBoxPageNo.Text = lastPage.ToString();
