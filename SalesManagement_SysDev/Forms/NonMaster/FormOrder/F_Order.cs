@@ -690,7 +690,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormOrder
                 {
                     //MessageBox.Show("受注年月日は必須です");
                     messageDsp.DspMsg("M10044");
-                    checkBoxOrStateFlag.Focus();
+                    dateTimePickerOrDate.Focus();
                     return false;
                 }
             }
