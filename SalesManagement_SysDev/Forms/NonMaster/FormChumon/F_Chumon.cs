@@ -292,6 +292,17 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormChumon
 
         private void buttonSearch_Click(object sender, EventArgs e)
         {
+<<<<<<< HEAD
+        //    // 8.2.4.1 妥当な受注データ取得
+        //    if (!GetValidDataAtSelect())
+        //        return;
+
+        //    // 8.2.4.2 受注情報抽出
+        //    GenerateDataAtSelect();
+
+        //    // 8.2.4.3 受注抽出結果表示
+        //    SetSelectData();
+=======
             //// 8.2.4.1 妥当な受注データ取得
             //if (!GetValidDataAtSelect())
             //    return;
@@ -301,6 +312,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormChumon
 
             //// 8.2.4.3 受注抽出結果表示
             //SetSelectData();
+>>>>>>> 23d00451495012f61a3e5e2b567d03401991f58f
         }
 
         ///////////////////////////////
@@ -312,6 +324,285 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormChumon
         //          ：エラーがない場合True
         //          ：エラーがある場合False
         ///////////////////////////////
+<<<<<<< HEAD
+       //private bool GetValidDataAtSelect()
+       // {
+       //     // 注文IDの適否
+       //     if (!String.IsNullOrEmpty(textBoxChID.Text.Trim()))
+       //     {
+       //         //// 顧客IDに一致するレコードの存在チェック
+       //         //if (labelClName.Text == "“UnknownID”")
+       //         //{
+       //         //    //MessageBox.Show("入力された顧客IDは存在しません");
+       //         //    messageDsp.DspMsg("M10025");
+       //         //    textBoxClID.Focus();
+       //         //    return false;
+       //         //}
+       //         //// 顧客IDの半角数字チェック
+       //         //if (!dataInputFormCheck.CheckNumeric(textBoxClID.Text.Trim()))
+       //         //{
+       //         //    //MessageBox.Show("顧客IDは全て半角数字入力です");
+       //         //    messageDsp.DspMsg("M10001");
+       //         //    textBoxClID.Focus();
+       //         //    return false;
+       //         //}
+       //         //// 顧客IDの文字数チェック
+       //         //if (textBoxClID.TextLength > 6)
+       //         //{
+       //         //    //MessageBox.Show("顧客IDは6文字です");
+       //         //    messageDsp.DspMsg("M10002");
+       //         //    textBoxClID.Focus();
+       //         //    return false;
+       //         //}
+       //     }
+
+       //     // 受注IDの適否
+       //     if (!String.IsNullOrEmpty(textBoxOrID.Text.Trim()))
+       //     {
+       //         //// 顧客IDに一致するレコードの存在チェック
+       //         //if (labelClName.Text == "“UnknownID”")
+       //         //{
+       //         //    //MessageBox.Show("入力された顧客IDは存在しません");
+       //         //    messageDsp.DspMsg("M10025");
+       //         //    textBoxClID.Focus();
+       //         //    return false;
+       //         //}
+       //         //// 顧客IDの半角数字チェック
+       //         //if (!dataInputFormCheck.CheckNumeric(textBoxClID.Text.Trim()))
+       //         //{
+       //         //    //MessageBox.Show("顧客IDは全て半角数字入力です");
+       //         //    messageDsp.DspMsg("M10001");
+       //         //    textBoxClID.Focus();
+       //         //    return false;
+       //         //}
+       //         //// 顧客IDの文字数チェック
+       //         //if (textBoxClID.TextLength > 6)
+       //         //{
+       //         //    //MessageBox.Show("顧客IDは6文字です");
+       //         //    messageDsp.DspMsg("M10002");
+       //         //    textBoxClID.Focus();
+       //         //    return false;
+       //         //}
+       //     }
+
+       //     // 顧客IDの適否
+       //     if (!String.IsNullOrEmpty(textBoxClID.Text.Trim()))
+       //     {
+       //         // 顧客IDに一致するレコードの存在チェック
+       //         if (labelClName.Text == "“UnknownID”")
+       //         {
+       //             //MessageBox.Show("入力された顧客IDは存在しません");
+       //             messageDsp.DspMsg("M10025");
+       //             textBoxClID.Focus();
+       //             return false;
+       //         }
+       //         // 顧客IDの半角数字チェック
+       //         if (!dataInputFormCheck.CheckNumeric(textBoxClID.Text.Trim()))
+       //         {
+       //             //MessageBox.Show("顧客IDは全て半角数字入力です");
+       //             messageDsp.DspMsg("M10001");
+       //             textBoxClID.Focus();
+       //             return false;
+       //         }
+       //         // 顧客IDの文字数チェック
+       //         if (textBoxClID.TextLength > 6)
+       //         {
+       //             //MessageBox.Show("顧客IDは6文字です");
+       //             messageDsp.DspMsg("M10002");
+       //             textBoxClID.Focus();
+       //             return false;
+       //         }
+       //     }
+
+       //     // 社員IDの適否
+       //     if (!String.IsNullOrEmpty(textBoxEmID.Text.Trim()))
+       //     {
+       //         //// 社員IDが0ではないかチェック
+       //         //if (int.Parse(textBoxEmID.Text.Trim()) == 0)
+       //         //{
+       //         //    //MessageBox.Show("社員IDは01から割り当ててください");
+       //         //    messageDsp.DspMsg("M10007");
+       //         //    textBoxEmID.Focus();
+       //         //    return false;
+       //         //}
+
+       //         /// ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+       //         /// 仕様書で社員IDがNULLを許容する管理は実行しない
+       //         /// ただし社員IDが必須入力の場合はCtrl + K + U でコメント解除してチェックさせてください
+
+       //         // 社員IDに一致するレコードの存在チェック
+       //         if (labelEmName.Text == "“UnknownID”")
+       //         {
+       //             //MessageBox.Show("入力された社員IDは存在しません");
+       //             messageDsp.DspMsg("M10041");
+       //             textBoxEmID.Focus();
+       //             return false;
+       //         }
+
+       //         // 社員IDの半角数字チェック
+       //         if (!dataInputFormCheck.CheckNumeric(textBoxEmID.Text.Trim()))
+       //         {
+       //             //MessageBox.Show("社員IDは全て半角数字入力です");
+       //             messageDsp.DspMsg("M10005");
+       //             textBoxEmID.Focus();
+       //             return false;
+       //         }
+       //         // 社員IDの文字数チェック
+       //         if (textBoxEmID.TextLength > 6)
+       //         {
+       //             //MessageBox.Show("社員IDは6文字です");
+       //             messageDsp.DspMsg("M10006");
+       //             textBoxEmID.Focus();
+       //             return false;
+       //         }
+       //     }
+
+       //     // 営業所IDの適否
+       //     if (!String.IsNullOrEmpty(textBoxSoID.Text.Trim()))
+       //     {
+       //         // 営業所IDに一致するレコードの存在チェック
+       //         if (labelSoName.Text == "“UnknownID”")
+       //         {
+       //             //MessageBox.Show("入力された営業所IDは存在しません");
+       //             messageDsp.DspMsg("M10042");
+       //             textBoxSoID.Focus();
+       //             return false;
+       //         }
+       //         // 営業所IDの半角数字チェック
+       //         if (!dataInputFormCheck.CheckNumeric(textBoxSoID.Text.Trim()))
+       //         {
+       //             //MessageBox.Show("営業所IDは全て半角数字入力です");
+       //             messageDsp.DspMsg("M10009");
+       //             textBoxSoID.Focus();
+       //             return false;
+       //         }
+       //         // 営業所IDの文字数チェック
+       //         if (textBoxSoID.TextLength > 2)
+       //         {
+       //             //MessageBox.Show("営業所IDは6文字です");
+       //             messageDsp.DspMsg("M10010");
+       //             textBoxSoID.Focus();
+       //             return false;
+       //         }
+       //     }
+
+       //     // 顧客担当者名の適否
+       //     if (!String.IsNullOrEmpty(textBoxClCharge.Text.Trim()))
+       //     {
+       //         // 顧客担当者名の全角チェック
+       //         if (!dataInputFormCheck.CheckFullWidth(textBoxClCharge.Text.Trim()))
+       //         {
+       //             //MessageBox.Show("顧客担当者名は全て全角入力です");
+       //             messageDsp.DspMsg("M10013");
+       //             textBoxClCharge.Focus();
+       //             return false;
+       //         }
+       //         // 顧客担当者名の文字数チェック
+       //         if (textBoxClCharge.TextLength > 50)
+       //         {
+       //             //MessageBox.Show("顧客担当者名は50文字以下です");
+       //             messageDsp.DspMsg("M10014");
+       //             textBoxClCharge.Focus();
+       //             return false;
+       //         }
+       //     }
+
+       //     // 受注詳細IDの未入力チェック
+       //     if (!String.IsNullOrEmpty(textBoxOrDetailID.Text.Trim()))
+       //     {
+       //         // 受注詳細IDの半角数字チェック
+       //         if (!dataInputFormCheck.CheckNumeric(textBoxOrDetailID.Text.Trim()))
+       //         {
+       //             //MessageBox.Show("受注詳細IDは全て半角数字入力です");
+       //             messageDsp.DspMsg("M10055");
+       //             textBoxOrDetailID.Focus();
+       //             return false;
+       //         }
+       //     }
+
+       //     // 商品IDの適否
+       //     if (!String.IsNullOrEmpty(textBoxPrID.Text.Trim()))
+       //     {
+       //         // 商品IDの半角数字チェック
+       //         if (!dataInputFormCheck.CheckNumeric(textBoxPrID.Text.Trim()))
+       //         {
+       //             //MessageBox.Show("商品IDは全て半角数字入力です");
+       //             messageDsp.DspMsg("M10016");
+       //             textBoxPrID.Focus();
+       //             return false;
+       //         }
+       //         // 商品IDの文字数チェック
+       //         if (textBoxPrID.TextLength > 6)
+       //         {
+       //             //MessageBox.Show("商品IDは6文字です");
+       //             messageDsp.DspMsg("M10017");
+       //             textBoxPrID.Focus();
+       //             return false;
+       //         }
+       //     }
+
+       //     // 数量の適否
+       //     if (!String.IsNullOrEmpty(textBoxOrQuantity.Text.Trim()))
+       //     {
+       //         // 数量の半角数字チェック
+       //         if (!dataInputFormCheck.CheckNumeric(textBoxOrQuantity.Text.Trim()))
+       //         {
+       //             //MessageBox.Show("数量は全て半角数字入力です");
+       //             messageDsp.DspMsg("M10020");
+       //             textBoxOrQuantity.Focus();
+       //             return false;
+       //         }
+       //         // 数量の文字数チェック
+       //         if (textBoxOrQuantity.TextLength > 4)
+       //         {
+       //             //MessageBox.Show("数量は4文字です");
+       //             messageDsp.DspMsg("M10021");
+       //             textBoxOrQuantity.Focus();
+       //             return false;
+       //         }
+       //     }
+
+       //     // 合計金額の適否
+       //     if (!String.IsNullOrEmpty(textBoxOrTotalPrice.Text.Trim()))
+       //     {
+       //         // 合計金額の半角数字チェック
+       //         if (!dataInputFormCheck.CheckNumeric(textBoxOrTotalPrice.Text.Trim()))
+       //         {
+       //             //MessageBox.Show("合計金額は全て半角数字入力です");
+       //             messageDsp.DspMsg("M10023");
+       //             textBoxOrTotalPrice.Focus();
+       //             return false;
+       //         }
+       //         // 合計金額の文字数チェック
+       //         if (textBoxOrTotalPrice.TextLength > 10)
+       //         {
+       //             //MessageBox.Show("合計金額は10文字です");
+       //             messageDsp.DspMsg("M10024");
+       //             textBoxOrTotalPrice.Focus();
+       //             return false;
+       //         }
+       //     }
+
+       //     // 状態フラグの適否
+       //     if (checkBoxOrStateFlag.CheckState == CheckState.Indeterminate)
+       //     {
+       //         //MessageBox.Show("状態フラグが不確定の状態です");
+       //         messageDsp.DspMsg("M10027");
+       //         checkBoxOrStateFlag.Focus();
+       //         return false;
+       //     }
+
+       //     // 管理フラグの適否
+       //     if (checkBoxOrFlag.CheckState == CheckState.Indeterminate)
+       //     {
+       //         //MessageBox.Show("管理フラグが不確定の状態です");
+       //         messageDsp.DspMsg("M10028");
+       //         checkBoxOrFlag.Focus();
+       //         return false;
+       //     }
+       //     return true;
+       // }
+=======
         //private bool GetValidDataAtSelect()
         //{
         //    // 注文IDの適否
@@ -589,6 +880,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormChumon
         //    }
         //    return true;
         //}
+>>>>>>> 23d00451495012f61a3e5e2b567d03401991f58f
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
