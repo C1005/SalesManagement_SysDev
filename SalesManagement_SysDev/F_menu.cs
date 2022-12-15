@@ -152,14 +152,13 @@ namespace SalesManagement_SysDev
             }
 
             //フォームを透明化
-            Opacity = 0; //(透明化だけだとトップに戻るときに何もない状態になる)
+            //Opacity = 0; //(透明化だけだとトップに戻るときに何もない状態になる)
 
             //選択されたフォームを開く
             frm.ShowDialog();
 
             //開いたフォームから戻ってきたら
             //メモリを解放する
-            Opacity = 100;
             frm.Dispose();
         }
     }

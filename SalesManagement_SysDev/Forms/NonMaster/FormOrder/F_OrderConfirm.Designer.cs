@@ -234,7 +234,6 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormOrder
             this.buttonClose.TabStop = false;
             this.buttonClose.Text = "閉じる";
             this.buttonClose.UseVisualStyleBackColor = true;
-            this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
             // 
             // buttonClear
             // 
@@ -250,7 +249,6 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormOrder
             this.buttonClear.TabStop = false;
             this.buttonClear.Text = "入力クリア";
             this.buttonClear.UseVisualStyleBackColor = true;
-            this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
             // 
             // buttonList
             // 
@@ -266,7 +264,6 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormOrder
             this.buttonList.TabIndex = 1;
             this.buttonList.Text = "一覧表示";
             this.buttonList.UseVisualStyleBackColor = false;
-            this.buttonList.Click += new System.EventHandler(this.buttonList_Click);
             // 
             // buttonLogout
             // 
@@ -283,7 +280,6 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormOrder
             this.buttonLogout.TabStop = false;
             this.buttonLogout.Text = "ログアウト";
             this.buttonLogout.UseVisualStyleBackColor = true;
-            this.buttonLogout.Click += new System.EventHandler(this.buttonLogout_Click);
             // 
             // buttonSearch
             // 
@@ -299,7 +295,6 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormOrder
             this.buttonSearch.TabIndex = 0;
             this.buttonSearch.Text = "検索";
             this.buttonSearch.UseVisualStyleBackColor = false;
-            this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
             // panel2
             // 
@@ -415,7 +410,6 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormOrder
             this.buttonConfirm.TabStop = false;
             this.buttonConfirm.Text = "受注確定";
             this.buttonConfirm.UseVisualStyleBackColor = false;
-            this.buttonConfirm.Click += new System.EventHandler(this.buttonConfirm_Click);
             // 
             // labelPage
             // 
@@ -436,7 +430,6 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormOrder
             this.dataGridViewOrder.Size = new System.Drawing.Size(1527, 432);
             this.dataGridViewOrder.TabIndex = 1367;
             this.dataGridViewOrder.TabStop = false;
-            this.dataGridViewOrder.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewOrder_CellClick);
             // 
             // textBoxPageNo
             // 
@@ -461,7 +454,6 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormOrder
             this.buttonFirstPage.TabStop = false;
             this.buttonFirstPage.Text = "|◀";
             this.buttonFirstPage.UseVisualStyleBackColor = true;
-            this.buttonFirstPage.Click += new System.EventHandler(this.buttonFirstPage_Click);
             // 
             // buttonLastPage
             // 
@@ -476,7 +468,6 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormOrder
             this.buttonLastPage.TabStop = false;
             this.buttonLastPage.Text = "▶|";
             this.buttonLastPage.UseVisualStyleBackColor = true;
-            this.buttonLastPage.Click += new System.EventHandler(this.buttonLastPage_Click);
             // 
             // textBoxPageSize
             // 
@@ -501,7 +492,6 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormOrder
             this.buttonNextPage.TabStop = false;
             this.buttonNextPage.Text = "▶";
             this.buttonNextPage.UseVisualStyleBackColor = true;
-            this.buttonNextPage.Click += new System.EventHandler(this.buttonNextPage_Click);
             // 
             // buttonPageSizeChange
             // 
@@ -516,7 +506,6 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormOrder
             this.buttonPageSizeChange.TabStop = false;
             this.buttonPageSizeChange.Text = "行数変更";
             this.buttonPageSizeChange.UseVisualStyleBackColor = true;
-            this.buttonPageSizeChange.Click += new System.EventHandler(this.buttonPageSizeChange_Click);
             // 
             // buttonPreviousPage
             // 
@@ -531,7 +520,6 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormOrder
             this.buttonPreviousPage.TabStop = false;
             this.buttonPreviousPage.Text = "◀";
             this.buttonPreviousPage.UseVisualStyleBackColor = true;
-            this.buttonPreviousPage.Click += new System.EventHandler(this.buttonPreviousPage_Click);
             // 
             // panel7
             // 
@@ -580,7 +568,6 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormOrder
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "F_OrderConfirm";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.Load += new System.EventHandler(this.F_OrderConfirm_Load);
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
             this.panel3.ResumeLayout(false);

@@ -690,7 +690,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormOrder
                 {
                     //MessageBox.Show("受注年月日は必須です");
                     messageDsp.DspMsg("M10044");
-                    dateTimePickerOrDate.Focus();
+                    checkBoxOrStateFlag.Focus();
                     return false;
                 }
             }
@@ -2462,7 +2462,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormOrder
             if (provisionalMode == true)
             {
                 //仮登録
-                int lastPage = (int)Math.Ceiling(OrderProvisional.Count / (double)pageSize);
+                int lastPage = (int)Math.Ceiling(OrderProvisional.Count / (double)pageSize) - 1;
 
                 if (pageNo >= lastPage)
                     textBoxPageNo.Text = lastPage.ToString();
@@ -2471,7 +2471,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormOrder
             }
             else
             {
-                int lastPage = (int)Math.Ceiling(filteredList.Count / (double)pageSize);
+                int lastPage = (int)Math.Ceiling(filteredList.Count / (double)pageSize) - 1;
 
                 if (pageNo >= lastPage)
                     textBoxPageNo.Text = lastPage.ToString();
