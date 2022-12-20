@@ -70,7 +70,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
             this.panel6 = new System.Windows.Forms.Panel();
             this.buttonOrderSearch = new System.Windows.Forms.Button();
             this.buttonCusSearch = new System.Windows.Forms.Button();
-            this.buttonEmployeeSearch = new System.Windows.Forms.Button();
+            this.buttonEmSearch = new System.Windows.Forms.Button();
             this.buttonProductSearch = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.buttonDetailClear = new System.Windows.Forms.Button();
@@ -178,6 +178,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
             this.checkBoxArStateFlag.TabStop = false;
             this.checkBoxArStateFlag.Text = "入荷状態フラグ";
             this.checkBoxArStateFlag.UseVisualStyleBackColor = true;
+            this.checkBoxArStateFlag.CheckedChanged += new System.EventHandler(this.checkBoxArStateFlag_CheckedChanged);
             // 
             // checkBoxArFlag
             // 
@@ -190,6 +191,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
             this.checkBoxArFlag.TabStop = false;
             this.checkBoxArFlag.Text = "入荷管理フラグ";
             this.checkBoxArFlag.UseVisualStyleBackColor = true;
+            this.checkBoxArFlag.CheckedChanged += new System.EventHandler(this.checkBoxArFlag_CheckedChanged);
             // 
             // label非表示理由
             // 
@@ -247,6 +249,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
             this.buttonFirstPage.TabStop = false;
             this.buttonFirstPage.Text = "|◀";
             this.buttonFirstPage.UseVisualStyleBackColor = true;
+            this.buttonFirstPage.Click += new System.EventHandler(this.buttonFirstPage_Click);
             // 
             // buttonLastPage
             // 
@@ -261,6 +264,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
             this.buttonLastPage.TabStop = false;
             this.buttonLastPage.Text = "▶|";
             this.buttonLastPage.UseVisualStyleBackColor = true;
+            this.buttonLastPage.Click += new System.EventHandler(this.buttonLastPage_Click);
             // 
             // textBoxPageSize
             // 
@@ -285,6 +289,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
             this.buttonNextPage.TabStop = false;
             this.buttonNextPage.Text = "▶";
             this.buttonNextPage.UseVisualStyleBackColor = true;
+            this.buttonNextPage.Click += new System.EventHandler(this.buttonNextPage_Click);
             // 
             // buttonPageSizeChange
             // 
@@ -299,6 +304,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
             this.buttonPageSizeChange.TabStop = false;
             this.buttonPageSizeChange.Text = "行数変更";
             this.buttonPageSizeChange.UseVisualStyleBackColor = true;
+            this.buttonPageSizeChange.Click += new System.EventHandler(this.buttonPageSizeChange_Click);
             // 
             // buttonPreviousPage
             // 
@@ -313,6 +319,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
             this.buttonPreviousPage.TabStop = false;
             this.buttonPreviousPage.Text = "◀";
             this.buttonPreviousPage.UseVisualStyleBackColor = true;
+            this.buttonPreviousPage.Click += new System.EventHandler(this.buttonPreviousPage_Click);
             // 
             // labelPageSize
             // 
@@ -473,6 +480,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
             this.buttonClose.TabStop = false;
             this.buttonClose.Text = "閉じる";
             this.buttonClose.UseVisualStyleBackColor = true;
+            this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
             // 
             // buttonClear
             // 
@@ -488,6 +496,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
             this.buttonClear.TabStop = false;
             this.buttonClear.Text = "入力クリア";
             this.buttonClear.UseVisualStyleBackColor = true;
+            this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
             // 
             // buttonList
             // 
@@ -520,6 +529,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
             this.buttonLogout.TabStop = false;
             this.buttonLogout.Text = "ログアウト";
             this.buttonLogout.UseVisualStyleBackColor = true;
+            this.buttonLogout.Click += new System.EventHandler(this.buttonLogout_Click);
             // 
             // buttonSearch
             // 
@@ -634,7 +644,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
             this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel6.Controls.Add(this.buttonOrderSearch);
             this.panel6.Controls.Add(this.buttonCusSearch);
-            this.panel6.Controls.Add(this.buttonEmployeeSearch);
+            this.panel6.Controls.Add(this.buttonEmSearch);
             this.panel6.Controls.Add(this.buttonProductSearch);
             this.panel6.Location = new System.Drawing.Point(1709, 16);
             this.panel6.Margin = new System.Windows.Forms.Padding(4);
@@ -644,7 +654,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
             // 
             // buttonOrderSearch
             // 
-            this.buttonOrderSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_その他;
+            this.buttonOrderSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.営業所検索;
             this.buttonOrderSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonOrderSearch.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonOrderSearch.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
@@ -660,7 +670,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
             // 
             // buttonCusSearch
             // 
-            this.buttonCusSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_その他;
+            this.buttonCusSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.営業所検索;
             this.buttonCusSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonCusSearch.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonCusSearch.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
@@ -674,25 +684,25 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
             this.buttonCusSearch.UseVisualStyleBackColor = true;
             this.buttonCusSearch.Click += new System.EventHandler(this.buttonCusSearch_Click);
             // 
-            // buttonEmployeeSearch
+            // buttonEmSearch
             // 
-            this.buttonEmployeeSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_その他;
-            this.buttonEmployeeSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonEmployeeSearch.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.buttonEmployeeSearch.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.buttonEmployeeSearch.Location = new System.Drawing.Point(8, 126);
-            this.buttonEmployeeSearch.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
-            this.buttonEmployeeSearch.Name = "buttonEmployeeSearch";
-            this.buttonEmployeeSearch.Size = new System.Drawing.Size(123, 45);
-            this.buttonEmployeeSearch.TabIndex = 1430;
-            this.buttonEmployeeSearch.TabStop = false;
-            this.buttonEmployeeSearch.Text = "社員検索";
-            this.buttonEmployeeSearch.UseVisualStyleBackColor = true;
-            this.buttonEmployeeSearch.Click += new System.EventHandler(this.buttonEmployeeSearch_Click);
+            this.buttonEmSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.営業所検索;
+            this.buttonEmSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonEmSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonEmSearch.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonEmSearch.Location = new System.Drawing.Point(8, 126);
+            this.buttonEmSearch.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.buttonEmSearch.Name = "buttonEmSearch";
+            this.buttonEmSearch.Size = new System.Drawing.Size(123, 45);
+            this.buttonEmSearch.TabIndex = 1430;
+            this.buttonEmSearch.TabStop = false;
+            this.buttonEmSearch.Text = "社員検索";
+            this.buttonEmSearch.UseVisualStyleBackColor = true;
+            this.buttonEmSearch.Click += new System.EventHandler(this.buttonEmSearch_Click);
             // 
             // buttonProductSearch
             // 
-            this.buttonProductSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_その他;
+            this.buttonProductSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.営業所検索;
             this.buttonProductSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonProductSearch.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonProductSearch.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
@@ -733,6 +743,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
             this.buttonDetailClear.TabStop = false;
             this.buttonDetailClear.Text = "詳細欄クリア";
             this.buttonDetailClear.UseVisualStyleBackColor = false;
+            this.buttonDetailClear.Click += new System.EventHandler(this.buttonDetailClear_Click);
             // 
             // panel4
             // 
@@ -787,6 +798,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
             this.textBoxPrID.Name = "textBoxPrID";
             this.textBoxPrID.Size = new System.Drawing.Size(140, 26);
             this.textBoxPrID.TabIndex = 1428;
+            this.textBoxPrID.TextChanged += new System.EventHandler(this.textBoxPrID_TextChanged);
             // 
             // textBoxArDetailID
             // 
@@ -859,6 +871,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
             this.textBoxOrID.Name = "textBoxOrID";
             this.textBoxOrID.Size = new System.Drawing.Size(140, 26);
             this.textBoxOrID.TabIndex = 1478;
+            this.textBoxOrID.TextChanged += new System.EventHandler(this.textBoxOrID_TextChanged);
             // 
             // label6
             // 
@@ -915,6 +928,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
             this.textBoxSoID.Name = "textBoxSoID";
             this.textBoxSoID.Size = new System.Drawing.Size(140, 26);
             this.textBoxSoID.TabIndex = 1473;
+            this.textBoxSoID.TextChanged += new System.EventHandler(this.textBoxSoID_TextChanged);
             // 
             // textBoxArID
             // 
@@ -937,6 +951,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
             this.textBoxEmID.Name = "textBoxEmID";
             this.textBoxEmID.Size = new System.Drawing.Size(140, 26);
             this.textBoxEmID.TabIndex = 1471;
+            this.textBoxEmID.TextChanged += new System.EventHandler(this.textBoxEmID_TextChanged);
             // 
             // textBoxClID
             // 
@@ -948,6 +963,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
             this.textBoxClID.Name = "textBoxClID";
             this.textBoxClID.Size = new System.Drawing.Size(140, 26);
             this.textBoxClID.TabIndex = 1468;
+            this.textBoxClID.TextChanged += new System.EventHandler(this.textBoxClID_TextChanged);
             // 
             // label2
             // 
@@ -1118,7 +1134,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Button buttonOrderSearch;
         private System.Windows.Forms.Button buttonCusSearch;
-        private System.Windows.Forms.Button buttonEmployeeSearch;
+        private System.Windows.Forms.Button buttonEmSearch;
         private System.Windows.Forms.Button buttonProductSearch;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button buttonDetailClear;

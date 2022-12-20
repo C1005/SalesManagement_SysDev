@@ -688,7 +688,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormChumon
             // 
             // buttonOrderSearch
             // 
-            this.buttonOrderSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_その他;
+            this.buttonOrderSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.営業所検索;
             this.buttonOrderSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonOrderSearch.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonOrderSearch.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
@@ -704,7 +704,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormChumon
             // 
             // buttonEmployeeSearch
             // 
-            this.buttonEmployeeSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_その他;
+            this.buttonEmployeeSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.営業所検索;
             this.buttonEmployeeSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonEmployeeSearch.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonEmployeeSearch.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
@@ -720,7 +720,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormChumon
             // 
             // buttonCusSearch
             // 
-            this.buttonCusSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_その他;
+            this.buttonCusSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.営業所検索;
             this.buttonCusSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonCusSearch.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonCusSearch.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
@@ -736,7 +736,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormChumon
             // 
             // buttonProductSearch
             // 
-            this.buttonProductSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_その他;
+            this.buttonProductSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.営業所検索;
             this.buttonProductSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonProductSearch.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonProductSearch.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));

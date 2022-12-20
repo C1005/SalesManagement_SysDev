@@ -62,14 +62,16 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
             this.buttonPreviousPage = new System.Windows.Forms.Button();
             this.labelPageSize = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.labelStateFlag = new System.Windows.Forms.Label();
+            this.labelFlag = new System.Windows.Forms.Label();
             this.panel10 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.button2 = new System.Windows.Forms.Button();
+            this.buttonOrderSearch = new System.Windows.Forms.Button();
             this.buttonCusSearch = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.buttonProductSearch = new System.Windows.Forms.Button();
+            this.buttonEmSearch = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.buttonDetailClear = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
@@ -97,8 +99,6 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
             this.label顧客ID = new System.Windows.Forms.Label();
             this.label出荷完了年月日 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.labelStateFlag = new System.Windows.Forms.Label();
-            this.labelFlag = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownOrderID)).BeginInit();
             this.panel2.SuspendLayout();
             this.panel8.SuspendLayout();
@@ -151,6 +151,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
             this.buttonDelete.TabIndex = 1;
             this.buttonDelete.Text = "削除";
             this.buttonDelete.UseVisualStyleBackColor = false;
+            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
             // buttonClose
             // 
@@ -181,6 +182,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
             this.buttonClear.TabStop = false;
             this.buttonClear.Text = "入力クリア";
             this.buttonClear.UseVisualStyleBackColor = true;
+            this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
             // 
             // buttonList
             // 
@@ -196,6 +198,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
             this.buttonList.TabIndex = 2;
             this.buttonList.Text = "一覧表示";
             this.buttonList.UseVisualStyleBackColor = false;
+            this.buttonList.Click += new System.EventHandler(this.buttonList_Click);
             // 
             // buttonLogout
             // 
@@ -227,6 +230,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
             this.buttonSearch.TabIndex = 0;
             this.buttonSearch.Text = "検索";
             this.buttonSearch.UseVisualStyleBackColor = false;
+            this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
             // panel2
             // 
@@ -405,6 +409,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
             this.checkBoxShStateFlag.TabStop = false;
             this.checkBoxShStateFlag.Text = "出荷状態フラグ";
             this.checkBoxShStateFlag.UseVisualStyleBackColor = true;
+            this.checkBoxShStateFlag.CheckedChanged += new System.EventHandler(this.checkBoxShStateFlag_CheckedChanged);
             // 
             // checkBoxShFlag
             // 
@@ -417,6 +422,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
             this.checkBoxShFlag.TabStop = false;
             this.checkBoxShFlag.Text = "出荷管理フラグ";
             this.checkBoxShFlag.UseVisualStyleBackColor = true;
+            this.checkBoxShFlag.CheckedChanged += new System.EventHandler(this.checkBoxShFlag_CheckedChanged);
             // 
             // label非表示理由
             // 
@@ -449,6 +455,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
             this.dataGridViewShipment.Size = new System.Drawing.Size(1527, 432);
             this.dataGridViewShipment.TabIndex = 21;
             this.dataGridViewShipment.TabStop = false;
+            this.dataGridViewShipment.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewShipment_CellClick);
             // 
             // textBoxPageNo
             // 
@@ -473,6 +480,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
             this.buttonFirstPage.TabStop = false;
             this.buttonFirstPage.Text = "|◀";
             this.buttonFirstPage.UseVisualStyleBackColor = true;
+            this.buttonFirstPage.Click += new System.EventHandler(this.buttonFirstPage_Click);
             // 
             // buttonLastPage
             // 
@@ -487,6 +495,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
             this.buttonLastPage.TabStop = false;
             this.buttonLastPage.Text = "▶|";
             this.buttonLastPage.UseVisualStyleBackColor = true;
+            this.buttonLastPage.Click += new System.EventHandler(this.buttonLastPage_Click);
             // 
             // textBoxPageSize
             // 
@@ -511,6 +520,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
             this.buttonNextPage.TabStop = false;
             this.buttonNextPage.Text = "▶";
             this.buttonNextPage.UseVisualStyleBackColor = true;
+            this.buttonNextPage.Click += new System.EventHandler(this.buttonNextPage_Click);
             // 
             // buttonPageSizeChange
             // 
@@ -525,6 +535,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
             this.buttonPageSizeChange.TabStop = false;
             this.buttonPageSizeChange.Text = "行数変更";
             this.buttonPageSizeChange.UseVisualStyleBackColor = true;
+            this.buttonPageSizeChange.Click += new System.EventHandler(this.buttonPageSizeChange_Click);
             // 
             // buttonPreviousPage
             // 
@@ -539,6 +550,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
             this.buttonPreviousPage.TabStop = false;
             this.buttonPreviousPage.Text = "◀";
             this.buttonPreviousPage.UseVisualStyleBackColor = true;
+            this.buttonPreviousPage.Click += new System.EventHandler(this.buttonPreviousPage_Click);
             // 
             // labelPageSize
             // 
@@ -580,6 +592,28 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(1940, 272);
             this.panel3.TabIndex = 1374;
+            // 
+            // labelStateFlag
+            // 
+            this.labelStateFlag.AutoSize = true;
+            this.labelStateFlag.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.labelStateFlag.Location = new System.Drawing.Point(962, 194);
+            this.labelStateFlag.Name = "labelStateFlag";
+            this.labelStateFlag.Size = new System.Drawing.Size(52, 15);
+            this.labelStateFlag.TabIndex = 1453;
+            this.labelStateFlag.Text = "確定済";
+            this.labelStateFlag.Visible = false;
+            // 
+            // labelFlag
+            // 
+            this.labelFlag.AutoSize = true;
+            this.labelFlag.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.labelFlag.Location = new System.Drawing.Point(962, 216);
+            this.labelFlag.Name = "labelFlag";
+            this.labelFlag.Size = new System.Drawing.Size(52, 15);
+            this.labelFlag.TabIndex = 1452;
+            this.labelFlag.Text = "非表示";
+            this.labelFlag.Visible = false;
             // 
             // panel10
             // 
@@ -623,34 +657,35 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
             // 
             this.panel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(182)))), ((int)(((byte)(215)))), ((int)(((byte)(215)))));
             this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel6.Controls.Add(this.button2);
+            this.panel6.Controls.Add(this.buttonOrderSearch);
             this.panel6.Controls.Add(this.buttonCusSearch);
-            this.panel6.Controls.Add(this.button1);
             this.panel6.Controls.Add(this.buttonProductSearch);
+            this.panel6.Controls.Add(this.buttonEmSearch);
             this.panel6.Location = new System.Drawing.Point(1709, 16);
             this.panel6.Margin = new System.Windows.Forms.Padding(4);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(140, 248);
             this.panel6.TabIndex = 1496;
             // 
-            // button2
+            // buttonOrderSearch
             // 
-            this.button2.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_その他;
-            this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.button2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button2.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button2.Location = new System.Drawing.Point(8, 183);
-            this.button2.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(123, 45);
-            this.button2.TabIndex = 1431;
-            this.button2.TabStop = false;
-            this.button2.Text = "受注検索";
-            this.button2.UseVisualStyleBackColor = true;
+            this.buttonOrderSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.営業所検索;
+            this.buttonOrderSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonOrderSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonOrderSearch.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonOrderSearch.Location = new System.Drawing.Point(8, 184);
+            this.buttonOrderSearch.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.buttonOrderSearch.Name = "buttonOrderSearch";
+            this.buttonOrderSearch.Size = new System.Drawing.Size(123, 45);
+            this.buttonOrderSearch.TabIndex = 1433;
+            this.buttonOrderSearch.TabStop = false;
+            this.buttonOrderSearch.Text = "受注検索";
+            this.buttonOrderSearch.UseVisualStyleBackColor = true;
+            this.buttonOrderSearch.Click += new System.EventHandler(this.buttonOrderSearch_Click);
             // 
             // buttonCusSearch
             // 
-            this.buttonCusSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_その他;
+            this.buttonCusSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.営業所検索;
             this.buttonCusSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonCusSearch.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonCusSearch.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
@@ -662,29 +697,15 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
             this.buttonCusSearch.TabStop = false;
             this.buttonCusSearch.Text = "顧客検索";
             this.buttonCusSearch.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_その他;
-            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button1.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button1.Location = new System.Drawing.Point(8, 126);
-            this.button1.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(123, 45);
-            this.button1.TabIndex = 1430;
-            this.button1.TabStop = false;
-            this.button1.Text = "社員検索";
-            this.button1.UseVisualStyleBackColor = true;
+            this.buttonCusSearch.Click += new System.EventHandler(this.buttonCusSearch_Click);
             // 
             // buttonProductSearch
             // 
-            this.buttonProductSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_その他;
+            this.buttonProductSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.営業所検索;
             this.buttonProductSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonProductSearch.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonProductSearch.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.buttonProductSearch.Location = new System.Drawing.Point(8, 73);
+            this.buttonProductSearch.Location = new System.Drawing.Point(8, 70);
             this.buttonProductSearch.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
             this.buttonProductSearch.Name = "buttonProductSearch";
             this.buttonProductSearch.Size = new System.Drawing.Size(123, 45);
@@ -692,6 +713,23 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
             this.buttonProductSearch.TabStop = false;
             this.buttonProductSearch.Text = "商品検索";
             this.buttonProductSearch.UseVisualStyleBackColor = true;
+            this.buttonProductSearch.Click += new System.EventHandler(this.buttonProductSearch_Click);
+            // 
+            // buttonEmSearch
+            // 
+            this.buttonEmSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.営業所検索;
+            this.buttonEmSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonEmSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonEmSearch.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonEmSearch.Location = new System.Drawing.Point(8, 127);
+            this.buttonEmSearch.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.buttonEmSearch.Name = "buttonEmSearch";
+            this.buttonEmSearch.Size = new System.Drawing.Size(123, 45);
+            this.buttonEmSearch.TabIndex = 1432;
+            this.buttonEmSearch.TabStop = false;
+            this.buttonEmSearch.Text = "社員検索";
+            this.buttonEmSearch.UseVisualStyleBackColor = true;
+            this.buttonEmSearch.Click += new System.EventHandler(this.buttonEmSearch_Click);
             // 
             // panel1
             // 
@@ -720,6 +758,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
             this.buttonDetailClear.TabStop = false;
             this.buttonDetailClear.Text = "詳細欄クリア";
             this.buttonDetailClear.UseVisualStyleBackColor = false;
+            this.buttonDetailClear.Click += new System.EventHandler(this.buttonDetailClear_Click);
             // 
             // panel4
             // 
@@ -774,6 +813,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
             this.textBoxPrID.Name = "textBoxPrID";
             this.textBoxPrID.Size = new System.Drawing.Size(140, 26);
             this.textBoxPrID.TabIndex = 1428;
+            this.textBoxPrID.TextChanged += new System.EventHandler(this.textBoxPrID_TextChanged);
             // 
             // textBoxShDetailID
             // 
@@ -846,6 +886,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
             this.textBoxOrID.Name = "textBoxOrID";
             this.textBoxOrID.Size = new System.Drawing.Size(140, 26);
             this.textBoxOrID.TabIndex = 1493;
+            this.textBoxOrID.TextChanged += new System.EventHandler(this.textBoxOrID_TextChanged);
             // 
             // label6
             // 
@@ -902,6 +943,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
             this.textBoxSoID.Name = "textBoxSoID";
             this.textBoxSoID.Size = new System.Drawing.Size(140, 26);
             this.textBoxSoID.TabIndex = 1488;
+            this.textBoxSoID.TextChanged += new System.EventHandler(this.textBoxSoID_TextChanged);
             // 
             // textBoxShID
             // 
@@ -924,6 +966,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
             this.textBoxEmID.Name = "textBoxEmID";
             this.textBoxEmID.Size = new System.Drawing.Size(140, 26);
             this.textBoxEmID.TabIndex = 1486;
+            this.textBoxEmID.TextChanged += new System.EventHandler(this.textBoxEmID_TextChanged);
             // 
             // textBoxClID
             // 
@@ -935,6 +978,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
             this.textBoxClID.Name = "textBoxClID";
             this.textBoxClID.Size = new System.Drawing.Size(140, 26);
             this.textBoxClID.TabIndex = 1483;
+            this.textBoxClID.TextChanged += new System.EventHandler(this.textBoxClID_TextChanged);
             // 
             // label2
             // 
@@ -1018,28 +1062,6 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
             this.panel5.Size = new System.Drawing.Size(177, 54);
             this.panel5.TabIndex = 1375;
             // 
-            // labelStateFlag
-            // 
-            this.labelStateFlag.AutoSize = true;
-            this.labelStateFlag.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.labelStateFlag.Location = new System.Drawing.Point(962, 194);
-            this.labelStateFlag.Name = "labelStateFlag";
-            this.labelStateFlag.Size = new System.Drawing.Size(52, 15);
-            this.labelStateFlag.TabIndex = 1453;
-            this.labelStateFlag.Text = "確定済";
-            this.labelStateFlag.Visible = false;
-            // 
-            // labelFlag
-            // 
-            this.labelFlag.AutoSize = true;
-            this.labelFlag.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.labelFlag.Location = new System.Drawing.Point(962, 216);
-            this.labelFlag.Name = "labelFlag";
-            this.labelFlag.Size = new System.Drawing.Size(52, 15);
-            this.labelFlag.TabIndex = 1452;
-            this.labelFlag.Text = "非表示";
-            this.labelFlag.Visible = false;
-            // 
             // F_Shipment
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -1056,6 +1078,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "F_Shipment";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.F_Shipment_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownOrderID)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel8.ResumeLayout(false);
@@ -1137,9 +1160,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
         private System.Windows.Forms.Label label数量;
         private System.Windows.Forms.Label label商品ID;
         private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button buttonCusSearch;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button buttonProductSearch;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button buttonDetailClear;
@@ -1148,5 +1169,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label labelStateFlag;
         private System.Windows.Forms.Label labelFlag;
+        private System.Windows.Forms.Button buttonOrderSearch;
+        private System.Windows.Forms.Button buttonEmSearch;
     }
 }

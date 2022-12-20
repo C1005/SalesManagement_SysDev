@@ -276,7 +276,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
                 // 大分類名の文字数チェック
                 if (textBoxMcName.TextLength > 50)
                 {
-                    //MessageBox.Show("大分類名は25文字以下です");
+                    //MessageBox.Show("大分類名は50文字以下です");
                     messageDsp.DspMsg("M1006");
                     textBoxMcName.Focus();
                     return false;
@@ -363,7 +363,185 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
 
         private void buttonUpdate_Click(object sender, EventArgs e)
         {
+            // 8.2.2.1 妥当な小分類データ取得
+            if (!GetValidDataAtUpdate())
+                return;
 
+            // 8.2.2.2 小分類情報作成
+            var updMajorCassification = GenerateDataAtUpdate();
+
+            // 8.2.2.3 小分類情報更新
+            UpdateMajorCassification(updMajorCassification);
+        }
+
+        ///////////////////////////////
+        //　8.2.1.1 妥当な大分類データ取得
+        //メソッド名：GetValidDataAtRegistration()
+        //引　数   ：なし
+        //戻り値   ：true or false
+        //機　能   ：入力データの形式チェック
+        //          ：エラーがない場合True
+        //          ：エラーがある場合False
+        ///////////////////////////////
+        private bool GetValidDataAtUpdate()
+        {
+            // 大分類IDの適否
+            if (!String.IsNullOrEmpty(textBoxMcID.Text.Trim()))
+            {
+                // 大分類IDの半角数字チェック
+                if (!dataInputFormCheck.CheckNumeric(textBoxMcID.Text.Trim()))
+                {
+                    //MessageBox.Show("大分類IDは全て半角英数字入力です");
+                    messageDsp.DspMsg("M1001");
+                    textBoxMcID.Focus();
+                    return false;
+                }
+                // 大分類IDの文字数チェック
+                if (textBoxMcID.TextLength > 2)
+                {
+                    //MessageBox.Show("大分類IDは2文字です");
+                    messageDsp.DspMsg("M1002");
+                    textBoxMcID.Focus();
+                    return false;
+                }
+                // 大分類IDが0ではないかチェック
+                if (int.Parse(textBoxMcID.Text.Trim()) == 0)
+                {
+                    //MessageBox.Show("大分類IDは01から割り当ててください");
+                    messageDsp.DspMsg("M1024");
+                    textBoxMcID.Focus();
+                    return false;
+                }
+            }
+            else
+            {
+                //MessageBox.Show("大分類IDが入力されていません");
+                messageDsp.DspMsg("M1004");
+                textBoxMcID.Focus();
+                return false;
+            }
+
+            // 大分類名の適否
+            if (!String.IsNullOrEmpty(textBoxMcName.Text.Trim()))
+            {
+                // 大分類名の全角チェック
+                if (!dataInputFormCheck.CheckFullWidth(textBoxMcName.Text.Trim()))
+                {
+                    //MessageBox.Show("大分類名は全て全角入力です");
+                    messageDsp.DspMsg("M1005");
+                    textBoxMcName.Focus();
+                    return false;
+                }
+                // 大分類名の文字数チェック
+                if (textBoxMcName.TextLength > 50)
+                {
+                    //MessageBox.Show("大分類名は50文字以下です");
+                    messageDsp.DspMsg("M1006");
+                    textBoxMcName.Focus();
+                    return false;
+                }
+            }
+            else
+            {
+                //MessageBox.Show("大分類名が入力されていません");
+                messageDsp.DspMsg("M1007");
+                textBoxMcName.Focus();
+                return false;
+            }
+
+            // 管理フラグの適否
+            if (checkBoxMcFlag.CheckState == CheckState.Indeterminate)
+            {
+                //MessageBox.Show("管理フラグが不確定の状態です");
+                messageDsp.DspMsg("M1008");
+                checkBoxMcFlag.Focus();
+                return false;
+            }
+
+            return true;
+        }
+
+        ///////////////////////////////
+        //　8.2.2.2 大分類情報作成
+        //メソッド名：GenerateDataAtUpdate()
+        //引　数   ：なし
+        //戻り値   ：大分類更新情報
+        //機　能   ：更新データのセット
+        ///////////////////////////////
+        private M_MajorCassification GenerateDataAtUpdate()
+        {
+            return new M_MajorCassification
+            {
+                McID = int.Parse(textBoxMcID.Text.Trim()),
+                McName = textBoxMcName.Text.Trim(),
+                McFlag = McFlg,
+                McHidden = textBoxMcHidden.Text.Trim(),
+            };
+        }
+
+        ///////////////////////////////
+        //　8.2.2.3 小分類情報更新
+        //メソッド名：UpdateSmallClassification()
+        //引　数   ：小分類情報
+        //戻り値   ：なし
+        //機　能   ：小分類情報の更新
+        ///////////////////////////////
+        private void UpdateMajorCassification(M_MajorCassification updMajorCassification)
+        {
+            if (McFlg == 0)
+            {
+                // 更新確認メッセージ
+                DialogResult result = messageDsp.DspMsg("M8015");
+                if (result == DialogResult.Cancel)
+                    return;
+
+                // 小分類情報の更新
+                bool flg = majorCassificationDataAccess.UpdateMajorCassificationData(updMajorCassification);
+                if (flg == true)
+                    //MessageBox.Show("データを更新しました。");
+                    messageDsp.DspMsg("M8016");
+                else
+                    //MessageBox.Show("データの更新に失敗しました。");
+                    messageDsp.DspMsg("M8017");
+
+                textBoxMcID.Focus();
+
+                // 入力エリアのクリア
+                ClearInput();
+
+                // データグリッドビューの表示
+                GetDataGridView();
+            }
+
+            else if (McFlg == 2)
+            {
+                DeleteSmallClassification(updMajorCassification);
+            }
+        }
+        private void DeleteSmallClassification(M_MajorCassification delMajorCassification)
+        {
+
+            // 更新確認メッセージ
+            DialogResult result = messageDsp.DspMsg("M8019");
+            if (result == DialogResult.Cancel)
+                return;
+
+            // 小分類情報の更新
+            bool flg = majorCassificationDataAccess.DeleteMajorCassificationData(delMajorCassification);
+            if (flg == true)
+                //MessageBox.Show("データを削除しました。");
+                messageDsp.DspMsg("M8020");
+            else
+                //MessageBox.Show("データの削除に失敗しました。");
+                messageDsp.DspMsg("M8021");
+
+            textBoxMcID.Focus();
+
+            // 入力エリアのクリア
+            ClearInput();
+
+            // データグリッドビューの表示
+            GetDataGridView();
         }
 
         private void buttonSearch_Click(object sender, EventArgs e)
@@ -381,6 +559,64 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
 
         private bool GetValidDataAtSelect()
         {
+            // 大分類IDの適否
+            if (!String.IsNullOrEmpty(textBoxMcID.Text.Trim()))
+            {
+                // 大分類IDの半角数字チェック
+                if (!dataInputFormCheck.CheckNumeric(textBoxMcID.Text.Trim()))
+                {
+                    //MessageBox.Show("大分類IDは全て半角英数字入力です");
+                    messageDsp.DspMsg("M1001");
+                    textBoxMcID.Focus();
+                    return false;
+                }
+                // 大分類IDの文字数チェック
+                if (textBoxMcID.TextLength > 2)
+                {
+                    //MessageBox.Show("大分類IDは2文字です");
+                    messageDsp.DspMsg("M1002");
+                    textBoxMcID.Focus();
+                    return false;
+                }
+                // 大分類IDが0ではないかチェック
+                if (int.Parse(textBoxMcID.Text.Trim()) == 0)
+                {
+                    //MessageBox.Show("大分類IDは01から割り当ててください");
+                    messageDsp.DspMsg("M1024");
+                    textBoxMcID.Focus();
+                    return false;
+                }
+            }
+
+            // 大分類名の適否
+            if (!String.IsNullOrEmpty(textBoxMcName.Text.Trim()))
+            {
+                // 大分類名の全角チェック
+                if (!dataInputFormCheck.CheckFullWidth(textBoxMcName.Text.Trim()))
+                {
+                    //MessageBox.Show("大分類名は全て全角入力です");
+                    messageDsp.DspMsg("M1005");
+                    textBoxMcName.Focus();
+                    return false;
+                }
+                // 大分類名の文字数チェック
+                if (textBoxMcName.TextLength > 50)
+                {
+                    //MessageBox.Show("大分類名は50文字以下です");
+                    messageDsp.DspMsg("M1006");
+                    textBoxMcName.Focus();
+                    return false;
+                }
+            }
+
+            // 管理フラグの適否
+            if (checkBoxMcFlag.CheckState == CheckState.Indeterminate)
+            {
+                //MessageBox.Show("管理フラグが不確定の状態です");
+                messageDsp.DspMsg("M1008");
+                checkBoxMcFlag.Focus();
+                return false;
+            }
             return true;
         }
 
@@ -466,7 +702,8 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
 
         private void buttonList_Click(object sender, EventArgs e)
         {
-
+            // データグリッドビューの表示
+            SetFormDataGridView();
         }
 
         private void checkBoxMcFlag_CheckedChanged(object sender, EventArgs e)
@@ -488,12 +725,29 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
 
         private void dataGridViewMajorClassification_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-
+            //クリックされた行データをテキストボックスへ
+            textBoxMcID.Text = dataGridViewMajorClassification.Rows[dataGridViewMajorClassification.CurrentRow.Index].Cells[0].Value.ToString();
+            textBoxMcName.Text = dataGridViewMajorClassification.Rows[dataGridViewMajorClassification.CurrentRow.Index].Cells[1].Value.ToString();
+            int ScFlg2 = int.Parse(dataGridViewMajorClassification.Rows[dataGridViewMajorClassification.CurrentRow.Index].Cells[2].Value.ToString());
+            if (ScFlg2 == 0)
+            {
+                checkBoxMcFlag.Checked = false;
+            }
+            else if (ScFlg2 == 2)
+            {
+                checkBoxMcFlag.Checked = true;
+            }
+            textBoxMcHidden.Text = dataGridViewMajorClassification.Rows[dataGridViewMajorClassification.CurrentRow.Index].Cells[3].Value.ToString();
         }
 
         private void buttonClose_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void buttonLogout_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

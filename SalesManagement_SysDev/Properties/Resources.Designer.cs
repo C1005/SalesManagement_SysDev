@@ -153,6 +153,16 @@ namespace SalesManagement_SysDev.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap Fixed_マスタ用ボタン2 {
+            get {
+                object obj = ResourceManager.GetObject("Fixed_マスタ用ボタン2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap Fixed_ログアウト {
             get {
                 object obj = ResourceManager.GetObject("Fixed_ログアウト", resourceCulture);
@@ -296,6 +306,36 @@ namespace SalesManagement_SysDev.Properties {
         internal static System.Drawing.Bitmap Fixed_陥没panel {
             get {
                 object obj = ResourceManager.GetObject("Fixed_陥没panel", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap MenuPanel_A {
+            get {
+                object obj = ResourceManager.GetObject("MenuPanel_A", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap MenuPanel_B {
+            get {
+                object obj = ResourceManager.GetObject("MenuPanel_B", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap MenuPanel_C {
+            get {
+                object obj = ResourceManager.GetObject("MenuPanel_C", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

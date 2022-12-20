@@ -70,7 +70,6 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
 
         private void GetDataGridView()
         {
-
             // 小分類データの取得
             SmallClassification = smallClassificationDataAccess.GetSmallClassificationData();
 
@@ -342,6 +341,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             return new M_SmallClassification
             {
                 ScID = int.Parse(textBoxScID.Text.Trim()),
+                McID = int.Parse(textBoxMcID.Text.Trim()),
                 ScName = textBoxScName.Text.Trim(),
                 ScFlag = ScFlg,
                 ScHidden = textBoxScHidden.Text.Trim(),
@@ -690,6 +690,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             return new M_SmallClassification
             {
                 ScID = int.Parse(textBoxScID.Text.Trim()),
+                McID = int.Parse(textBoxMcID.Text.Trim()),
                 ScName = textBoxScName.Text.Trim(),
                 ScFlag = ScFlg,
                 ScHidden = textBoxScHidden.Text.Trim(),
@@ -769,6 +770,90 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
         private void buttonClose_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void buttonMajorClassForm_Click(object sender, EventArgs e)
+        {
+            OpenForm(((Button)sender).Text);
+        }
+        private void OpenForm(string formName)
+        {
+            Form frm = new Form();
+            //引数より、開くフォームを設定
+            switch (formName)
+            {
+                case "大分類検索":
+                    frm = new F_MajorCassification();
+                    break;
+            }
+
+            // すでに同じフォームが開かれているかどうかを確認する
+            bool isOpen = false;
+            Form openForm = null;
+            foreach (Form form in Application.OpenForms)
+            {
+                if (form.GetType() == frm.GetType())
+                {
+                    isOpen = true;
+                    openForm = form;
+                    break;
+                }
+            }
+
+            // 同じフォームが開かれていれば、そのフォームを最前面に持ってくる
+            if (isOpen)
+            {
+                openForm.BringToFront();
+            }
+            // 同じフォームが開かれていなければ、選択されたフォームを開く
+            else
+            {
+                frm.Show();
+            }
+        }
+
+        private void buttonLogout_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxMcID_TextChanged(object sender, EventArgs e)
+        {
+            if (textBoxMcID.Text != "")
+            {
+                var context = new SalesManagement_DevContext();
+                try
+                {
+                    int mMcID = int.Parse(textBoxMcID.Text);
+                    var mMajorClassification = context.M_MajorCassifications.Single(x => x.McID == mMcID);
+                    if (mMajorClassification.McFlag == 2)
+                    {
+                        string mMcName = mMajorClassification.McName;
+                        labelMcName.Text = "(非表示)" + mMcName;
+                        labelMcName.Visible = true;
+                        context.Dispose();
+                    }
+                    else
+                    {
+                        string mMcName = mMajorClassification.McName;
+                        labelMcName.Text = mMcName;
+                        labelMcName.Visible = true;
+                        context.Dispose();
+                    }
+                }
+                catch
+                {
+                    labelMcName.Visible = true;
+                    labelMcName.Text = "“UnknownID”";
+                    context.Dispose();
+                    return;
+                }
+            }
+            else
+            {
+                labelMcName.Visible = false;
+                labelMcName.Text = "大分類名";
+            }
         }
     }
 }

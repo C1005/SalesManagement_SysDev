@@ -61,9 +61,12 @@
     <Compile Include="Common\DataImport.cs" />
     <Compile Include="Common\DataInputFormCheck.cs" />
     <Compile Include="Common\MessageDsp.cs" />
+    <Compile Include="Common\PassWordHash.cs" />
     <Compile Include="Entity\M_MajorCassification.cs" />
     <Compile Include="Entity\M_Message.cs" />
     <Compile Include="Entity\M_Product.cs" />
+    <Compile Include="Entity\T_HattyuDetailProvisional.cs" />
+    <Compile Include="Entity\T_HattyuProvisional.cs" />
     <Compile Include="Entity\T_OrderDetailProvisional.cs" />
     <Compile Include="Entity\T_OrderProvisional.cs" />
     <Compile Include="Forms\DbAccess\ArrivalDataAccess.cs" />
@@ -464,6 +467,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ロード画面.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MenuPanel_A.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MenuPanel_B.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MenuPanel_C.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fixed_マスタ用ボタン2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

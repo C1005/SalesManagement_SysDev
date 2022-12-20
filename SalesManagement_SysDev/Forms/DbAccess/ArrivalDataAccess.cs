@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-
 namespace SalesManagement_SysDev.Forms.DbAccess
 {
     class ArrivalDataAccess

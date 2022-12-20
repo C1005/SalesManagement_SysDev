@@ -43,7 +43,6 @@ namespace SalesManagement_SysDev
         public DateTime EmHiredate { get; set; }    //入社年月日
 
         [Required]
-        [MaxLength(10)]
         [Column("EmPassword", TypeName = "nvarchar", Order = 5)]
         [DisplayName("パスワード")]
         public String EmPassword { get; set; }      //パスワード

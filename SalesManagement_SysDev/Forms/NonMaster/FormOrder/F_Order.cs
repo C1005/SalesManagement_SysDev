@@ -53,7 +53,6 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormOrder
         }
 
         ///////////////////////////////
-        //
         //メソッド名：SetFormDataGridView()
         //引　数   ：なし
         //戻り値   ：なし
@@ -184,7 +183,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormOrder
 
         private void OpenForm(string formName)
         {
-            Form frm = new Form();
+            Form frm = null;
             //引数より、開くフォームを設定
             switch (formName)
             {
@@ -201,12 +200,30 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormOrder
                     frm = new F_OrderConfirm(); //フォームの名前
                     break;
             }
-            //選択されたフォームを開く
-            frm.ShowDialog();
 
-            //開いたフォームから戻ってきたら
-            //メモリを解放する
-            frm.Dispose();
+            // すでに同じフォームが開かれているかどうかを確認する
+            bool isOpen = false;
+            Form openForm = null;
+            foreach (Form form in Application.OpenForms)
+            {
+                if (form.GetType() == frm.GetType())
+                {
+                    isOpen = true;
+                    openForm = form;
+                    break;
+                }
+            }
+
+            // 同じフォームが開かれていれば、そのフォームを最前面に持ってくる
+            if (isOpen)
+            {
+                openForm.BringToFront();
+            }
+            // 同じフォームが開かれていなければ、選択されたフォームを開く
+            else
+            {
+                frm.Show();
+            }
         }
 
         private void buttonRegist_Click(object sender, EventArgs e)
@@ -229,7 +246,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormOrder
             {
                 //MessageBox.Show("仮登録を行ってから登録してください");
                 messageDsp.DspMsg("M10045");
-                textBoxClID.Focus();
+                textBoxOrID.Focus();
                 return false;
             }
             return true;
@@ -640,14 +657,6 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormOrder
                         textBoxSoID.Focus();
                         return false;
                     }
-                    // 営業所IDが0ではないかチェック
-                    if (int.Parse(textBoxSoID.Text.Trim()) == 0)
-                    {
-                        //MessageBox.Show("営業所IDは01から割り当ててください");
-                        messageDsp.DspMsg("M10011");
-                        textBoxSoID.Focus();
-                        return false;
-                    }
                 }
                 else
                 {
@@ -691,7 +700,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormOrder
                 {
                     //MessageBox.Show("受注年月日は必須です");
                     messageDsp.DspMsg("M10044");
-                    checkBoxOrStateFlag.Focus();
+                    dateTimePickerOrDate.Focus();
                     return false;
                 }
             }
@@ -1354,6 +1363,19 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormOrder
                 Order = orderDataAccess.SearchOrderData(selectCondition);
                 return;
             }
+            else if (mPrID != "")
+            {
+                // 検索条件のセット
+                selectCondition = new T_OrderDsp()
+                {
+                    PrID = int.Parse(textBoxPrID.Text.Trim()),
+                    OrStateFlag = mOrStateFlg,
+                    OrFlag = mOrFlg //フラグがチェック状態なら非表示一覧表示内で検索、そうでなければ通常検索
+                };
+                // データの抽出
+                Order = orderDataAccess.SearchOrderData(selectCondition);
+                return;
+            }
             else if (mOrStateFlg == 1) 
             {
                 // 検索条件のセット
@@ -1370,19 +1392,6 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormOrder
                 // 検索条件のセット
                 selectCondition = new T_OrderDsp()
                 {
-                    OrFlag = mOrFlg //フラグがチェック状態なら非表示一覧表示内で検索、そうでなければ通常検索
-                };
-                // データの抽出
-                Order = orderDataAccess.SearchOrderData(selectCondition);
-                return;
-            }
-            else if (mPrID != "")
-            {
-                // 検索条件のセット
-                selectCondition = new T_OrderDsp()
-                {
-                    PrID = int.Parse(textBoxPrID.Text.Trim()),
-                    OrStateFlag = mOrStateFlg,
                     OrFlag = mOrFlg //フラグがチェック状態なら非表示一覧表示内で検索、そうでなければ通常検索
                 };
                 // データの抽出
@@ -2021,7 +2030,6 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormOrder
                 labelMark1.Visible = true;
                 labelMark2.Visible = true;
                 textBoxClID.Enabled = false;
-                textBoxClID.Enabled = false;
                 textBoxOrID.Enabled = false;
                 textBoxEmID.Enabled = false;
                 textBoxSoID.Enabled = false;
@@ -2037,7 +2045,6 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormOrder
                 buttonProvisionalCancel.Visible = false;
                 labelMark1.Visible = false;
                 labelMark2.Visible = false;
-                textBoxClID.Enabled = true;
                 textBoxClID.Enabled = true;
                 textBoxOrID.Enabled = true;
                 textBoxEmID.Enabled = true;
@@ -2463,7 +2470,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormOrder
             if (provisionalMode == true)
             {
                 //仮登録
-                int lastPage = (int)Math.Ceiling(OrderProvisional.Count / (double)pageSize) - 1;
+                int lastPage = (int)Math.Ceiling(OrderProvisional.Count / (double)pageSize);
 
                 if (pageNo >= lastPage)
                     textBoxPageNo.Text = lastPage.ToString();
@@ -2472,7 +2479,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormOrder
             }
             else
             {
-                int lastPage = (int)Math.Ceiling(filteredList.Count / (double)pageSize) - 1;
+                int lastPage = (int)Math.Ceiling(filteredList.Count / (double)pageSize);
 
                 if (pageNo >= lastPage)
                     textBoxPageNo.Text = lastPage.ToString();

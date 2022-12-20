@@ -157,6 +157,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
             this.buttonClose.TabStop = false;
             this.buttonClose.Text = "閉じる";
             this.buttonClose.UseVisualStyleBackColor = true;
+            this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
             // 
             // buttonLogout
             // 
@@ -173,6 +174,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
             this.buttonLogout.TabStop = false;
             this.buttonLogout.Text = "ログアウト";
             this.buttonLogout.UseVisualStyleBackColor = true;
+            this.buttonLogout.Click += new System.EventHandler(this.buttonLogout_Click);
             // 
             // panel8
             // 
@@ -270,6 +272,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
             this.buttonUpdate.TabIndex = 2;
             this.buttonUpdate.Text = "更新";
             this.buttonUpdate.UseVisualStyleBackColor = false;
+            this.buttonUpdate.Click += new System.EventHandler(this.buttonUpdate_Click);
             // 
             // buttonClear
             // 
@@ -285,6 +288,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
             this.buttonClear.TabStop = false;
             this.buttonClear.Text = "入力クリア";
             this.buttonClear.UseVisualStyleBackColor = true;
+            this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
             // 
             // buttonList
             // 
@@ -300,6 +304,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
             this.buttonList.TabIndex = 3;
             this.buttonList.Text = "一覧表示";
             this.buttonList.UseVisualStyleBackColor = false;
+            this.buttonList.Click += new System.EventHandler(this.buttonList_Click);
             // 
             // buttonSearch
             // 
@@ -315,6 +320,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
             this.buttonSearch.TabIndex = 0;
             this.buttonSearch.Text = "検索";
             this.buttonSearch.UseVisualStyleBackColor = false;
+            this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
             // buttonRegist
             // 
@@ -330,6 +336,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
             this.buttonRegist.TabIndex = 1;
             this.buttonRegist.Text = "登録";
             this.buttonRegist.UseVisualStyleBackColor = false;
+            this.buttonRegist.Click += new System.EventHandler(this.buttonRegist_Click);
             // 
             // textBoxClAddress
             // 
@@ -459,10 +466,11 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
             // 
             // buttonCusSearch
             // 
-            this.buttonCusSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_その他;
+            this.buttonCusSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.営業所検索;
             this.buttonCusSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonCusSearch.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonCusSearch.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonCusSearch.ForeColor = System.Drawing.Color.Black;
             this.buttonCusSearch.Location = new System.Drawing.Point(1618, 93);
             this.buttonCusSearch.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
             this.buttonCusSearch.Name = "buttonCusSearch";
@@ -471,6 +479,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
             this.buttonCusSearch.TabStop = false;
             this.buttonCusSearch.Text = "営業所検索";
             this.buttonCusSearch.UseVisualStyleBackColor = true;
+            this.buttonCusSearch.Click += new System.EventHandler(this.buttonCusSearch_Click);
             // 
             // buttonPageSizeChange
             // 
@@ -485,6 +494,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
             this.buttonPageSizeChange.TabStop = false;
             this.buttonPageSizeChange.Text = "行数変更";
             this.buttonPageSizeChange.UseVisualStyleBackColor = true;
+            this.buttonPageSizeChange.Click += new System.EventHandler(this.buttonPageSizeChange_Click);
             // 
             // textBoxClHidden
             // 
@@ -512,6 +522,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
             this.buttonLastPage.TabStop = false;
             this.buttonLastPage.Text = "▶|";
             this.buttonLastPage.UseVisualStyleBackColor = true;
+            this.buttonLastPage.Click += new System.EventHandler(this.buttonLastPage_Click);
             // 
             // buttonNextPage
             // 
@@ -527,6 +538,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
             this.buttonNextPage.TabStop = false;
             this.buttonNextPage.Text = "▶";
             this.buttonNextPage.UseVisualStyleBackColor = true;
+            this.buttonNextPage.Click += new System.EventHandler(this.buttonNextPage_Click);
             // 
             // buttonPreviousPage
             // 
@@ -542,6 +554,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
             this.buttonPreviousPage.TabStop = false;
             this.buttonPreviousPage.Text = "◀";
             this.buttonPreviousPage.UseVisualStyleBackColor = true;
+            this.buttonPreviousPage.Click += new System.EventHandler(this.buttonPreviousPage_Click);
             // 
             // textBoxPageNo
             // 
@@ -568,6 +581,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
             this.buttonFirstPage.TabStop = false;
             this.buttonFirstPage.Text = "|◀";
             this.buttonFirstPage.UseVisualStyleBackColor = true;
+            this.buttonFirstPage.Click += new System.EventHandler(this.buttonFirstPage_Click);
             // 
             // dataGridViewClient
             // 
@@ -604,6 +618,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
             this.dataGridViewClient.Size = new System.Drawing.Size(1527, 432);
             this.dataGridViewClient.TabIndex = 1327;
             this.dataGridViewClient.TabStop = false;
+            this.dataGridViewClient.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewClient_CellClick);
             // 
             // checkBoxClFlag
             // 
@@ -617,6 +632,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
             this.checkBoxClFlag.TabStop = false;
             this.checkBoxClFlag.Text = "顧客管理フラグ";
             this.checkBoxClFlag.UseVisualStyleBackColor = true;
+            this.checkBoxClFlag.CheckedChanged += new System.EventHandler(this.checkBoxClFlag_CheckedChanged);
             // 
             // panel1
             // 
@@ -714,6 +730,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
             this.textBoxSoID.Name = "textBoxSoID";
             this.textBoxSoID.Size = new System.Drawing.Size(131, 26);
             this.textBoxSoID.TabIndex = 1414;
+            this.textBoxSoID.TextChanged += new System.EventHandler(this.textBoxSoID_TextChanged);
             // 
             // label2営業所ID
             // 

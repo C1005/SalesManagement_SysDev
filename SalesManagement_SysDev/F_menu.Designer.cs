@@ -51,6 +51,21 @@ namespace SalesManagement_SysDev
             this.buttonOrderManager = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBoxEmployee = new System.Windows.Forms.GroupBox();
+            this.panel11 = new System.Windows.Forms.Panel();
+            this.buttonEmployee = new System.Windows.Forms.Button();
+            this.buttonToPosition = new System.Windows.Forms.Button();
+            this.buttonToSalesOffice2 = new System.Windows.Forms.Button();
+            this.groupBoxProduct = new System.Windows.Forms.GroupBox();
+            this.panel10 = new System.Windows.Forms.Panel();
+            this.buttonToProduct = new System.Windows.Forms.Button();
+            this.buttonToSmall = new System.Windows.Forms.Button();
+            this.buttonToMajor = new System.Windows.Forms.Button();
+            this.buttonToMaker = new System.Windows.Forms.Button();
+            this.groupBoxClient = new System.Windows.Forms.GroupBox();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.buttonToSalesOffice = new System.Windows.Forms.Button();
+            this.buttonToClient = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel6 = new System.Windows.Forms.Panel();
             this.buttonSaleManager = new System.Windows.Forms.Button();
@@ -69,6 +84,12 @@ namespace SalesManagement_SysDev
             this.panel2.SuspendLayout();
             this.panel8.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBoxEmployee.SuspendLayout();
+            this.panel11.SuspendLayout();
+            this.groupBoxProduct.SuspendLayout();
+            this.panel10.SuspendLayout();
+            this.groupBoxClient.SuspendLayout();
+            this.panel9.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel4.SuspendLayout();
@@ -94,6 +115,7 @@ namespace SalesManagement_SysDev
             // panel7
             // 
             this.panel7.BackColor = System.Drawing.Color.OldLace;
+            this.panel7.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.MenuPanel_A;
             this.panel7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel7.Controls.Add(this.buttonClientManager);
@@ -116,7 +138,7 @@ namespace SalesManagement_SysDev
             this.buttonClientManager.Name = "buttonClientManager";
             this.buttonClientManager.Size = new System.Drawing.Size(328, 90);
             this.buttonClientManager.TabIndex = 0;
-            this.buttonClientManager.Text = "顧客管理";
+            this.buttonClientManager.Text = "顧客マスター";
             this.buttonClientManager.UseVisualStyleBackColor = false;
             this.buttonClientManager.Click += new System.EventHandler(this.buttonClientManager_Click);
             // 
@@ -127,11 +149,11 @@ namespace SalesManagement_SysDev
             this.buttonProductManager.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonProductManager.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonProductManager.Font = new System.Drawing.Font("MS UI Gothic", 19.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.buttonProductManager.Location = new System.Drawing.Point(75, 317);
+            this.buttonProductManager.Location = new System.Drawing.Point(75, 315);
             this.buttonProductManager.Name = "buttonProductManager";
             this.buttonProductManager.Size = new System.Drawing.Size(328, 90);
             this.buttonProductManager.TabIndex = 1;
-            this.buttonProductManager.Text = "商品管理";
+            this.buttonProductManager.Text = "商品マスター";
             this.toolTip1.SetToolTip(this.buttonProductManager, "小分類管理・大分類管理・メーカ管理");
             this.buttonProductManager.UseVisualStyleBackColor = false;
             this.buttonProductManager.Click += new System.EventHandler(this.buttonProductManager_Click);
@@ -147,7 +169,7 @@ namespace SalesManagement_SysDev
             this.buttonEmployeeManager.Name = "buttonEmployeeManager";
             this.buttonEmployeeManager.Size = new System.Drawing.Size(328, 90);
             this.buttonEmployeeManager.TabIndex = 3;
-            this.buttonEmployeeManager.Text = "社員管理";
+            this.buttonEmployeeManager.Text = "社員マスター";
             this.toolTip2.SetToolTip(this.buttonEmployeeManager, "営業所管理・役職管理");
             this.buttonEmployeeManager.UseVisualStyleBackColor = false;
             this.buttonEmployeeManager.Click += new System.EventHandler(this.buttonEmployeeManager_Click);
@@ -159,6 +181,7 @@ namespace SalesManagement_SysDev
             this.buttonStockManager.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonStockManager.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonStockManager.Font = new System.Drawing.Font("MS UI Gothic", 19.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonStockManager.ForeColor = System.Drawing.Color.Black;
             this.buttonStockManager.Location = new System.Drawing.Point(428, 33);
             this.buttonStockManager.Name = "buttonStockManager";
             this.buttonStockManager.Size = new System.Drawing.Size(289, 90);
@@ -276,6 +299,7 @@ namespace SalesManagement_SysDev
             this.buttonClose.TabStop = false;
             this.buttonClose.Text = "閉じる";
             this.buttonClose.UseVisualStyleBackColor = true;
+            this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
             // 
             // buttonLogout
             // 
@@ -301,6 +325,7 @@ namespace SalesManagement_SysDev
             this.buttonOrderManager.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonOrderManager.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonOrderManager.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonOrderManager.ForeColor = System.Drawing.Color.Black;
             this.buttonOrderManager.Location = new System.Drawing.Point(26, 24);
             this.buttonOrderManager.Name = "buttonOrderManager";
             this.buttonOrderManager.Size = new System.Drawing.Size(289, 90);
@@ -315,7 +340,10 @@ namespace SalesManagement_SysDev
             this.groupBox2.BackColor = System.Drawing.SystemColors.Menu;
             this.groupBox2.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_top_枠線;
             this.groupBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.groupBox2.Controls.Add(this.groupBoxEmployee);
             this.groupBox2.Controls.Add(this.panel1);
+            this.groupBox2.Controls.Add(this.groupBoxProduct);
+            this.groupBox2.Controls.Add(this.groupBoxClient);
             this.groupBox2.Font = new System.Drawing.Font("MS UI Gothic", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.groupBox2.Location = new System.Drawing.Point(639, 139);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
@@ -326,9 +354,241 @@ namespace SalesManagement_SysDev
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "業務";
             // 
+            // groupBoxEmployee
+            // 
+            this.groupBoxEmployee.BackColor = System.Drawing.SystemColors.Menu;
+            this.groupBoxEmployee.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_top_枠線;
+            this.groupBoxEmployee.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.groupBoxEmployee.Controls.Add(this.panel11);
+            this.groupBoxEmployee.Font = new System.Drawing.Font("MS UI Gothic", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.groupBoxEmployee.Location = new System.Drawing.Point(0, 0);
+            this.groupBoxEmployee.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.groupBoxEmployee.Name = "groupBoxEmployee";
+            this.groupBoxEmployee.Padding = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.groupBoxEmployee.Size = new System.Drawing.Size(1350, 833);
+            this.groupBoxEmployee.TabIndex = 1407;
+            this.groupBoxEmployee.TabStop = false;
+            this.groupBoxEmployee.Text = "社員マスター";
+            this.groupBoxEmployee.Visible = false;
+            // 
+            // panel11
+            // 
+            this.panel11.BackColor = System.Drawing.Color.OldLace;
+            this.panel11.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.MenuPanel_B;
+            this.panel11.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panel11.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel11.Controls.Add(this.buttonEmployee);
+            this.panel11.Controls.Add(this.buttonToPosition);
+            this.panel11.Controls.Add(this.buttonToSalesOffice2);
+            this.panel11.Location = new System.Drawing.Point(59, 66);
+            this.panel11.Margin = new System.Windows.Forms.Padding(4);
+            this.panel11.Name = "panel11";
+            this.panel11.Size = new System.Drawing.Size(1213, 718);
+            this.panel11.TabIndex = 0;
+            // 
+            // buttonEmployee
+            // 
+            this.buttonEmployee.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(228)))), ((int)(((byte)(86)))));
+            this.buttonEmployee.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_マスタ用ボタン2;
+            this.buttonEmployee.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonEmployee.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonEmployee.Font = new System.Drawing.Font("MS UI Gothic", 25.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonEmployee.Location = new System.Drawing.Point(239, 74);
+            this.buttonEmployee.Name = "buttonEmployee";
+            this.buttonEmployee.Size = new System.Drawing.Size(726, 142);
+            this.buttonEmployee.TabIndex = 6;
+            this.buttonEmployee.Text = "社員管理";
+            this.buttonEmployee.UseVisualStyleBackColor = false;
+            this.buttonEmployee.Click += new System.EventHandler(this.buttonEmployee_Click);
+            // 
+            // buttonToPosition
+            // 
+            this.buttonToPosition.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(228)))), ((int)(((byte)(86)))));
+            this.buttonToPosition.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_管理画面移動;
+            this.buttonToPosition.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonToPosition.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonToPosition.Font = new System.Drawing.Font("MS UI Gothic", 25.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonToPosition.Location = new System.Drawing.Point(239, 488);
+            this.buttonToPosition.Name = "buttonToPosition";
+            this.buttonToPosition.Size = new System.Drawing.Size(726, 142);
+            this.buttonToPosition.TabIndex = 5;
+            this.buttonToPosition.Text = "役職管理";
+            this.buttonToPosition.UseVisualStyleBackColor = false;
+            this.buttonToPosition.Click += new System.EventHandler(this.buttonToPosition_Click);
+            // 
+            // buttonToSalesOffice2
+            // 
+            this.buttonToSalesOffice2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(228)))), ((int)(((byte)(86)))));
+            this.buttonToSalesOffice2.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_管理画面移動;
+            this.buttonToSalesOffice2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonToSalesOffice2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonToSalesOffice2.Font = new System.Drawing.Font("MS UI Gothic", 25.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonToSalesOffice2.Location = new System.Drawing.Point(239, 279);
+            this.buttonToSalesOffice2.Name = "buttonToSalesOffice2";
+            this.buttonToSalesOffice2.Size = new System.Drawing.Size(726, 142);
+            this.buttonToSalesOffice2.TabIndex = 4;
+            this.buttonToSalesOffice2.Text = "営業所管理";
+            this.buttonToSalesOffice2.UseVisualStyleBackColor = false;
+            this.buttonToSalesOffice2.Click += new System.EventHandler(this.buttonToSalesOffice2_Click);
+            // 
+            // groupBoxProduct
+            // 
+            this.groupBoxProduct.BackColor = System.Drawing.SystemColors.Menu;
+            this.groupBoxProduct.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_top_枠線;
+            this.groupBoxProduct.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.groupBoxProduct.Controls.Add(this.panel10);
+            this.groupBoxProduct.Font = new System.Drawing.Font("MS UI Gothic", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.groupBoxProduct.Location = new System.Drawing.Point(0, 0);
+            this.groupBoxProduct.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.groupBoxProduct.Name = "groupBoxProduct";
+            this.groupBoxProduct.Padding = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.groupBoxProduct.Size = new System.Drawing.Size(1350, 833);
+            this.groupBoxProduct.TabIndex = 1407;
+            this.groupBoxProduct.TabStop = false;
+            this.groupBoxProduct.Text = "商品マスター";
+            this.groupBoxProduct.Visible = false;
+            // 
+            // panel10
+            // 
+            this.panel10.BackColor = System.Drawing.Color.OldLace;
+            this.panel10.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.MenuPanel_B;
+            this.panel10.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panel10.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel10.Controls.Add(this.buttonToProduct);
+            this.panel10.Controls.Add(this.buttonToSmall);
+            this.panel10.Controls.Add(this.buttonToMajor);
+            this.panel10.Controls.Add(this.buttonToMaker);
+            this.panel10.Location = new System.Drawing.Point(59, 66);
+            this.panel10.Margin = new System.Windows.Forms.Padding(4);
+            this.panel10.Name = "panel10";
+            this.panel10.Size = new System.Drawing.Size(1213, 718);
+            this.panel10.TabIndex = 0;
+            // 
+            // buttonToProduct
+            // 
+            this.buttonToProduct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(228)))), ((int)(((byte)(86)))));
+            this.buttonToProduct.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_マスタ用ボタン2;
+            this.buttonToProduct.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonToProduct.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonToProduct.Font = new System.Drawing.Font("MS UI Gothic", 25.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonToProduct.Location = new System.Drawing.Point(239, 40);
+            this.buttonToProduct.Name = "buttonToProduct";
+            this.buttonToProduct.Size = new System.Drawing.Size(726, 142);
+            this.buttonToProduct.TabIndex = 7;
+            this.buttonToProduct.Text = "商品管理";
+            this.buttonToProduct.UseVisualStyleBackColor = false;
+            this.buttonToProduct.Click += new System.EventHandler(this.buttonToProduct_Click);
+            // 
+            // buttonToSmall
+            // 
+            this.buttonToSmall.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(228)))), ((int)(((byte)(86)))));
+            this.buttonToSmall.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_管理画面移動;
+            this.buttonToSmall.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonToSmall.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonToSmall.Font = new System.Drawing.Font("MS UI Gothic", 25.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonToSmall.Location = new System.Drawing.Point(239, 532);
+            this.buttonToSmall.Name = "buttonToSmall";
+            this.buttonToSmall.Size = new System.Drawing.Size(726, 142);
+            this.buttonToSmall.TabIndex = 6;
+            this.buttonToSmall.Text = "小分類管理";
+            this.buttonToSmall.UseVisualStyleBackColor = false;
+            this.buttonToSmall.Click += new System.EventHandler(this.buttonToSmall_Click);
+            // 
+            // buttonToMajor
+            // 
+            this.buttonToMajor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(228)))), ((int)(((byte)(86)))));
+            this.buttonToMajor.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_管理画面移動;
+            this.buttonToMajor.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonToMajor.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonToMajor.Font = new System.Drawing.Font("MS UI Gothic", 25.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonToMajor.Location = new System.Drawing.Point(239, 368);
+            this.buttonToMajor.Name = "buttonToMajor";
+            this.buttonToMajor.Size = new System.Drawing.Size(726, 142);
+            this.buttonToMajor.TabIndex = 5;
+            this.buttonToMajor.Text = "大分類管理";
+            this.buttonToMajor.UseVisualStyleBackColor = false;
+            this.buttonToMajor.Click += new System.EventHandler(this.buttonToMajor_Click);
+            // 
+            // buttonToMaker
+            // 
+            this.buttonToMaker.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(228)))), ((int)(((byte)(86)))));
+            this.buttonToMaker.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_管理画面移動;
+            this.buttonToMaker.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonToMaker.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonToMaker.Font = new System.Drawing.Font("MS UI Gothic", 25.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonToMaker.Location = new System.Drawing.Point(239, 205);
+            this.buttonToMaker.Name = "buttonToMaker";
+            this.buttonToMaker.Size = new System.Drawing.Size(726, 142);
+            this.buttonToMaker.TabIndex = 4;
+            this.buttonToMaker.Text = "メーカ管理";
+            this.buttonToMaker.UseVisualStyleBackColor = false;
+            this.buttonToMaker.Click += new System.EventHandler(this.buttonToMaker_Click);
+            // 
+            // groupBoxClient
+            // 
+            this.groupBoxClient.BackColor = System.Drawing.SystemColors.Menu;
+            this.groupBoxClient.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_top_枠線;
+            this.groupBoxClient.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.groupBoxClient.Controls.Add(this.panel9);
+            this.groupBoxClient.Font = new System.Drawing.Font("MS UI Gothic", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.groupBoxClient.Location = new System.Drawing.Point(0, 0);
+            this.groupBoxClient.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.groupBoxClient.Name = "groupBoxClient";
+            this.groupBoxClient.Padding = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.groupBoxClient.Size = new System.Drawing.Size(1350, 833);
+            this.groupBoxClient.TabIndex = 1406;
+            this.groupBoxClient.TabStop = false;
+            this.groupBoxClient.Text = "顧客マスター";
+            this.groupBoxClient.Visible = false;
+            // 
+            // panel9
+            // 
+            this.panel9.BackColor = System.Drawing.Color.OldLace;
+            this.panel9.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.MenuPanel_B;
+            this.panel9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel9.Controls.Add(this.buttonToSalesOffice);
+            this.panel9.Controls.Add(this.buttonToClient);
+            this.panel9.Location = new System.Drawing.Point(59, 66);
+            this.panel9.Margin = new System.Windows.Forms.Padding(4);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(1213, 718);
+            this.panel9.TabIndex = 0;
+            // 
+            // buttonToSalesOffice
+            // 
+            this.buttonToSalesOffice.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(228)))), ((int)(((byte)(86)))));
+            this.buttonToSalesOffice.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_管理画面移動;
+            this.buttonToSalesOffice.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonToSalesOffice.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonToSalesOffice.Font = new System.Drawing.Font("MS UI Gothic", 25.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonToSalesOffice.Location = new System.Drawing.Point(239, 425);
+            this.buttonToSalesOffice.Name = "buttonToSalesOffice";
+            this.buttonToSalesOffice.Size = new System.Drawing.Size(726, 142);
+            this.buttonToSalesOffice.TabIndex = 5;
+            this.buttonToSalesOffice.Text = "営業所管理";
+            this.buttonToSalesOffice.UseVisualStyleBackColor = false;
+            this.buttonToSalesOffice.Click += new System.EventHandler(this.buttonToSalesOffice_Click);
+            // 
+            // buttonToClient
+            // 
+            this.buttonToClient.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(228)))), ((int)(((byte)(86)))));
+            this.buttonToClient.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_マスタ用ボタン2;
+            this.buttonToClient.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonToClient.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonToClient.Font = new System.Drawing.Font("MS UI Gothic", 25.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonToClient.Location = new System.Drawing.Point(239, 139);
+            this.buttonToClient.Name = "buttonToClient";
+            this.buttonToClient.Size = new System.Drawing.Size(726, 142);
+            this.buttonToClient.TabIndex = 4;
+            this.buttonToClient.Text = "顧客管理";
+            this.buttonToClient.UseVisualStyleBackColor = false;
+            this.buttonToClient.Click += new System.EventHandler(this.buttonToClient_Click);
+            // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.OldLace;
+            this.panel1.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.MenuPanel_B;
             this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel1.Controls.Add(this.panel6);
@@ -343,6 +603,7 @@ namespace SalesManagement_SysDev
             // panel6
             // 
             this.panel6.BackColor = System.Drawing.SystemColors.MenuBar;
+            this.panel6.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.MenuPanel_C;
             this.panel6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel6.Controls.Add(this.buttonSaleManager);
@@ -360,6 +621,7 @@ namespace SalesManagement_SysDev
             this.buttonSaleManager.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonSaleManager.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonSaleManager.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonSaleManager.ForeColor = System.Drawing.Color.Black;
             this.buttonSaleManager.Location = new System.Drawing.Point(27, 33);
             this.buttonSaleManager.Name = "buttonSaleManager";
             this.buttonSaleManager.Size = new System.Drawing.Size(289, 90);
@@ -371,6 +633,7 @@ namespace SalesManagement_SysDev
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.SystemColors.MenuBar;
+            this.panel4.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.MenuPanel_C;
             this.panel4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel4.Controls.Add(this.buttonWarehousingManager);
@@ -388,6 +651,7 @@ namespace SalesManagement_SysDev
             this.buttonWarehousingManager.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonWarehousingManager.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonWarehousingManager.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonWarehousingManager.ForeColor = System.Drawing.Color.Black;
             this.buttonWarehousingManager.Location = new System.Drawing.Point(427, 33);
             this.buttonWarehousingManager.Name = "buttonWarehousingManager";
             this.buttonWarehousingManager.Size = new System.Drawing.Size(289, 90);
@@ -403,6 +667,7 @@ namespace SalesManagement_SysDev
             this.buttonHattyuManager.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonHattyuManager.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonHattyuManager.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonHattyuManager.ForeColor = System.Drawing.Color.Black;
             this.buttonHattyuManager.Location = new System.Drawing.Point(27, 33);
             this.buttonHattyuManager.Name = "buttonHattyuManager";
             this.buttonHattyuManager.Size = new System.Drawing.Size(289, 90);
@@ -414,6 +679,7 @@ namespace SalesManagement_SysDev
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.SystemColors.MenuBar;
+            this.panel3.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.MenuPanel_C;
             this.panel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel3.Controls.Add(this.buttonArrivalManager);
@@ -434,6 +700,7 @@ namespace SalesManagement_SysDev
             this.buttonArrivalManager.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonArrivalManager.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonArrivalManager.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonArrivalManager.ForeColor = System.Drawing.Color.Black;
             this.buttonArrivalManager.Location = new System.Drawing.Point(26, 172);
             this.buttonArrivalManager.Name = "buttonArrivalManager";
             this.buttonArrivalManager.Size = new System.Drawing.Size(289, 90);
@@ -449,6 +716,7 @@ namespace SalesManagement_SysDev
             this.buttonSyukkoManager.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonSyukkoManager.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonSyukkoManager.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonSyukkoManager.ForeColor = System.Drawing.Color.Black;
             this.buttonSyukkoManager.Location = new System.Drawing.Point(832, 24);
             this.buttonSyukkoManager.Name = "buttonSyukkoManager";
             this.buttonSyukkoManager.Size = new System.Drawing.Size(289, 90);
@@ -464,6 +732,7 @@ namespace SalesManagement_SysDev
             this.buttonShipmentManager.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonShipmentManager.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonShipmentManager.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonShipmentManager.ForeColor = System.Drawing.Color.Black;
             this.buttonShipmentManager.Location = new System.Drawing.Point(428, 172);
             this.buttonShipmentManager.Name = "buttonShipmentManager";
             this.buttonShipmentManager.Size = new System.Drawing.Size(289, 90);
@@ -479,6 +748,7 @@ namespace SalesManagement_SysDev
             this.buttonChumonManager.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonChumonManager.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonChumonManager.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonChumonManager.ForeColor = System.Drawing.Color.Black;
             this.buttonChumonManager.Location = new System.Drawing.Point(428, 24);
             this.buttonChumonManager.Name = "buttonChumonManager";
             this.buttonChumonManager.Size = new System.Drawing.Size(289, 90);
@@ -524,6 +794,7 @@ namespace SalesManagement_SysDev
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "販売管理システム";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.F_menu_FormClosing);
             this.Load += new System.EventHandler(this.F_menu_Load);
             this.groupBox4.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
@@ -531,6 +802,12 @@ namespace SalesManagement_SysDev
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
             this.groupBox2.ResumeLayout(false);
+            this.groupBoxEmployee.ResumeLayout(false);
+            this.panel11.ResumeLayout(false);
+            this.groupBoxProduct.ResumeLayout(false);
+            this.panel10.ResumeLayout(false);
+            this.groupBoxClient.ResumeLayout(false);
+            this.panel9.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
@@ -577,5 +854,20 @@ namespace SalesManagement_SysDev
         private System.Windows.Forms.Label label販売管理システム;
         private System.Windows.Forms.Button buttonClose;
         private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.GroupBox groupBoxClient;
+        private System.Windows.Forms.Panel panel9;
+        private System.Windows.Forms.Button buttonToSalesOffice;
+        private System.Windows.Forms.Button buttonToClient;
+        private System.Windows.Forms.GroupBox groupBoxProduct;
+        private System.Windows.Forms.Panel panel10;
+        private System.Windows.Forms.Button buttonToSmall;
+        private System.Windows.Forms.Button buttonToMajor;
+        private System.Windows.Forms.Button buttonToMaker;
+        private System.Windows.Forms.GroupBox groupBoxEmployee;
+        private System.Windows.Forms.Panel panel11;
+        private System.Windows.Forms.Button buttonToPosition;
+        private System.Windows.Forms.Button buttonToSalesOffice2;
+        private System.Windows.Forms.Button buttonEmployee;
+        private System.Windows.Forms.Button buttonToProduct;
     }
 }

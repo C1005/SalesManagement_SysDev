@@ -16,5 +16,10 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
         {
             InitializeComponent();
         }
+
+        private void F_HattyuUpdate_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

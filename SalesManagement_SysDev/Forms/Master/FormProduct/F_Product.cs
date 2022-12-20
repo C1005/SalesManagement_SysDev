@@ -12,9 +12,105 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
 {
     public partial class F_Product : Form
     {
+        //メッセージ表示用クラスのインスタンス化
+        MessageDsp messageDsp = new MessageDsp();
+        //データベース大分類テーブルアクセス用クラスのインスタンス化
+        DbAccess.ProductDataAccess product = new DbAccess.ProductDataAccess();
+        //入力形式チェック用クラスのインスタンス化
+        DataInputFormCheck dataInputFormCheck = new DataInputFormCheck();
+        //データグリッドビュー用の大分類データ
+        private static List<M_Product> Product;
+        //管理フラグを数値型で入れるための変数
+        int PrFlg;
+
         public F_Product()
         {
             InitializeComponent();
+        }
+
+        private void F_Product_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonSearch_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonRegist_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonUpdate_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonList_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonClear_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBoxPrFlag_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonLogout_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonClose_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonPageSizeChange_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonFirstPage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonPreviousPage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonNextPage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonLastPage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridViewProduct_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void textBoxMaID_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxScID_TextChanged(object sender, EventArgs e)
+        {
+
         }
 
         private void buttonMakerForm_Click(object sender, EventArgs e)
@@ -38,22 +134,40 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             //引数より、開くフォームを設定
             switch (formName)
             {
-                case "メーカ管理画面へ": //ボタンのテキスト名
+                case "メーカ検索": //ボタンのテキスト名
                     frm = new F_Maker(); //フォームの名前
                     break;
-                case "大分類管理画面へ":
+                case "大分類検索":
                     frm = new F_MajorCassification();
                     break;
-                case "小分類管理画面へ":
+                case "小分類検索":
                     frm = new F_SmallClassification();
                     break;
             }
-            //選択されたフォームを開く
-            frm.ShowDialog();
 
-            //開いたフォームから戻ってきたら
-            //メモリを解放する
-            frm.Dispose();
+            // すでに同じフォームが開かれているかどうかを確認する
+            bool isOpen = false;
+            Form openForm = null;
+            foreach (Form form in Application.OpenForms)
+            {
+                if (form.GetType() == frm.GetType())
+                {
+                    isOpen = true;
+                    openForm = form;
+                    break;
+                }
+            }
+
+            // 同じフォームが開かれていれば、そのフォームを最前面に持ってくる
+            if (isOpen)
+            {
+                openForm.BringToFront();
+            }
+            // 同じフォームが開かれていなければ、選択されたフォームを開く
+            else
+            {
+                frm.Show();
+            }
         }
     }
 }

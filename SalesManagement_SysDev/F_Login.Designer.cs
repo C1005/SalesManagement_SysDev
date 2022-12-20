@@ -184,9 +184,9 @@
             this.labelUserID.ForeColor = System.Drawing.Color.Yellow;
             this.labelUserID.Location = new System.Drawing.Point(185, 180);
             this.labelUserID.Name = "labelUserID";
-            this.labelUserID.Size = new System.Drawing.Size(75, 15);
+            this.labelUserID.Size = new System.Drawing.Size(55, 15);
             this.labelUserID.TabIndex = 1303;
-            this.labelUserID.Text = "ユーザーID";
+            this.labelUserID.Text = "社員ID";
             // 
             // panel1
             // 

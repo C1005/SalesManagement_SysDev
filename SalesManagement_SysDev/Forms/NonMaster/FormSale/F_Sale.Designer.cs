@@ -61,6 +61,8 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormSale
             this.labelEmpID = new System.Windows.Forms.Label();
             this.buttonSearch = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.labelStateFlag = new System.Windows.Forms.Label();
+            this.labelFlag = new System.Windows.Forms.Label();
             this.panel10 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
@@ -77,9 +79,9 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormSale
             this.label12 = new System.Windows.Forms.Label();
             this.textBoxSaPrTotalPrice = new System.Windows.Forms.TextBox();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.button2 = new System.Windows.Forms.Button();
+            this.buttonOrderSearch = new System.Windows.Forms.Button();
             this.buttonCusSearch = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonEmSearch = new System.Windows.Forms.Button();
             this.buttonProductSearch = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.buttonDetailClear = new System.Windows.Forms.Button();
@@ -98,8 +100,6 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormSale
             this.label受注ID = new System.Windows.Forms.Label();
             this.label顧客ID = new System.Windows.Forms.Label();
             this.label売上日時 = new System.Windows.Forms.Label();
-            this.labelStateFlag = new System.Windows.Forms.Label();
-            this.labelFlag = new System.Windows.Forms.Label();
             this.panel5.SuspendLayout();
             this.panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSale)).BeginInit();
@@ -547,6 +547,28 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormSale
             this.panel3.Size = new System.Drawing.Size(1940, 272);
             this.panel3.TabIndex = 1374;
             // 
+            // labelStateFlag
+            // 
+            this.labelStateFlag.AutoSize = true;
+            this.labelStateFlag.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.labelStateFlag.Location = new System.Drawing.Point(962, 188);
+            this.labelStateFlag.Name = "labelStateFlag";
+            this.labelStateFlag.Size = new System.Drawing.Size(52, 15);
+            this.labelStateFlag.TabIndex = 1453;
+            this.labelStateFlag.Text = "確定済";
+            this.labelStateFlag.Visible = false;
+            // 
+            // labelFlag
+            // 
+            this.labelFlag.AutoSize = true;
+            this.labelFlag.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.labelFlag.Location = new System.Drawing.Point(962, 210);
+            this.labelFlag.Name = "labelFlag";
+            this.labelFlag.Size = new System.Drawing.Size(52, 15);
+            this.labelFlag.TabIndex = 1452;
+            this.labelFlag.Text = "非表示";
+            this.labelFlag.Visible = false;
+            // 
             // panel10
             // 
             this.panel10.BackColor = System.Drawing.SystemColors.MenuBar;
@@ -745,9 +767,9 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormSale
             // 
             this.panel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(182)))), ((int)(((byte)(215)))), ((int)(((byte)(215)))));
             this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel6.Controls.Add(this.button2);
+            this.panel6.Controls.Add(this.buttonOrderSearch);
             this.panel6.Controls.Add(this.buttonCusSearch);
-            this.panel6.Controls.Add(this.button1);
+            this.panel6.Controls.Add(this.buttonEmSearch);
             this.panel6.Controls.Add(this.buttonProductSearch);
             this.panel6.Location = new System.Drawing.Point(1709, 16);
             this.panel6.Margin = new System.Windows.Forms.Padding(4);
@@ -755,24 +777,24 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormSale
             this.panel6.Size = new System.Drawing.Size(140, 248);
             this.panel6.TabIndex = 1496;
             // 
-            // button2
+            // buttonOrderSearch
             // 
-            this.button2.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_その他;
-            this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.button2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button2.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button2.Location = new System.Drawing.Point(8, 183);
-            this.button2.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(123, 45);
-            this.button2.TabIndex = 1431;
-            this.button2.TabStop = false;
-            this.button2.Text = "受注検索";
-            this.button2.UseVisualStyleBackColor = true;
+            this.buttonOrderSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.営業所検索;
+            this.buttonOrderSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonOrderSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonOrderSearch.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonOrderSearch.Location = new System.Drawing.Point(8, 183);
+            this.buttonOrderSearch.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.buttonOrderSearch.Name = "buttonOrderSearch";
+            this.buttonOrderSearch.Size = new System.Drawing.Size(123, 45);
+            this.buttonOrderSearch.TabIndex = 1431;
+            this.buttonOrderSearch.TabStop = false;
+            this.buttonOrderSearch.Text = "受注検索";
+            this.buttonOrderSearch.UseVisualStyleBackColor = true;
             // 
             // buttonCusSearch
             // 
-            this.buttonCusSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_その他;
+            this.buttonCusSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.営業所検索;
             this.buttonCusSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonCusSearch.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonCusSearch.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
@@ -785,24 +807,24 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormSale
             this.buttonCusSearch.Text = "顧客検索";
             this.buttonCusSearch.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // buttonEmSearch
             // 
-            this.button1.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_その他;
-            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button1.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button1.Location = new System.Drawing.Point(8, 126);
-            this.button1.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(123, 45);
-            this.button1.TabIndex = 1430;
-            this.button1.TabStop = false;
-            this.button1.Text = "社員検索";
-            this.button1.UseVisualStyleBackColor = true;
+            this.buttonEmSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.営業所検索;
+            this.buttonEmSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonEmSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonEmSearch.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonEmSearch.Location = new System.Drawing.Point(8, 126);
+            this.buttonEmSearch.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.buttonEmSearch.Name = "buttonEmSearch";
+            this.buttonEmSearch.Size = new System.Drawing.Size(123, 45);
+            this.buttonEmSearch.TabIndex = 1430;
+            this.buttonEmSearch.TabStop = false;
+            this.buttonEmSearch.Text = "社員検索";
+            this.buttonEmSearch.UseVisualStyleBackColor = true;
             // 
             // buttonProductSearch
             // 
-            this.buttonProductSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_その他;
+            this.buttonProductSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.営業所検索;
             this.buttonProductSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonProductSearch.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonProductSearch.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
@@ -1014,28 +1036,6 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormSale
             this.label売上日時.TabIndex = 1481;
             this.label売上日時.Text = "売上日時";
             // 
-            // labelStateFlag
-            // 
-            this.labelStateFlag.AutoSize = true;
-            this.labelStateFlag.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.labelStateFlag.Location = new System.Drawing.Point(962, 188);
-            this.labelStateFlag.Name = "labelStateFlag";
-            this.labelStateFlag.Size = new System.Drawing.Size(52, 15);
-            this.labelStateFlag.TabIndex = 1453;
-            this.labelStateFlag.Text = "確定済";
-            this.labelStateFlag.Visible = false;
-            // 
-            // labelFlag
-            // 
-            this.labelFlag.AutoSize = true;
-            this.labelFlag.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.labelFlag.Location = new System.Drawing.Point(962, 210);
-            this.labelFlag.Name = "labelFlag";
-            this.labelFlag.Size = new System.Drawing.Size(52, 15);
-            this.labelFlag.TabIndex = 1452;
-            this.labelFlag.Text = "非表示";
-            this.labelFlag.Visible = false;
-            // 
             // F_Sale
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -1121,9 +1121,9 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormSale
         private System.Windows.Forms.Label label顧客ID;
         private System.Windows.Forms.Label label売上日時;
         private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button buttonOrderSearch;
         private System.Windows.Forms.Button buttonCusSearch;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonEmSearch;
         private System.Windows.Forms.Button buttonProductSearch;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button buttonDetailClear;

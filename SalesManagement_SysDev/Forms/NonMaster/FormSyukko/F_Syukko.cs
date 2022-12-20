@@ -20,14 +20,87 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormSyukko
         DataInputFormCheck dataInputFormCheck = new DataInputFormCheck();
         //データグリッドビュー用の受注データ
         private static List<T_SyukkoDsp> Syukko;
+        private static List<T_SyukkoDsp> filteredList;
         //フラグを数値型で入れるための変数
         int SyStateFlg = 0;
         int SyFlg = 0;
-    
 
         public F_Syukko()
         {
             InitializeComponent();
+        }
+
+        private void buttonConfirmForm_Click(object sender, EventArgs e)
+        {
+            OpenForm(((Button)sender).Text);
+        }
+
+        private void buttonCusSearch_Click(object sender, EventArgs e)
+        {
+            OpenForm(((Button)sender).Text);
+        }
+
+        private void buttonProductSearch_Click(object sender, EventArgs e)
+        {
+            OpenForm(((Button)sender).Text);
+        }
+
+        private void buttonEmSearch_Click(object sender, EventArgs e)
+        {
+            OpenForm(((Button)sender).Text);
+        }
+
+        private void buttonOrderSearch_Click(object sender, EventArgs e)
+        {
+            OpenForm(((Button)sender).Text);
+        }
+
+        private void OpenForm(string formName)
+        {
+            Form frm = new Form();
+            //引数より、開くフォームを設定
+            switch (formName)
+            {
+                case "出庫検索": //ボタンのテキスト名
+                    frm = new Master.FormClient.F_Client(); //フォームの名前
+                    break;
+                case "商品検索": //ボタンのテキスト名
+                    frm = new Master.FormProduct.F_Product(); //フォームの名前
+                    break;
+                case "社員検索": //ボタンのテキスト名
+                    frm = new Master.FormEmployee.F_Employee(); //フォームの名前
+                    break;
+                case "受注検索": //ボタンのテキスト名
+                    frm = new NonMaster.FormOrder.F_Order(); //フォームの名前
+                    break;
+                case "出庫確定画面へ": //ボタンのテキスト名
+                    frm = new F_SyukkoConfirm(); //フォームの名前
+                    break;
+            }
+
+            // すでに同じフォームが開かれているかどうかを確認する
+            bool isOpen = false;
+            Form openForm = null;
+            foreach (Form form in Application.OpenForms)
+            {
+                if (form.GetType() == frm.GetType())
+                {
+                    isOpen = true;
+                    openForm = form;
+                    break;
+                }
+            }
+
+            // 同じフォームが開かれていれば、そのフォームを最前面に持ってくる
+            if (isOpen)
+            {
+                openForm.BringToFront();
+            }
+            // 同じフォームが開かれていなければ、選択されたフォームを開く
+            else
+            {
+                frm.Show();
+            }
         }
 
         private void F_Syukko_Load(object sender, EventArgs e)
@@ -85,6 +158,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormSyukko
         {
             int pageSize = int.Parse(textBoxPageSize.Text);
             int pageNo = int.Parse(textBoxPageNo.Text) - 1;
+            filteredList = Syukko.Where(x => x.SyFlag != 2).ToList(); //OrFlagが2のレコードは排除する
             dataGridViewSyukko.DataSource = Syukko.Skip(pageSize * pageNo).Take(pageSize).ToList();
             //各列幅の指定
             dataGridViewSyukko.Columns[0].Width = 100;
@@ -119,76 +193,19 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormSyukko
             dataGridViewSyukko.Refresh();
         }
 
-        private void buttonConfirmForm_Click(object sender, EventArgs e)
-        {
-            OpenForm(((Button)sender).Text);
-        }
-
-        private void OpenForm(string formName)
-        {
-            Form frm = new Form();
-            //引数より、開くフォームを設定
-            switch (formName)
-            {
-                case "出庫検索": //ボタンのテキスト名
-                    frm = new Master.FormClient.F_Client(); //フォームの名前
-                    break;
-                case "商品検索": //ボタンのテキスト名
-                    frm = new Master.FormProduct.F_Product(); //フォームの名前
-                    break;
-                case "社員検索": //ボタンのテキスト名
-                    frm = new Master.FormEmployee.F_Employee(); //フォームの名前
-                    break;
-                case "受注検索": //ボタンのテキスト名
-                    frm = new NonMaster.FormOrder.F_Order(); //フォームの名前
-                    break;
-                case "出庫確定画面へ": //ボタンのテキスト名
-                    frm = new F_SyukkoConfirm(); //フォームの名前
-                    break;
-               
-            }
-            //選択されたフォームを開く
-            frm.ShowDialog();
-
-            //開いたフォームから戻ってきたら
-            //メモリを解放する
-            frm.Dispose();
-        }
-
-        private void panel4_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void buttonCusSearch_Click(object sender, EventArgs e)
-        {
-            OpenForm(((Button)sender).Text);
-        }
-
-        private void buttonProductSearch_Click(object sender, EventArgs e)
-        {
-            OpenForm(((Button)sender).Text);
-        }
-
-        private void buttonEmployeeSearch_Click(object sender, EventArgs e)
-        {
-            OpenForm(((Button)sender).Text);
-        }
-
-        private void buttonOrderSearch_Click(object sender, EventArgs e)
-        {
-            OpenForm(((Button)sender).Text);
-        }
-
         private void buttonList_Click(object sender, EventArgs e)
         {
             // データグリッドビューの表示
             SetFormDataGridView();
         }
 
-        private void buttonClose_Click(object sender, EventArgs e)
+        private void buttonClear_Click(object sender, EventArgs e)
         {
-            this.Close();
+            // 入力エリアのクリア
+            ClearInput();
+
+            // データグリッドビューの表示
+            GetDataGridView();
         }
 
         private void buttonDetailClear_Click(object sender, EventArgs e)
@@ -200,6 +217,16 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormSyukko
 
             // データグリッドビューの表示
             SetFormDataGridView();
+        }
+
+        private void buttonLogout_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
         private void buttonDelete_Click(object sender, EventArgs e)
@@ -310,6 +337,15 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormSyukko
                 return false;
             }
 
+            // 管理フラグの適否２
+            if (checkBoxSyFlag.Checked == false)
+            {
+                //MessageBox.Show("管理フラグが未チェックです");
+                messageDsp.DspMsg("M10029");
+                checkBoxSyFlag.Focus();
+                return false;
+            }
+
             // 非表示理由の適否
             if (checkBoxSyFlag.Checked == true)
             {
@@ -335,7 +371,8 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormSyukko
             return new T_Syukko
             {
                 SyID = int.Parse(textBoxSyID.Text.Trim()),
-                SyFlag = SyFlg
+                SyFlag = SyFlg,
+                SyHidden = textBoxSyHidden.Text.Trim()
             };
         }
         ///////////////////////////////
@@ -363,7 +400,37 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormSyukko
                 messageDsp.DspMsg("M16013");
 
             textBoxSyID.Focus();
+        }
 
+        private void checkBoxSyStateFlag_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxSyStateFlag.Checked == true)
+            {
+                SyStateFlg = 1;
+                return;
+            }
+            else if (checkBoxSyStateFlag.Checked == false)
+            {
+                SyStateFlg = 0;
+                return;
+            }
+        }
+
+        private void checkBoxSyFlag_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxSyFlag.Checked == true)
+            {
+                SyFlg = 2;
+                textBoxSyHidden.Enabled = true;
+                return;
+            }
+            else if (checkBoxSyFlag.Checked == false)
+            {
+                SyFlg = 0;
+                textBoxSyHidden.Enabled = false;
+                textBoxSyHidden.Text = "";
+                return;
+            }
         }
 
         private void ClearInput()
@@ -402,8 +469,6 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormSyukko
                 dateTimePickerSyDate.Text = dataGridViewSyukko.Rows[dataGridViewSyukko.CurrentRow.Index].Cells[5].Value.ToString();
             }
 
-
-            
             int OrStateFlg2 = int.Parse(dataGridViewSyukko.Rows[dataGridViewSyukko.CurrentRow.Index].Cells[6].Value.ToString());
             if (OrStateFlg2 == 0)
             {
@@ -426,48 +491,70 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormSyukko
             textBoxSyDetailID.Text = dataGridViewSyukko.Rows[dataGridViewSyukko.CurrentRow.Index].Cells[9].Value.ToString();
             textBoxPrID.Text = dataGridViewSyukko.Rows[dataGridViewSyukko.CurrentRow.Index].Cells[10].Value.ToString();
             textBoxSyQuantity.Text = dataGridViewSyukko.Rows[dataGridViewSyukko.CurrentRow.Index].Cells[11].Value.ToString();
-
         }
 
-        private void textBoxPrID_TextChanged(object sender, EventArgs e)
+        private void buttonPageSizeChange_Click(object sender, EventArgs e)
         {
-            if (textBoxPrID.Text != "")
-            {
-                var context = new SalesManagement_DevContext();
-                try
-                {
-                    int mPrID = int.Parse(textBoxPrID.Text);
-                    var mProduct = context.M_Products.Single(x => x.PrID == mPrID);
-                    if (mProduct.PrFlag == 2)
-                    {
-                        string mPrName = mProduct.PrName;
-                        int mPrice = mProduct.Price;
-                        labelPrName.Text = "(非表示)" + mPrName;
-                        labelPrName.Visible = true;
-                        context.Dispose();
-                    }
-                    else
-                    {
-                        string mPrName = mProduct.PrName;
-                        int mPrice = mProduct.Price;
-                        labelPrName.Text = mPrName;
-                        labelPrName.Visible = true;
-                        context.Dispose();
-                    }
-                }
-                catch
-                {
-                    labelPrName.Text = "“UnknownID”";
-                    labelPrName.Visible = true;
-                    context.Dispose();
-                    return;
-                }
-            }
+            SetDataGridView();
+        }
+
+        private void buttonFirstPage_Click(object sender, EventArgs e)
+        {
+            int pageSize = int.Parse(textBoxPageSize.Text);
+            dataGridViewSyukko.DataSource = filteredList.Take(pageSize).ToList();
+
+            // DataGridViewを更新
+            dataGridViewSyukko.Refresh();
+            //ページ番号の設定
+            textBoxPageNo.Text = "1";
+        }
+
+        private void buttonPreviousPage_Click(object sender, EventArgs e)
+        {
+            int pageSize = int.Parse(textBoxPageSize.Text);
+            int pageNo = int.Parse(textBoxPageNo.Text) - 2;
+            dataGridViewSyukko.DataSource = filteredList.Skip(pageSize * pageNo).Take(pageSize).ToList();
+
+            // DataGridViewを更新
+            dataGridViewSyukko.Refresh();
+            //ページ番号の設定
+            if (pageNo + 1 > 1)
+                textBoxPageNo.Text = (pageNo + 1).ToString();
             else
-            {
-                labelPrName.Visible = false;
-                labelPrName.Text = "商品名";
-            }
+                textBoxPageNo.Text = "1";
+        }
+
+        private void buttonNextPage_Click(object sender, EventArgs e)
+        {
+            int pageSize = int.Parse(textBoxPageSize.Text);
+            int pageNo = int.Parse(textBoxPageNo.Text);
+            //最終ページの計算
+            int lastNo = (int)Math.Ceiling(filteredList.Count / (double)pageSize) - 1;
+            //最終ページでなければ
+            if (pageNo <= lastNo)
+                dataGridViewSyukko.DataSource = filteredList.Skip(pageSize * pageNo).Take(pageSize).ToList();
+
+            // DataGridViewを更新
+            dataGridViewSyukko.Refresh();
+            //ページ番号の設定
+            int lastPage = (int)Math.Ceiling(filteredList.Count / (double)pageSize);
+            if (pageNo >= lastPage)
+                textBoxPageNo.Text = lastPage.ToString();
+            else
+                textBoxPageNo.Text = (pageNo + 1).ToString();
+        }
+
+        private void buttonLastPage_Click(object sender, EventArgs e)
+        {
+            int pageSize = int.Parse(textBoxPageSize.Text);
+            //最終ページの計算
+            int pageNo = (int)Math.Ceiling(filteredList.Count / (double)pageSize) - 1;
+            dataGridViewSyukko.DataSource = filteredList.Skip(pageSize * pageNo).Take(pageSize).ToList();
+
+            // DataGridViewを更新
+            dataGridViewSyukko.Refresh();
+            //ページ番号の設定
+            textBoxPageNo.Text = (pageNo + 1).ToString();
         }
 
         private void textBoxClID_TextChanged(object sender, EventArgs e)
@@ -651,43 +738,42 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormSyukko
             }
         }
 
-        private void buttonClear_Click(object sender, EventArgs e)
+        private void textBoxPrID_TextChanged(object sender, EventArgs e)
         {
-            // 入力エリアのクリア
-            ClearInput();
-
-            // データグリッドビューの表示
-            GetDataGridView();
-        }
-
-        private void checkBoxSyStateFlag_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBoxSyStateFlag.Checked == true)
+            if (textBoxPrID.Text != "")
             {
-                SyStateFlg = 1;
-                return;
+                var context = new SalesManagement_DevContext();
+                try
+                {
+                    int mPrID = int.Parse(textBoxPrID.Text);
+                    var mProduct = context.M_Products.Single(x => x.PrID == mPrID);
+                    if (mProduct.PrFlag == 2)
+                    {
+                        string mPrName = mProduct.PrName;
+                        labelPrName.Text = "(非表示)" + mPrName;
+                        labelPrName.Visible = true;
+                        context.Dispose();
+                    }
+                    else
+                    {
+                        string mPrName = mProduct.PrName;
+                        labelPrName.Text = mPrName;
+                        labelPrName.Visible = true;
+                        context.Dispose();
+                    }
+                }
+                catch
+                {
+                    labelPrName.Text = "“UnknownID”";
+                    labelPrName.Visible = true;
+                    context.Dispose();
+                    return;
+                }
             }
-            else if (checkBoxSyStateFlag.Checked == false)
+            else
             {
-                SyStateFlg = 0;
-                return;
-            }
-        }
-
-        private void checkBoxSyFlag_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBoxSyFlag.Checked == true)
-            {
-                SyFlg = 2;
-                textBoxSyHidden.Enabled = true;
-                return;
-            }
-            else if (checkBoxSyFlag.Checked == false)
-            {
-                SyFlg = 0;
-                textBoxSyHidden.Enabled = false;
-                textBoxSyHidden.Text = "";
-                return;
+                labelPrName.Visible = false;
+                labelPrName.Text = "商品名";
             }
         }
     }

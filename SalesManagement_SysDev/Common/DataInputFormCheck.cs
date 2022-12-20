@@ -52,26 +52,6 @@ namespace SalesManagement_SysDev
 
             return flg;
         }
-        ///////////////////////////////
-        //メソッド名：CheckHalfWidthKatakana()
-        //引　数   ：文字列
-        //戻り値   ：True or False
-        //機　能   ：半角カナのチェック
-        //          ：半角カナの場合True
-        //          ：半角カナでない場合False
-        ///////////////////////////////
-        public bool CheckHalfWidthKatakana(string text)
-        {
-            bool flg;
-
-            Regex regex = new Regex(@"[\uFF66-\uFF9D]");
-            if (!regex.IsMatch(text))
-                flg = false;
-            else
-                flg = true;
-
-            return flg;
-        }
 
         ///////////////////////////////
         //メソッド名：CheckNumeric()
@@ -91,45 +71,6 @@ namespace SalesManagement_SysDev
             else
                 flg = true;
 
-            return flg;
-        }
-        ///////////////////////////////
-        //メソッド名：CheckMailAddress()
-        //引　数   ：文字列
-        //戻り値   ：True or False
-        //機　能   ：メールアドレス形式のチェック
-        //          ：メールアドレス形式の場合True
-        //          ：メールアドレス形式でない場合False
-        ///////////////////////////////
-        public bool CheckMailAddress(string text)
-        {
-            bool flg = false;
-
-            Regex regex = new Regex(@"^\b[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,4}\b$");
-            if (!regex.IsMatch(text))
-                flg = false;
-            else
-                flg = true;
-
-            return flg;
-        }
-        ///////////////////////////////
-        //メソッド名：CheckHalfChar()
-        //引　数   ：文字列
-        //戻り値   ：True or False
-        //機　能   ：半角文字のチェック
-        //          ：半角文字の場合True
-        //          ：半角文字でない場合False
-        ///////////////////////////////
-        public bool CheckHalfChar(string text)
-        {
-            bool flg = false;
-
-            Regex regex = new Regex("^[ -~]+$");
-            if (!regex.IsMatch(text))
-                flg = false;
-            else
-                flg = true;
             return flg;
         }
     }

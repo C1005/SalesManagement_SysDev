@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
-
-namespace SalesManagement_SysDev
+namespace SalesManagement_SysDev.Entity
 {
-    class T_Hattyu
+    class T_HattyuProvisional
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -52,7 +51,7 @@ namespace SalesManagement_SysDev
         public String HaHidden { get; set; }            //非表示理由
     }
 
-    class T_HattyuDsp
+    class T_HattyuProvisionalDsp
     {
         [DisplayName("発注ID")]
         public int HaID { get; set; }                   //発注ID	

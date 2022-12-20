@@ -74,8 +74,8 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             this.buttonEmployeeSearch = new System.Windows.Forms.Button();
             this.buttonProductSearch = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.buttonProvisional = new System.Windows.Forms.Button();
             this.buttonProvisionalCancel = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
             this.buttonDetailClear = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
             this.labelPrName = new System.Windows.Forms.Label();
@@ -86,6 +86,8 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             this.label26 = new System.Windows.Forms.Label();
             this.label数量 = new System.Windows.Forms.Label();
             this.label商品ID = new System.Windows.Forms.Label();
+            this.labelMark1 = new System.Windows.Forms.Label();
+            this.labelMark2 = new System.Windows.Forms.Label();
             this.textBoxMaID = new System.Windows.Forms.TextBox();
             this.textBoxHaID = new System.Windows.Forms.TextBox();
             this.textBoxEmID = new System.Windows.Forms.TextBox();
@@ -94,7 +96,6 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             this.label発注ID = new System.Windows.Forms.Label();
             this.label発注年月日 = new System.Windows.Forms.Label();
             this.label発注社員ID = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewHattyu)).BeginInit();
             this.panel5.SuspendLayout();
@@ -190,6 +191,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             this.checkBoxWaWarehouseFlag.TabStop = false;
             this.checkBoxWaWarehouseFlag.Text = "入庫済フラグ（倉庫）";
             this.checkBoxWaWarehouseFlag.UseVisualStyleBackColor = true;
+            this.checkBoxWaWarehouseFlag.CheckedChanged += new System.EventHandler(this.checkBoxWaWarehouseFlag_CheckedChanged);
             // 
             // checkBoxHaFlag
             // 
@@ -202,6 +204,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             this.checkBoxHaFlag.TabStop = false;
             this.checkBoxHaFlag.Text = "発注管理フラグ";
             this.checkBoxHaFlag.UseVisualStyleBackColor = true;
+            this.checkBoxHaFlag.CheckedChanged += new System.EventHandler(this.checkBoxHaFlag_CheckedChanged);
             // 
             // label非表示理由
             // 
@@ -234,6 +237,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             this.dataGridViewHattyu.Size = new System.Drawing.Size(1527, 432);
             this.dataGridViewHattyu.TabIndex = 21;
             this.dataGridViewHattyu.TabStop = false;
+            this.dataGridViewHattyu.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewHattyu_CellClick);
             // 
             // textBoxPageNo
             // 
@@ -258,6 +262,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             this.buttonFirstPage.TabStop = false;
             this.buttonFirstPage.Text = "|◀";
             this.buttonFirstPage.UseVisualStyleBackColor = true;
+            this.buttonFirstPage.Click += new System.EventHandler(this.buttonFirstPage_Click);
             // 
             // buttonLastPage
             // 
@@ -272,6 +277,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             this.buttonLastPage.TabStop = false;
             this.buttonLastPage.Text = "▶|";
             this.buttonLastPage.UseVisualStyleBackColor = true;
+            this.buttonLastPage.Click += new System.EventHandler(this.buttonLastPage_Click);
             // 
             // textBoxPageSize
             // 
@@ -296,6 +302,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             this.buttonNextPage.TabStop = false;
             this.buttonNextPage.Text = "▶";
             this.buttonNextPage.UseVisualStyleBackColor = true;
+            this.buttonNextPage.Click += new System.EventHandler(this.buttonNextPage_Click);
             // 
             // buttonPageSizeChange
             // 
@@ -310,6 +317,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             this.buttonPageSizeChange.TabStop = false;
             this.buttonPageSizeChange.Text = "行数変更";
             this.buttonPageSizeChange.UseVisualStyleBackColor = true;
+            this.buttonPageSizeChange.Click += new System.EventHandler(this.buttonPageSizeChange_Click);
             // 
             // buttonPreviousPage
             // 
@@ -324,6 +332,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             this.buttonPreviousPage.TabStop = false;
             this.buttonPreviousPage.Text = "◀";
             this.buttonPreviousPage.UseVisualStyleBackColor = true;
+            this.buttonPreviousPage.Click += new System.EventHandler(this.buttonPreviousPage_Click);
             // 
             // labelPageSize
             // 
@@ -387,6 +396,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             this.buttonUpdate.TabIndex = 1399;
             this.buttonUpdate.Text = "更新";
             this.buttonUpdate.UseVisualStyleBackColor = false;
+            this.buttonUpdate.Click += new System.EventHandler(this.buttonUpdate_Click);
             // 
             // panel8
             // 
@@ -484,6 +494,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             this.buttonClose.TabStop = false;
             this.buttonClose.Text = "閉じる";
             this.buttonClose.UseVisualStyleBackColor = true;
+            this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
             // 
             // buttonClear
             // 
@@ -499,6 +510,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             this.buttonClear.TabStop = false;
             this.buttonClear.Text = "入力クリア";
             this.buttonClear.UseVisualStyleBackColor = true;
+            this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
             // 
             // buttonList
             // 
@@ -514,6 +526,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             this.buttonList.TabIndex = 3;
             this.buttonList.Text = "一覧表示";
             this.buttonList.UseVisualStyleBackColor = false;
+            this.buttonList.Click += new System.EventHandler(this.buttonList_Click);
             // 
             // buttonLogout
             // 
@@ -530,6 +543,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             this.buttonLogout.TabStop = false;
             this.buttonLogout.Text = "ログアウト";
             this.buttonLogout.UseVisualStyleBackColor = true;
+            this.buttonLogout.Click += new System.EventHandler(this.buttonLogout_Click);
             // 
             // buttonSearch
             // 
@@ -545,6 +559,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             this.buttonSearch.TabIndex = 0;
             this.buttonSearch.Text = "検索";
             this.buttonSearch.UseVisualStyleBackColor = false;
+            this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
             // buttonRegist
             // 
@@ -560,12 +575,12 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             this.buttonRegist.TabIndex = 1;
             this.buttonRegist.Text = "登録";
             this.buttonRegist.UseVisualStyleBackColor = false;
+            this.buttonRegist.Click += new System.EventHandler(this.buttonRegist_Click);
             // 
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.SystemColors.MenuBar;
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel3.Controls.Add(this.label1);
             this.panel3.Controls.Add(this.labelEmName);
             this.panel3.Controls.Add(this.panel10);
             this.panel3.Controls.Add(this.labelMaName);
@@ -661,7 +676,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             // 
             // buttonMakerSearch
             // 
-            this.buttonMakerSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_その他;
+            this.buttonMakerSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.営業所検索;
             this.buttonMakerSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonMakerSearch.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonMakerSearch.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
@@ -673,10 +688,11 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             this.buttonMakerSearch.TabStop = false;
             this.buttonMakerSearch.Text = "メーカ検索";
             this.buttonMakerSearch.UseVisualStyleBackColor = true;
+            this.buttonMakerSearch.Click += new System.EventHandler(this.buttonMakerSearch_Click);
             // 
             // buttonEmployeeSearch
             // 
-            this.buttonEmployeeSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_その他;
+            this.buttonEmployeeSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.営業所検索;
             this.buttonEmployeeSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonEmployeeSearch.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonEmployeeSearch.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
@@ -688,10 +704,11 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             this.buttonEmployeeSearch.TabStop = false;
             this.buttonEmployeeSearch.Text = "社員検索";
             this.buttonEmployeeSearch.UseVisualStyleBackColor = true;
+            this.buttonEmployeeSearch.Click += new System.EventHandler(this.buttonEmployeeSearch_Click);
             // 
             // buttonProductSearch
             // 
-            this.buttonProductSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_その他;
+            this.buttonProductSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.営業所検索;
             this.buttonProductSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonProductSearch.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonProductSearch.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
@@ -703,19 +720,38 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             this.buttonProductSearch.TabStop = false;
             this.buttonProductSearch.Text = "商品検索";
             this.buttonProductSearch.UseVisualStyleBackColor = true;
+            this.buttonProductSearch.Click += new System.EventHandler(this.buttonProductSearch_Click);
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(182)))), ((int)(((byte)(215)))), ((int)(((byte)(215)))));
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Controls.Add(this.buttonProvisional);
             this.panel1.Controls.Add(this.buttonProvisionalCancel);
-            this.panel1.Controls.Add(this.button3);
             this.panel1.Controls.Add(this.buttonDetailClear);
             this.panel1.Location = new System.Drawing.Point(1576, 16);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(133, 248);
             this.panel1.TabIndex = 1490;
+            // 
+            // buttonProvisional
+            // 
+            this.buttonProvisional.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(220)))), ((int)(((byte)(195)))));
+            this.buttonProvisional.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_仮登録など;
+            this.buttonProvisional.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonProvisional.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonProvisional.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonProvisional.ForeColor = System.Drawing.Color.Black;
+            this.buttonProvisional.Location = new System.Drawing.Point(5, 14);
+            this.buttonProvisional.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.buttonProvisional.Name = "buttonProvisional";
+            this.buttonProvisional.Size = new System.Drawing.Size(123, 45);
+            this.buttonProvisional.TabIndex = 16;
+            this.buttonProvisional.TabStop = false;
+            this.buttonProvisional.Text = "仮登録";
+            this.buttonProvisional.UseVisualStyleBackColor = false;
+            this.buttonProvisional.Click += new System.EventHandler(this.buttonProvisional_Click);
             // 
             // buttonProvisionalCancel
             // 
@@ -734,23 +770,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             this.buttonProvisionalCancel.Text = "キャンセル";
             this.buttonProvisionalCancel.UseVisualStyleBackColor = false;
             this.buttonProvisionalCancel.Visible = false;
-            // 
-            // button3
-            // 
-            this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(220)))), ((int)(((byte)(195)))));
-            this.button3.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_仮登録など;
-            this.button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.button3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button3.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button3.ForeColor = System.Drawing.Color.Black;
-            this.button3.Location = new System.Drawing.Point(5, 14);
-            this.button3.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(123, 45);
-            this.button3.TabIndex = 14;
-            this.button3.TabStop = false;
-            this.button3.Text = "仮登録";
-            this.button3.UseVisualStyleBackColor = false;
+            this.buttonProvisionalCancel.Click += new System.EventHandler(this.buttonProvisionalCancel_Click);
             // 
             // buttonDetailClear
             // 
@@ -768,6 +788,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             this.buttonDetailClear.TabStop = false;
             this.buttonDetailClear.Text = "詳細欄クリア";
             this.buttonDetailClear.UseVisualStyleBackColor = false;
+            this.buttonDetailClear.Click += new System.EventHandler(this.buttonDetailClear_Click);
             // 
             // panel4
             // 
@@ -783,6 +804,8 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             this.panel4.Controls.Add(this.label26);
             this.panel4.Controls.Add(this.label数量);
             this.panel4.Controls.Add(this.label商品ID);
+            this.panel4.Controls.Add(this.labelMark1);
+            this.panel4.Controls.Add(this.labelMark2);
             this.panel4.Location = new System.Drawing.Point(1131, 16);
             this.panel4.Margin = new System.Windows.Forms.Padding(4);
             this.panel4.Name = "panel4";
@@ -822,6 +845,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             this.textBoxPrID.Name = "textBoxPrID";
             this.textBoxPrID.Size = new System.Drawing.Size(140, 26);
             this.textBoxPrID.TabIndex = 1428;
+            this.textBoxPrID.TextChanged += new System.EventHandler(this.textBoxPrID_TextChanged);
             // 
             // textBoxHaDetailID
             // 
@@ -884,6 +908,32 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             this.label商品ID.TabIndex = 1378;
             this.label商品ID.Text = "商品ID";
             // 
+            // labelMark1
+            // 
+            this.labelMark1.AutoSize = true;
+            this.labelMark1.BackColor = System.Drawing.Color.Transparent;
+            this.labelMark1.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.labelMark1.ForeColor = System.Drawing.Color.Red;
+            this.labelMark1.Location = new System.Drawing.Point(117, 120);
+            this.labelMark1.Name = "labelMark1";
+            this.labelMark1.Size = new System.Drawing.Size(22, 15);
+            this.labelMark1.TabIndex = 1433;
+            this.labelMark1.Text = "＊";
+            this.labelMark1.Visible = false;
+            // 
+            // labelMark2
+            // 
+            this.labelMark2.AutoSize = true;
+            this.labelMark2.BackColor = System.Drawing.Color.Transparent;
+            this.labelMark2.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.labelMark2.ForeColor = System.Drawing.Color.Red;
+            this.labelMark2.Location = new System.Drawing.Point(117, 170);
+            this.labelMark2.Name = "labelMark2";
+            this.labelMark2.Size = new System.Drawing.Size(22, 15);
+            this.labelMark2.TabIndex = 1434;
+            this.labelMark2.Text = "＊";
+            this.labelMark2.Visible = false;
+            // 
             // textBoxMaID
             // 
             this.textBoxMaID.Font = new System.Drawing.Font("MS UI Gothic", 11F);
@@ -894,6 +944,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             this.textBoxMaID.Name = "textBoxMaID";
             this.textBoxMaID.Size = new System.Drawing.Size(140, 26);
             this.textBoxMaID.TabIndex = 1488;
+            this.textBoxMaID.TextChanged += new System.EventHandler(this.textBoxMaID_TextChanged);
             // 
             // textBoxHaID
             // 
@@ -916,6 +967,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             this.textBoxEmID.Name = "textBoxEmID";
             this.textBoxEmID.Size = new System.Drawing.Size(140, 26);
             this.textBoxEmID.TabIndex = 1486;
+            this.textBoxEmID.TextChanged += new System.EventHandler(this.textBoxEmID_TextChanged);
             // 
             // dateTimePickerHaDate
             // 
@@ -977,18 +1029,6 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             this.label発注社員ID.TabIndex = 1483;
             this.label発注社員ID.Text = "発注社員ID";
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("MS UI Gothic", 18F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label1.ForeColor = System.Drawing.Color.DarkRed;
-            this.label1.Location = new System.Drawing.Point(178, 207);
-            this.label1.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(678, 30);
-            this.label1.TabIndex = 1493;
-            this.label1.Text = "発注更新はフラグがオンになるだけで、更新機能とは別";
-            // 
             // F_Hattyu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -1005,6 +1045,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "F_Hattyu";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.F_Hattyu_Load);
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewHattyu)).EndInit();
@@ -1082,7 +1123,6 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Label label数量;
         private System.Windows.Forms.Label label商品ID;
-        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label labelMaName;
         private System.Windows.Forms.Panel panel10;
         private System.Windows.Forms.Label label3;
@@ -1091,6 +1131,8 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
         private System.Windows.Forms.Label labelProvisional;
         private System.Windows.Forms.Button buttonProvisionalCancel;
         private System.Windows.Forms.Button buttonUpdate;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button buttonProvisional;
+        private System.Windows.Forms.Label labelMark1;
+        private System.Windows.Forms.Label labelMark2;
     }
 }

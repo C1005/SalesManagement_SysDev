@@ -26,6 +26,8 @@ namespace SalesManagement_SysDev
         public DbSet<T_ChumonDetail> T_ChumonDetails { get; set; }
         public DbSet<T_Hattyu> T_Hattyus { get; set; }
         public DbSet<T_HattyuDetail> T_HattyuDetails { get; set; }
+        public DbSet<Entity.T_HattyuProvisional> T_HattyuProvisionals { get; set; }
+        public DbSet<Entity.T_HattyuDetailProvisional> T_HattyuDetailProvisionals { get; set; }
         public DbSet<T_LoginHistory> T_LoginHistorys { get; set; }
         public DbSet<T_OperationHistory> T_OperationHistorys { get; set; }
         public DbSet<T_Order> T_Orders { get; set; }

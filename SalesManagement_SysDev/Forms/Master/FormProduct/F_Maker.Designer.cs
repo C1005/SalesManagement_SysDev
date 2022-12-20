@@ -287,6 +287,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             this.buttonUpdate.TabIndex = 2;
             this.buttonUpdate.Text = "更新";
             this.buttonUpdate.UseVisualStyleBackColor = false;
+            this.buttonUpdate.Click += new System.EventHandler(this.buttonUpdate_Click);
             // 
             // buttonClose
             // 
@@ -302,6 +303,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             this.buttonClose.TabStop = false;
             this.buttonClose.Text = "閉じる";
             this.buttonClose.UseVisualStyleBackColor = true;
+            this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
             // 
             // buttonClear
             // 
@@ -317,6 +319,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             this.buttonClear.TabStop = false;
             this.buttonClear.Text = "入力クリア";
             this.buttonClear.UseVisualStyleBackColor = true;
+            this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
             // 
             // buttonList
             // 
@@ -332,6 +335,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             this.buttonList.TabIndex = 3;
             this.buttonList.Text = "一覧表示";
             this.buttonList.UseVisualStyleBackColor = false;
+            this.buttonList.Click += new System.EventHandler(this.buttonList_Click);
             // 
             // buttonLogout
             // 
@@ -348,6 +352,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             this.buttonLogout.TabStop = false;
             this.buttonLogout.Text = "ログアウト";
             this.buttonLogout.UseVisualStyleBackColor = true;
+            this.buttonLogout.Click += new System.EventHandler(this.buttonLogout_Click);
             // 
             // buttonSearch
             // 
@@ -363,6 +368,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             this.buttonSearch.TabIndex = 0;
             this.buttonSearch.Text = "検索";
             this.buttonSearch.UseVisualStyleBackColor = false;
+            this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
             // buttonRegist
             // 
@@ -378,6 +384,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             this.buttonRegist.TabIndex = 1;
             this.buttonRegist.Text = "登録";
             this.buttonRegist.UseVisualStyleBackColor = false;
+            this.buttonRegist.Click += new System.EventHandler(this.buttonRegist_Click);
             // 
             // panel3
             // 
@@ -547,6 +554,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             this.checkBoxMaFlag.TabStop = false;
             this.checkBoxMaFlag.Text = "メーカー管理フラグ";
             this.checkBoxMaFlag.UseVisualStyleBackColor = true;
+            this.checkBoxMaFlag.CheckedChanged += new System.EventHandler(this.checkBoxMaFlag_CheckedChanged);
             // 
             // panel7
             // 
@@ -594,6 +602,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             this.dataGridViewMaker.Size = new System.Drawing.Size(1527, 432);
             this.dataGridViewMaker.TabIndex = 21;
             this.dataGridViewMaker.TabStop = false;
+            this.dataGridViewMaker.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewMaker_CellClick);
             // 
             // textBoxPageNo
             // 
@@ -618,6 +627,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             this.buttonFirstPage.TabStop = false;
             this.buttonFirstPage.Text = "|◀";
             this.buttonFirstPage.UseVisualStyleBackColor = true;
+            this.buttonFirstPage.Click += new System.EventHandler(this.buttonFirstPage_Click);
             // 
             // buttonLastPage
             // 
@@ -632,6 +642,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             this.buttonLastPage.TabStop = false;
             this.buttonLastPage.Text = "▶|";
             this.buttonLastPage.UseVisualStyleBackColor = true;
+            this.buttonLastPage.Click += new System.EventHandler(this.buttonLastPage_Click);
             // 
             // textBoxPageSize
             // 
@@ -656,6 +667,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             this.buttonNextPage.TabStop = false;
             this.buttonNextPage.Text = "▶";
             this.buttonNextPage.UseVisualStyleBackColor = true;
+            this.buttonNextPage.Click += new System.EventHandler(this.buttonNextPage_Click);
             // 
             // buttonPageSizeChange
             // 
@@ -670,6 +682,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             this.buttonPageSizeChange.TabStop = false;
             this.buttonPageSizeChange.Text = "行数変更";
             this.buttonPageSizeChange.UseVisualStyleBackColor = true;
+            this.buttonPageSizeChange.Click += new System.EventHandler(this.buttonPageSizeChange_Click);
             // 
             // buttonPreviousPage
             // 
@@ -684,6 +697,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             this.buttonPreviousPage.TabStop = false;
             this.buttonPreviousPage.Text = "◀";
             this.buttonPreviousPage.UseVisualStyleBackColor = true;
+            this.buttonPreviousPage.Click += new System.EventHandler(this.buttonPreviousPage_Click);
             // 
             // F_Maker
             // 
@@ -701,6 +715,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "F_Maker";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.F_Maker_Load);
             this.panel2.ResumeLayout(false);
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();

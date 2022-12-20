@@ -25,6 +25,23 @@ namespace SalesManagement_SysDev.Forms.DbAccess
             }
             return flg;
         }
+        public bool CheckStateFlagExistence(string orderID)
+        {
+            bool flg = false;
+            try
+            {
+                var context = new SalesManagement_DevContext();
+                //状態フラグで一致するデータが存在するか
+                var OrDate = context.T_Orders.Where(x => x.OrID.ToString() == orderID).ToList();
+                flg = OrDate.Any(x => x.OrStateFlag == 1);
+                context.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "例外エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return flg;
+        }
         public bool CheckOrderDetailCDExistence(string orderDetailID)
         {
             bool flg = false;
@@ -171,20 +188,6 @@ namespace SalesManagement_SysDev.Forms.DbAccess
             }
             return orderProvisional;
 
-        }
-
-
-        public List<int> GetOrIDRange(int startNo, int endNo)
-        {
-            if (startNo == endNo)
-            {
-                return new List<int>();
-            }
-            if (startNo > endNo)
-            {
-                return Enumerable.Range(endNo, startNo - endNo + 1).Reverse().ToList();
-            }
-            return Enumerable.Range(startNo, endNo - startNo + 1).ToList();
         }
 
         public bool AddOrderData(List<T_Order> regOrder)
@@ -336,6 +339,35 @@ namespace SalesManagement_SysDev.Forms.DbAccess
             return Order;
         }
 
+        //確定検索用
+        public List<T_OrderDsp> SearchOrderConfirm(T_OrderDsp selectCondition)
+        {
+            List<T_OrderDsp> Order = GetOrderData();
+            try
+            {
+                if (NonMaster.FormOrder.F_OrderConfirm.mOrID != "")
+                {
+                    Order = Order.Where(x =>
+                                                        x.OrID.ToString().Contains(selectCondition.OrID.ToString())).ToList();
+                }
+                else if (NonMaster.FormOrder.F_OrderConfirm.mClID != "")
+                {
+                    Order = Order.Where(x =>
+                                                        x.ClID.ToString().Contains(selectCondition.ClID.ToString())).ToList();
+                }
+                else if (NonMaster.FormOrder.F_OrderConfirm.mDate != false)
+                {
+                    Order = Order.Where(x =>
+                                                        x.OrDate.ToString().Contains(selectCondition.OrDate.ToString())).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "例外エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return Order;
+        }
+
         ///////////////////////////////
         //メソッド名：UpdatePositionData()
         //引　数   ：受注データ
@@ -379,6 +411,25 @@ namespace SalesManagement_SysDev.Forms.DbAccess
                 orderDetail.PrID = updOrderDetail.PrID;
                 orderDetail.OrQuantity = updOrderDetail.OrQuantity;
                 orderDetail.OrTotalPrice = updOrderDetail.OrTotalPrice;
+
+                context.SaveChanges();
+                context.Dispose();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "例外エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+        public bool ConfirmOrderData(T_Order conOrder)
+        {
+            try
+            {
+                var context = new SalesManagement_DevContext();
+                var order = context.T_Orders.Single(x => x.OrID == conOrder.OrID);
+                order.OrStateFlag = conOrder.OrStateFlag;
 
                 context.SaveChanges();
                 context.Dispose();

@@ -71,8 +71,8 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormWarehousing
             this.label2 = new System.Windows.Forms.Label();
             this.labelEmName = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonHattyuSearch = new System.Windows.Forms.Button();
+            this.buttonEmSearch = new System.Windows.Forms.Button();
             this.buttonProductSearch = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.buttonDetailClear = new System.Windows.Forms.Button();
@@ -642,8 +642,8 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormWarehousing
             // 
             this.panel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(182)))), ((int)(((byte)(215)))), ((int)(((byte)(215)))));
             this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel6.Controls.Add(this.button2);
-            this.panel6.Controls.Add(this.button1);
+            this.panel6.Controls.Add(this.buttonHattyuSearch);
+            this.panel6.Controls.Add(this.buttonEmSearch);
             this.panel6.Controls.Add(this.buttonProductSearch);
             this.panel6.Location = new System.Drawing.Point(1709, 16);
             this.panel6.Margin = new System.Windows.Forms.Padding(4);
@@ -651,43 +651,43 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormWarehousing
             this.panel6.Size = new System.Drawing.Size(140, 248);
             this.panel6.TabIndex = 1483;
             // 
-            // button2
+            // buttonHattyuSearch
             // 
-            this.button2.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_その他;
-            this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.button2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button2.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button2.Location = new System.Drawing.Point(8, 14);
-            this.button2.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(123, 45);
-            this.button2.TabIndex = 1431;
-            this.button2.TabStop = false;
-            this.button2.Text = "発注検索";
-            this.button2.UseVisualStyleBackColor = true;
+            this.buttonHattyuSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.営業所検索;
+            this.buttonHattyuSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonHattyuSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonHattyuSearch.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonHattyuSearch.Location = new System.Drawing.Point(8, 14);
+            this.buttonHattyuSearch.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.buttonHattyuSearch.Name = "buttonHattyuSearch";
+            this.buttonHattyuSearch.Size = new System.Drawing.Size(123, 45);
+            this.buttonHattyuSearch.TabIndex = 1431;
+            this.buttonHattyuSearch.TabStop = false;
+            this.buttonHattyuSearch.Text = "発注検索";
+            this.buttonHattyuSearch.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // buttonEmSearch
             // 
-            this.button1.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_その他;
-            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button1.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button1.Location = new System.Drawing.Point(8, 126);
-            this.button1.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(123, 45);
-            this.button1.TabIndex = 1430;
-            this.button1.TabStop = false;
-            this.button1.Text = "社員検索";
-            this.button1.UseVisualStyleBackColor = true;
+            this.buttonEmSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.営業所検索;
+            this.buttonEmSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonEmSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonEmSearch.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonEmSearch.Location = new System.Drawing.Point(8, 126);
+            this.buttonEmSearch.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.buttonEmSearch.Name = "buttonEmSearch";
+            this.buttonEmSearch.Size = new System.Drawing.Size(123, 45);
+            this.buttonEmSearch.TabIndex = 1430;
+            this.buttonEmSearch.TabStop = false;
+            this.buttonEmSearch.Text = "社員検索";
+            this.buttonEmSearch.UseVisualStyleBackColor = true;
             // 
             // buttonProductSearch
             // 
-            this.buttonProductSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_その他;
+            this.buttonProductSearch.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.営業所検索;
             this.buttonProductSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonProductSearch.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonProductSearch.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.buttonProductSearch.Location = new System.Drawing.Point(8, 73);
+            this.buttonProductSearch.Location = new System.Drawing.Point(8, 69);
             this.buttonProductSearch.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
             this.buttonProductSearch.Name = "buttonProductSearch";
             this.buttonProductSearch.Size = new System.Drawing.Size(123, 45);
@@ -959,8 +959,8 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormWarehousing
         private System.Windows.Forms.Label label数量;
         private System.Windows.Forms.Label label商品ID;
         private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonHattyuSearch;
+        private System.Windows.Forms.Button buttonEmSearch;
         private System.Windows.Forms.Button buttonProductSearch;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button buttonDetailClear;

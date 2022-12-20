@@ -32,14 +32,28 @@ namespace SalesManagement_SysDev
 
         private void buttonClientManager_Click(object sender, EventArgs e)
         {
-            simpleSound.Play();
-            OpenForm(((Button)sender).Text);
+            if (groupBoxClient.Visible == true)
+            {
+                groupBoxClient.Visible = false;
+                return;
+            }
+            groupBoxClient.Visible = true;
+            groupBoxClient.BringToFront();
+            groupBoxProduct.Visible = false;
+            groupBoxEmployee.Visible = false;
         }
 
         private void buttonProductManager_Click(object sender, EventArgs e)
         {
-            simpleSound.Play();
-            OpenForm(((Button)sender).Text);
+            if (groupBoxProduct.Visible == true)
+            {
+                groupBoxProduct.Visible = false;
+                return;
+            }
+            groupBoxProduct.Visible = true;
+            groupBoxProduct.BringToFront();
+            groupBoxClient.Visible = false;
+            groupBoxEmployee.Visible = false;
         }
 
         private void buttonStockManager_Click(object sender, EventArgs e)
@@ -50,8 +64,15 @@ namespace SalesManagement_SysDev
 
         private void buttonEmployeeManager_Click(object sender, EventArgs e)
         {
-            simpleSound.Play();
-            OpenForm(((Button)sender).Text);
+            if (groupBoxEmployee.Visible == true)
+            {
+                groupBoxEmployee.Visible = false;
+                return;
+            }
+            groupBoxEmployee.Visible = true;
+            groupBoxEmployee.BringToFront();
+            groupBoxClient.Visible = false;
+            groupBoxProduct.Visible = false;
         }
 
         private void buttonSaleManager_Click(object sender, EventArgs e)
@@ -115,14 +136,29 @@ namespace SalesManagement_SysDev
                 case "顧客管理": //ボタンのテキスト名
                     frm = new Forms.Master.FormClient.F_Client(); //フォームの名前
                     break;
+                case "営業所管理": 
+                    frm = new Forms.Master.FormEmployee.F_SalesOffice(); //フォームの名前
+                    break;
                 case "商品管理":
                     frm = new Forms.Master.FormProduct.F_Product(); //フォルダも指定する必要がある
+                    break;
+                case "メーカ管理": 
+                    frm = new Forms.Master.FormProduct.F_Maker();
+                    break;
+                case "大分類管理":
+                    frm = new Forms.Master.FormProduct.F_MajorCassification();
+                    break;
+                case "小分類管理":
+                    frm = new Forms.Master.FormProduct.F_SmallClassification();
                     break;
                 case "在庫管理":
                     frm = new Forms.Master.FormStock.F_Stock();
                     break;
                 case "社員管理":
                     frm = new Forms.Master.FormEmployee.F_Employee();
+                    break;
+                case "役職管理":
+                    frm = new Forms.Master.FormEmployee.F_Position();
                     break;
 
                 case "受注管理":
@@ -151,15 +187,110 @@ namespace SalesManagement_SysDev
                     break;
             }
 
-            //フォームを透明化
+            // すでに同じフォームが開かれているかどうかを確認する
+            bool isOpen = false;
+            Form openForm = null;
+            foreach (Form form in Application.OpenForms)
+            {
+                if (form.GetType() == frm.GetType())
+                {
+                    isOpen = true;
+                    openForm = form;
+                    break;
+                }
+            }
+
+            // 同じフォームが開かれていれば、そのフォームを最前面に持ってくる
+            if (isOpen)
+            {
+                openForm.BringToFront();
+            }
+            // 同じフォームが開かれていなければ、選択されたフォームを開く
+            else
+            {
+                frm.Show();
+            }
+
+            ////フォームを透明化
             //Opacity = 0; //(透明化だけだとトップに戻るときに何もない状態になる)
 
-            //選択されたフォームを開く
-            frm.ShowDialog();
+            ////選択されたフォームを開く
+            //frm.ShowDialog();
 
-            //開いたフォームから戻ってきたら
-            //メモリを解放する
-            frm.Dispose();
+            ////開いたフォームから戻ってきたら
+            ////メモリを解放する
+            //Opacity = 100;
+            //frm.Dispose();
+        }
+
+        private void buttonClose_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("販売管理システムを終了しますか？", "終了確認" , MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.No)
+                return;
+
+            this.Dispose();
+        }
+
+        private void F_menu_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            DialogResult result = MessageBox.Show("販売管理システムを終了しますか？", "終了確認", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.No)
+                e.Cancel = true;
+        }
+
+        private void buttonToClient_Click(object sender, EventArgs e)
+        {
+            simpleSound.Play();
+            OpenForm(((Button)sender).Text);
+        }
+
+        private void buttonToSalesOffice_Click(object sender, EventArgs e)
+        {
+            simpleSound.Play();
+            OpenForm(((Button)sender).Text);
+        }
+
+        private void buttonToMaker_Click(object sender, EventArgs e)
+        {
+            simpleSound.Play();
+            OpenForm(((Button)sender).Text);
+        }
+
+        private void buttonToMajor_Click(object sender, EventArgs e)
+        {
+            simpleSound.Play();
+            OpenForm(((Button)sender).Text);
+        }
+
+        private void buttonToSmall_Click(object sender, EventArgs e)
+        {
+            simpleSound.Play();
+            OpenForm(((Button)sender).Text);
+        }
+
+        private void buttonToSalesOffice2_Click(object sender, EventArgs e)
+        {
+            simpleSound.Play();
+            OpenForm(((Button)sender).Text);
+        }
+
+        private void buttonToPosition_Click(object sender, EventArgs e)
+        {
+            simpleSound.Play();
+            OpenForm(((Button)sender).Text);
+        }
+
+        private void buttonEmployee_Click(object sender, EventArgs e)
+        {
+            simpleSound.Play();
+            OpenForm(((Button)sender).Text);
+        }
+
+        private void buttonToProduct_Click(object sender, EventArgs e)
+        {
+            simpleSound.Play();
+            OpenForm(((Button)sender).Text);
         }
     }
 }

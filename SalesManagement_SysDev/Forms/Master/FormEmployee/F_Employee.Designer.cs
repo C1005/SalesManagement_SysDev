@@ -120,36 +120,36 @@ namespace SalesManagement_SysDev.Forms.Master.FormEmployee
             // buttonSalesOfficeForm
             // 
             this.buttonSalesOfficeForm.BackColor = System.Drawing.Color.LightSteelBlue;
-            this.buttonSalesOfficeForm.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_管理画面移動;
+            this.buttonSalesOfficeForm.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.営業所検索;
             this.buttonSalesOfficeForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonSalesOfficeForm.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonSalesOfficeForm.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.buttonSalesOfficeForm.ForeColor = System.Drawing.Color.Black;
-            this.buttonSalesOfficeForm.Location = new System.Drawing.Point(1607, 395);
+            this.buttonSalesOfficeForm.Location = new System.Drawing.Point(1618, 93);
             this.buttonSalesOfficeForm.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
             this.buttonSalesOfficeForm.Name = "buttonSalesOfficeForm";
-            this.buttonSalesOfficeForm.Size = new System.Drawing.Size(180, 50);
+            this.buttonSalesOfficeForm.Size = new System.Drawing.Size(123, 45);
             this.buttonSalesOfficeForm.TabIndex = 1389;
             this.buttonSalesOfficeForm.TabStop = false;
-            this.buttonSalesOfficeForm.Text = "営業所管理画面へ";
+            this.buttonSalesOfficeForm.Text = "営業所検索";
             this.buttonSalesOfficeForm.UseVisualStyleBackColor = false;
             this.buttonSalesOfficeForm.Click += new System.EventHandler(this.buttonSalesOfficeForm_Click);
             // 
             // buttonPositionForm
             // 
             this.buttonPositionForm.BackColor = System.Drawing.Color.LightSteelBlue;
-            this.buttonPositionForm.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_管理画面移動;
+            this.buttonPositionForm.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.営業所検索;
             this.buttonPositionForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonPositionForm.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonPositionForm.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.buttonPositionForm.ForeColor = System.Drawing.Color.Black;
-            this.buttonPositionForm.Location = new System.Drawing.Point(1607, 477);
+            this.buttonPositionForm.Location = new System.Drawing.Point(1618, 167);
             this.buttonPositionForm.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
             this.buttonPositionForm.Name = "buttonPositionForm";
-            this.buttonPositionForm.Size = new System.Drawing.Size(180, 50);
+            this.buttonPositionForm.Size = new System.Drawing.Size(123, 45);
             this.buttonPositionForm.TabIndex = 1388;
             this.buttonPositionForm.TabStop = false;
-            this.buttonPositionForm.Text = "役職管理画面へ";
+            this.buttonPositionForm.Text = "役職検索";
             this.buttonPositionForm.UseVisualStyleBackColor = false;
             this.buttonPositionForm.Click += new System.EventHandler(this.buttonPositionForm_Click);
             // 
@@ -178,6 +178,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormEmployee
             this.checkBoxEmFlag.TabStop = false;
             this.checkBoxEmFlag.Text = "社員管理フラグ";
             this.checkBoxEmFlag.UseVisualStyleBackColor = true;
+            this.checkBoxEmFlag.CheckedChanged += new System.EventHandler(this.checkBoxEmFlag_CheckedChanged);
             // 
             // label非表示理由
             // 
@@ -210,6 +211,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormEmployee
             this.dataGridViewEmployee.Size = new System.Drawing.Size(1527, 432);
             this.dataGridViewEmployee.TabIndex = 21;
             this.dataGridViewEmployee.TabStop = false;
+            this.dataGridViewEmployee.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewEmployee_CellClick);
             // 
             // textBoxPageNo
             // 
@@ -234,6 +236,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormEmployee
             this.buttonFirstPage.TabStop = false;
             this.buttonFirstPage.Text = "|◀";
             this.buttonFirstPage.UseVisualStyleBackColor = true;
+            this.buttonFirstPage.Click += new System.EventHandler(this.buttonFirstPage_Click);
             // 
             // buttonLastPage
             // 
@@ -248,6 +251,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormEmployee
             this.buttonLastPage.TabStop = false;
             this.buttonLastPage.Text = "▶|";
             this.buttonLastPage.UseVisualStyleBackColor = true;
+            this.buttonLastPage.Click += new System.EventHandler(this.buttonLastPage_Click);
             // 
             // textBoxPageSize
             // 
@@ -272,6 +276,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormEmployee
             this.buttonNextPage.TabStop = false;
             this.buttonNextPage.Text = "▶";
             this.buttonNextPage.UseVisualStyleBackColor = true;
+            this.buttonNextPage.Click += new System.EventHandler(this.buttonNextPage_Click);
             // 
             // buttonPageSizeChange
             // 
@@ -286,6 +291,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormEmployee
             this.buttonPageSizeChange.TabStop = false;
             this.buttonPageSizeChange.Text = "行数変更";
             this.buttonPageSizeChange.UseVisualStyleBackColor = true;
+            this.buttonPageSizeChange.Click += new System.EventHandler(this.buttonPageSizeChange_Click);
             // 
             // buttonPreviousPage
             // 
@@ -300,6 +306,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormEmployee
             this.buttonPreviousPage.TabStop = false;
             this.buttonPreviousPage.Text = "◀";
             this.buttonPreviousPage.UseVisualStyleBackColor = true;
+            this.buttonPreviousPage.Click += new System.EventHandler(this.buttonPreviousPage_Click);
             // 
             // labelPageSize
             // 
@@ -503,6 +510,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormEmployee
             this.buttonUpdate.TabIndex = 2;
             this.buttonUpdate.Text = "更新";
             this.buttonUpdate.UseVisualStyleBackColor = false;
+            this.buttonUpdate.Click += new System.EventHandler(this.buttonUpdate_Click);
             // 
             // buttonClose
             // 
@@ -518,6 +526,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormEmployee
             this.buttonClose.TabStop = false;
             this.buttonClose.Text = "閉じる";
             this.buttonClose.UseVisualStyleBackColor = true;
+            this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
             // 
             // buttonClear
             // 
@@ -533,6 +542,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormEmployee
             this.buttonClear.TabStop = false;
             this.buttonClear.Text = "入力クリア";
             this.buttonClear.UseVisualStyleBackColor = true;
+            this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
             // 
             // buttonList
             // 
@@ -548,6 +558,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormEmployee
             this.buttonList.TabIndex = 3;
             this.buttonList.Text = "一覧表示";
             this.buttonList.UseVisualStyleBackColor = false;
+            this.buttonList.Click += new System.EventHandler(this.buttonList_Click);
             // 
             // buttonLogout
             // 
@@ -564,6 +575,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormEmployee
             this.buttonLogout.TabStop = false;
             this.buttonLogout.Text = "ログアウト";
             this.buttonLogout.UseVisualStyleBackColor = true;
+            this.buttonLogout.Click += new System.EventHandler(this.buttonLogout_Click);
             // 
             // buttonSearch
             // 
@@ -579,6 +591,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormEmployee
             this.buttonSearch.TabIndex = 0;
             this.buttonSearch.Text = "検索";
             this.buttonSearch.UseVisualStyleBackColor = false;
+            this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
             // buttonRegist
             // 
@@ -594,6 +607,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormEmployee
             this.buttonRegist.TabIndex = 1;
             this.buttonRegist.Text = "登録";
             this.buttonRegist.UseVisualStyleBackColor = false;
+            this.buttonRegist.Click += new System.EventHandler(this.buttonRegist_Click);
             // 
             // panel3
             // 
@@ -705,6 +719,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormEmployee
             this.textBoxSoID.Name = "textBoxSoID";
             this.textBoxSoID.Size = new System.Drawing.Size(160, 26);
             this.textBoxSoID.TabIndex = 1404;
+            this.textBoxSoID.TextChanged += new System.EventHandler(this.textBoxSoID_TextChanged);
             // 
             // textBoxPoID
             // 
@@ -716,6 +731,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormEmployee
             this.textBoxPoID.Name = "textBoxPoID";
             this.textBoxPoID.Size = new System.Drawing.Size(160, 26);
             this.textBoxPoID.TabIndex = 1403;
+            this.textBoxPoID.TextChanged += new System.EventHandler(this.textBoxPoID_TextChanged);
             // 
             // label2社員名
             // 
@@ -815,6 +831,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormEmployee
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "F_Employee";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.F_Employee_Load);
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEmployee)).EndInit();
