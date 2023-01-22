@@ -29,22 +29,24 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBoxScName = new System.Windows.Forms.TextBox();
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(F_SmallClassification));
             this.buttonUpdate = new System.Windows.Forms.Button();
             this.buttonClose = new System.Windows.Forms.Button();
             this.buttonClear = new System.Windows.Forms.Button();
             this.buttonList = new System.Windows.Forms.Button();
-            this.buttonLogout = new System.Windows.Forms.Button();
             this.buttonSearch = new System.Windows.Forms.Button();
             this.buttonRegist = new System.Windows.Forms.Button();
             this.label小分類ID = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
-            this.buttonMajorClassForm = new System.Windows.Forms.Button();
+            this.labelNoTable = new System.Windows.Forms.Label();
+            this.panel13 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
             this.textBoxScHidden = new System.Windows.Forms.TextBox();
-            this.checkBoxScFlag = new System.Windows.Forms.CheckBox();
-            this.labelPrHidden = new System.Windows.Forms.Label();
             this.labelPage = new System.Windows.Forms.Label();
             this.dataGridViewSmallClassification = new System.Windows.Forms.DataGridView();
+            this.panel14 = new System.Windows.Forms.Panel();
+            this.checkBoxScFlag = new System.Windows.Forms.CheckBox();
             this.textBoxPageNo = new System.Windows.Forms.TextBox();
             this.buttonFirstPage = new System.Windows.Forms.Button();
             this.buttonLastPage = new System.Windows.Forms.Button();
@@ -57,13 +59,14 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             this.label小分類名 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.textBoxScName = new System.Windows.Forms.TextBox();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label大分類ID = new System.Windows.Forms.Label();
+            this.panel4 = new System.Windows.Forms.Panel();
             this.labelMcName = new System.Windows.Forms.Label();
-            this.panel10 = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.textBoxScID = new System.Windows.Forms.TextBox();
             this.textBoxMcID = new System.Windows.Forms.TextBox();
-            this.label大分類ID = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel8 = new System.Windows.Forms.Panel();
             this.label営業所名 = new System.Windows.Forms.Label();
@@ -72,24 +75,19 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             this.label社員ID = new System.Windows.Forms.Label();
             this.labelOfficeName = new System.Windows.Forms.Label();
             this.labelEmpID = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.panel7.SuspendLayout();
+            this.panel13.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSmallClassification)).BeginInit();
+            this.panel14.SuspendLayout();
             this.panel5.SuspendLayout();
             this.panel3.SuspendLayout();
-            this.panel10.SuspendLayout();
+            this.panel6.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel8.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // textBoxScName
-            // 
-            this.textBoxScName.Font = new System.Drawing.Font("MS UI Gothic", 11F);
-            this.textBoxScName.Location = new System.Drawing.Point(868, 120);
-            this.textBoxScName.Margin = new System.Windows.Forms.Padding(4);
-            this.textBoxScName.MaxLength = 50;
-            this.textBoxScName.Name = "textBoxScName";
-            this.textBoxScName.Size = new System.Drawing.Size(445, 26);
-            this.textBoxScName.TabIndex = 6;
             // 
             // buttonUpdate
             // 
@@ -102,7 +100,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             this.buttonUpdate.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
             this.buttonUpdate.Name = "buttonUpdate";
             this.buttonUpdate.Size = new System.Drawing.Size(103, 45);
-            this.buttonUpdate.TabIndex = 2;
+            this.buttonUpdate.TabIndex = 10;
             this.buttonUpdate.Text = "更新";
             this.buttonUpdate.UseVisualStyleBackColor = false;
             this.buttonUpdate.Click += new System.EventHandler(this.buttonUpdate_Click);
@@ -117,8 +115,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             this.buttonClose.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
             this.buttonClose.Name = "buttonClose";
             this.buttonClose.Size = new System.Drawing.Size(103, 45);
-            this.buttonClose.TabIndex = 16;
-            this.buttonClose.TabStop = false;
+            this.buttonClose.TabIndex = 13;
             this.buttonClose.Text = "閉じる";
             this.buttonClose.UseVisualStyleBackColor = true;
             this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
@@ -133,8 +130,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             this.buttonClear.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
             this.buttonClear.Name = "buttonClear";
             this.buttonClear.Size = new System.Drawing.Size(103, 45);
-            this.buttonClear.TabIndex = 15;
-            this.buttonClear.TabStop = false;
+            this.buttonClear.TabIndex = 12;
             this.buttonClear.Text = "入力クリア";
             this.buttonClear.UseVisualStyleBackColor = true;
             this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
@@ -150,27 +146,10 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             this.buttonList.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
             this.buttonList.Name = "buttonList";
             this.buttonList.Size = new System.Drawing.Size(103, 45);
-            this.buttonList.TabIndex = 3;
+            this.buttonList.TabIndex = 11;
             this.buttonList.Text = "一覧表示";
             this.buttonList.UseVisualStyleBackColor = false;
             this.buttonList.Click += new System.EventHandler(this.buttonList_Click);
-            // 
-            // buttonLogout
-            // 
-            this.buttonLogout.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_ログアウト;
-            this.buttonLogout.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonLogout.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.buttonLogout.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.buttonLogout.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(110)))));
-            this.buttonLogout.Location = new System.Drawing.Point(1491, 5);
-            this.buttonLogout.Margin = new System.Windows.Forms.Padding(4);
-            this.buttonLogout.Name = "buttonLogout";
-            this.buttonLogout.Size = new System.Drawing.Size(103, 45);
-            this.buttonLogout.TabIndex = 17;
-            this.buttonLogout.TabStop = false;
-            this.buttonLogout.Text = "ログアウト";
-            this.buttonLogout.UseVisualStyleBackColor = true;
-            this.buttonLogout.Click += new System.EventHandler(this.buttonLogout_Click);
             // 
             // buttonSearch
             // 
@@ -183,7 +162,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             this.buttonSearch.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
             this.buttonSearch.Name = "buttonSearch";
             this.buttonSearch.Size = new System.Drawing.Size(103, 45);
-            this.buttonSearch.TabIndex = 0;
+            this.buttonSearch.TabIndex = 8;
             this.buttonSearch.Text = "検索";
             this.buttonSearch.UseVisualStyleBackColor = false;
             this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
@@ -199,7 +178,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             this.buttonRegist.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
             this.buttonRegist.Name = "buttonRegist";
             this.buttonRegist.Size = new System.Drawing.Size(103, 45);
-            this.buttonRegist.TabIndex = 1;
+            this.buttonRegist.TabIndex = 9;
             this.buttonRegist.Text = "登録";
             this.buttonRegist.UseVisualStyleBackColor = false;
             this.buttonRegist.Click += new System.EventHandler(this.buttonRegist_Click);
@@ -207,9 +186,10 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             // label小分類ID
             // 
             this.label小分類ID.AutoSize = true;
+            this.label小分類ID.BackColor = System.Drawing.Color.Transparent;
             this.label小分類ID.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.label小分類ID.ForeColor = System.Drawing.Color.Firebrick;
-            this.label小分類ID.Location = new System.Drawing.Point(68, 123);
+            this.label小分類ID.Location = new System.Drawing.Point(59, 1);
             this.label小分類ID.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.label小分類ID.Name = "label小分類ID";
             this.label小分類ID.Size = new System.Drawing.Size(88, 19);
@@ -219,13 +199,15 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             // panel7
             // 
             this.panel7.BackColor = System.Drawing.SystemColors.MenuBar;
+            this.panel7.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_マスタ以外panel;
+            this.panel7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel7.Controls.Add(this.buttonMajorClassForm);
+            this.panel7.Controls.Add(this.labelNoTable);
+            this.panel7.Controls.Add(this.panel13);
             this.panel7.Controls.Add(this.textBoxScHidden);
-            this.panel7.Controls.Add(this.checkBoxScFlag);
-            this.panel7.Controls.Add(this.labelPrHidden);
             this.panel7.Controls.Add(this.labelPage);
             this.panel7.Controls.Add(this.dataGridViewSmallClassification);
+            this.panel7.Controls.Add(this.panel14);
             this.panel7.Controls.Add(this.textBoxPageNo);
             this.panel7.Controls.Add(this.buttonFirstPage);
             this.panel7.Controls.Add(this.buttonLastPage);
@@ -238,68 +220,64 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             this.panel7.Margin = new System.Windows.Forms.Padding(4);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(1940, 617);
-            this.panel7.TabIndex = 1380;
+            this.panel7.TabIndex = 3;
             // 
-            // buttonMajorClassForm
+            // labelNoTable
             // 
-            this.buttonMajorClassForm.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.営業所検索;
-            this.buttonMajorClassForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonMajorClassForm.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.buttonMajorClassForm.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.buttonMajorClassForm.ForeColor = System.Drawing.Color.Black;
-            this.buttonMajorClassForm.Location = new System.Drawing.Point(1604, 93);
-            this.buttonMajorClassForm.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
-            this.buttonMajorClassForm.Name = "buttonMajorClassForm";
-            this.buttonMajorClassForm.Size = new System.Drawing.Size(123, 45);
-            this.buttonMajorClassForm.TabIndex = 1401;
-            this.buttonMajorClassForm.TabStop = false;
-            this.buttonMajorClassForm.Text = "大分類検索";
-            this.buttonMajorClassForm.UseVisualStyleBackColor = true;
-            this.buttonMajorClassForm.Click += new System.EventHandler(this.buttonMajorClassForm_Click);
+            this.labelNoTable.AutoSize = true;
+            this.labelNoTable.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.labelNoTable.Font = new System.Drawing.Font("MS UI Gothic", 31.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.labelNoTable.ForeColor = System.Drawing.Color.LightGray;
+            this.labelNoTable.Location = new System.Drawing.Point(803, 280);
+            this.labelNoTable.Name = "labelNoTable";
+            this.labelNoTable.Size = new System.Drawing.Size(342, 53);
+            this.labelNoTable.TabIndex = 1444;
+            this.labelNoTable.Text = "－ NoTable －";
+            this.labelNoTable.Visible = false;
+            // 
+            // panel13
+            // 
+            this.panel13.BackColor = System.Drawing.SystemColors.MenuBar;
+            this.panel13.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_Menu_ログイン制限;
+            this.panel13.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panel13.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel13.Controls.Add(this.label2);
+            this.panel13.Location = new System.Drawing.Point(215, 18);
+            this.panel13.Margin = new System.Windows.Forms.Padding(4);
+            this.panel13.Name = "panel13";
+            this.panel13.Size = new System.Drawing.Size(534, 27);
+            this.panel13.TabIndex = 1442;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label2.ForeColor = System.Drawing.Color.Black;
+            this.label2.Location = new System.Drawing.Point(8, 1);
+            this.label2.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(109, 19);
+            this.label2.TabIndex = 1368;
+            this.label2.Text = "非表示理由";
             // 
             // textBoxScHidden
             // 
             this.textBoxScHidden.Enabled = false;
             this.textBoxScHidden.Font = new System.Drawing.Font("MS UI Gothic", 11F);
             this.textBoxScHidden.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.textBoxScHidden.Location = new System.Drawing.Point(304, 18);
+            this.textBoxScHidden.Location = new System.Drawing.Point(215, 44);
             this.textBoxScHidden.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxScHidden.Multiline = true;
             this.textBoxScHidden.Name = "textBoxScHidden";
-            this.textBoxScHidden.Size = new System.Drawing.Size(534, 55);
-            this.textBoxScHidden.TabIndex = 20;
-            this.textBoxScHidden.TabStop = false;
-            // 
-            // checkBoxScFlag
-            // 
-            this.checkBoxScFlag.AutoSize = true;
-            this.checkBoxScFlag.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.checkBoxScFlag.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.checkBoxScFlag.Location = new System.Drawing.Point(15, 47);
-            this.checkBoxScFlag.Name = "checkBoxScFlag";
-            this.checkBoxScFlag.Size = new System.Drawing.Size(136, 19);
-            this.checkBoxScFlag.TabIndex = 18;
-            this.checkBoxScFlag.TabStop = false;
-            this.checkBoxScFlag.Text = "小分類管理フラグ";
-            this.checkBoxScFlag.UseVisualStyleBackColor = true;
-            this.checkBoxScFlag.CheckedChanged += new System.EventHandler(this.checkBoxScFlag_CheckedChanged);
-            // 
-            // labelPrHidden
-            // 
-            this.labelPrHidden.AutoSize = true;
-            this.labelPrHidden.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.labelPrHidden.ForeColor = System.Drawing.Color.Black;
-            this.labelPrHidden.Location = new System.Drawing.Point(184, 35);
-            this.labelPrHidden.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
-            this.labelPrHidden.Name = "labelPrHidden";
-            this.labelPrHidden.Size = new System.Drawing.Size(109, 19);
-            this.labelPrHidden.TabIndex = 1368;
-            this.labelPrHidden.Text = "非表示理由";
+            this.textBoxScHidden.Size = new System.Drawing.Size(534, 27);
+            this.textBoxScHidden.TabIndex = 6;
             // 
             // labelPage
             // 
             this.labelPage.AutoSize = true;
-            this.labelPage.Location = new System.Drawing.Point(1327, 554);
+            this.labelPage.BackColor = System.Drawing.Color.Transparent;
+            this.labelPage.Location = new System.Drawing.Point(1650, 578);
             this.labelPage.Name = "labelPage";
             this.labelPage.Size = new System.Drawing.Size(43, 15);
             this.labelPage.TabIndex = 1387;
@@ -308,36 +286,61 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             // dataGridViewSmallClassification
             // 
             this.dataGridViewSmallClassification.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewSmallClassification.Location = new System.Drawing.Point(31, 93);
+            this.dataGridViewSmallClassification.Location = new System.Drawing.Point(31, 84);
             this.dataGridViewSmallClassification.Name = "dataGridViewSmallClassification";
             this.dataGridViewSmallClassification.RowHeadersWidth = 51;
             this.dataGridViewSmallClassification.RowTemplate.Height = 24;
-            this.dataGridViewSmallClassification.Size = new System.Drawing.Size(1527, 432);
+            this.dataGridViewSmallClassification.Size = new System.Drawing.Size(1874, 478);
             this.dataGridViewSmallClassification.TabIndex = 21;
             this.dataGridViewSmallClassification.TabStop = false;
             this.dataGridViewSmallClassification.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewSmallClassification_CellClick);
             // 
+            // panel14
+            // 
+            this.panel14.BackColor = System.Drawing.SystemColors.MenuBar;
+            this.panel14.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.MenuPanel_B;
+            this.panel14.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panel14.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel14.Controls.Add(this.checkBoxScFlag);
+            this.panel14.Location = new System.Drawing.Point(31, 18);
+            this.panel14.Margin = new System.Windows.Forms.Padding(4);
+            this.panel14.Name = "panel14";
+            this.panel14.Size = new System.Drawing.Size(153, 55);
+            this.panel14.TabIndex = 4;
+            // 
+            // checkBoxScFlag
+            // 
+            this.checkBoxScFlag.AutoSize = true;
+            this.checkBoxScFlag.BackColor = System.Drawing.Color.Transparent;
+            this.checkBoxScFlag.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.checkBoxScFlag.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.checkBoxScFlag.Location = new System.Drawing.Point(7, 16);
+            this.checkBoxScFlag.Name = "checkBoxScFlag";
+            this.checkBoxScFlag.Size = new System.Drawing.Size(136, 19);
+            this.checkBoxScFlag.TabIndex = 5;
+            this.checkBoxScFlag.Text = "小分類管理フラグ";
+            this.checkBoxScFlag.UseVisualStyleBackColor = false;
+            this.checkBoxScFlag.CheckedChanged += new System.EventHandler(this.checkBoxScFlag_CheckedChanged);
+            // 
             // textBoxPageNo
             // 
             this.textBoxPageNo.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.textBoxPageNo.Location = new System.Drawing.Point(1240, 549);
+            this.textBoxPageNo.Location = new System.Drawing.Point(1563, 573);
             this.textBoxPageNo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBoxPageNo.Name = "textBoxPageNo";
             this.textBoxPageNo.Size = new System.Drawing.Size(81, 22);
-            this.textBoxPageNo.TabIndex = 24;
-            this.textBoxPageNo.TabStop = false;
+            this.textBoxPageNo.TabIndex = 16;
             // 
             // buttonFirstPage
             // 
             this.buttonFirstPage.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_その他;
             this.buttonFirstPage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonFirstPage.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.buttonFirstPage.Location = new System.Drawing.Point(1418, 546);
+            this.buttonFirstPage.Location = new System.Drawing.Point(1741, 570);
             this.buttonFirstPage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonFirstPage.Name = "buttonFirstPage";
             this.buttonFirstPage.Size = new System.Drawing.Size(33, 28);
-            this.buttonFirstPage.TabIndex = 25;
-            this.buttonFirstPage.TabStop = false;
+            this.buttonFirstPage.TabIndex = 17;
             this.buttonFirstPage.Text = "|◀";
             this.buttonFirstPage.UseVisualStyleBackColor = true;
             this.buttonFirstPage.Click += new System.EventHandler(this.buttonFirstPage_Click);
@@ -347,12 +350,11 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             this.buttonLastPage.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_その他;
             this.buttonLastPage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonLastPage.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.buttonLastPage.Location = new System.Drawing.Point(1529, 546);
+            this.buttonLastPage.Location = new System.Drawing.Point(1852, 570);
             this.buttonLastPage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonLastPage.Name = "buttonLastPage";
             this.buttonLastPage.Size = new System.Drawing.Size(33, 28);
-            this.buttonLastPage.TabIndex = 28;
-            this.buttonLastPage.TabStop = false;
+            this.buttonLastPage.TabIndex = 20;
             this.buttonLastPage.Text = "▶|";
             this.buttonLastPage.UseVisualStyleBackColor = true;
             this.buttonLastPage.Click += new System.EventHandler(this.buttonLastPage_Click);
@@ -360,24 +362,22 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             // textBoxPageSize
             // 
             this.textBoxPageSize.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.textBoxPageSize.Location = new System.Drawing.Point(113, 549);
+            this.textBoxPageSize.Location = new System.Drawing.Point(113, 574);
             this.textBoxPageSize.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBoxPageSize.Name = "textBoxPageSize";
             this.textBoxPageSize.Size = new System.Drawing.Size(62, 22);
-            this.textBoxPageSize.TabIndex = 22;
-            this.textBoxPageSize.TabStop = false;
+            this.textBoxPageSize.TabIndex = 14;
             // 
             // buttonNextPage
             // 
             this.buttonNextPage.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_その他;
             this.buttonNextPage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonNextPage.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.buttonNextPage.Location = new System.Drawing.Point(1492, 546);
+            this.buttonNextPage.Location = new System.Drawing.Point(1815, 570);
             this.buttonNextPage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonNextPage.Name = "buttonNextPage";
             this.buttonNextPage.Size = new System.Drawing.Size(33, 28);
-            this.buttonNextPage.TabIndex = 27;
-            this.buttonNextPage.TabStop = false;
+            this.buttonNextPage.TabIndex = 19;
             this.buttonNextPage.Text = "▶";
             this.buttonNextPage.UseVisualStyleBackColor = true;
             this.buttonNextPage.Click += new System.EventHandler(this.buttonNextPage_Click);
@@ -387,12 +387,11 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             this.buttonPageSizeChange.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_その他;
             this.buttonPageSizeChange.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonPageSizeChange.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.buttonPageSizeChange.Location = new System.Drawing.Point(201, 543);
+            this.buttonPageSizeChange.Location = new System.Drawing.Point(201, 568);
             this.buttonPageSizeChange.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonPageSizeChange.Name = "buttonPageSizeChange";
             this.buttonPageSizeChange.Size = new System.Drawing.Size(123, 35);
-            this.buttonPageSizeChange.TabIndex = 23;
-            this.buttonPageSizeChange.TabStop = false;
+            this.buttonPageSizeChange.TabIndex = 15;
             this.buttonPageSizeChange.Text = "行数変更";
             this.buttonPageSizeChange.UseVisualStyleBackColor = true;
             this.buttonPageSizeChange.Click += new System.EventHandler(this.buttonPageSizeChange_Click);
@@ -402,12 +401,11 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             this.buttonPreviousPage.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_その他;
             this.buttonPreviousPage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonPreviousPage.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.buttonPreviousPage.Location = new System.Drawing.Point(1455, 546);
+            this.buttonPreviousPage.Location = new System.Drawing.Point(1778, 570);
             this.buttonPreviousPage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonPreviousPage.Name = "buttonPreviousPage";
             this.buttonPreviousPage.Size = new System.Drawing.Size(33, 28);
-            this.buttonPreviousPage.TabIndex = 26;
-            this.buttonPreviousPage.TabStop = false;
+            this.buttonPreviousPage.TabIndex = 18;
             this.buttonPreviousPage.Text = "◀";
             this.buttonPreviousPage.UseVisualStyleBackColor = true;
             this.buttonPreviousPage.Click += new System.EventHandler(this.buttonPreviousPage_Click);
@@ -415,7 +413,8 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             // labelPageSize
             // 
             this.labelPageSize.AutoSize = true;
-            this.labelPageSize.Location = new System.Drawing.Point(28, 553);
+            this.labelPageSize.BackColor = System.Drawing.Color.Transparent;
+            this.labelPageSize.Location = new System.Drawing.Point(28, 578);
             this.labelPageSize.Name = "labelPageSize";
             this.labelPageSize.Size = new System.Drawing.Size(81, 15);
             this.labelPageSize.TabIndex = 1379;
@@ -434,9 +433,10 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             // label小分類名
             // 
             this.label小分類名.AutoSize = true;
+            this.label小分類名.BackColor = System.Drawing.Color.Transparent;
             this.label小分類名.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.label小分類名.ForeColor = System.Drawing.Color.Black;
-            this.label小分類名.Location = new System.Drawing.Point(728, 123);
+            this.label小分類名.Location = new System.Drawing.Point(59, 1);
             this.label小分類名.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.label小分類名.Name = "label小分類名";
             this.label小分類名.Size = new System.Drawing.Size(89, 19);
@@ -457,100 +457,116 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.SystemColors.MenuBar;
+            this.panel3.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_マスタ以外panel;
+            this.panel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel3.Controls.Add(this.textBoxScName);
+            this.panel3.Controls.Add(this.panel6);
+            this.panel3.Controls.Add(this.panel1);
+            this.panel3.Controls.Add(this.panel4);
             this.panel3.Controls.Add(this.labelMcName);
-            this.panel3.Controls.Add(this.panel10);
             this.panel3.Controls.Add(this.textBoxScID);
             this.panel3.Controls.Add(this.textBoxMcID);
-            this.panel3.Controls.Add(this.label大分類ID);
-            this.panel3.Controls.Add(this.label小分類ID);
-            this.panel3.Controls.Add(this.textBoxScName);
-            this.panel3.Controls.Add(this.label小分類名);
             this.panel3.Location = new System.Drawing.Point(39, 83);
             this.panel3.Margin = new System.Windows.Forms.Padding(4);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(1940, 272);
-            this.panel3.TabIndex = 1379;
+            this.panel3.TabIndex = 0;
+            // 
+            // textBoxScName
+            // 
+            this.textBoxScName.Location = new System.Drawing.Point(1518, 122);
+            this.textBoxScName.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxScName.MaxLength = 2;
+            this.textBoxScName.Name = "textBoxScName";
+            this.textBoxScName.Size = new System.Drawing.Size(348, 22);
+            this.textBoxScName.TabIndex = 1443;
+            // 
+            // panel6
+            // 
+            this.panel6.BackColor = System.Drawing.SystemColors.MenuBar;
+            this.panel6.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_マスタ用ボタン_閉じる;
+            this.panel6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel6.Controls.Add(this.label小分類名);
+            this.panel6.Location = new System.Drawing.Point(1290, 120);
+            this.panel6.Margin = new System.Windows.Forms.Padding(4);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(220, 26);
+            this.panel6.TabIndex = 1442;
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.SystemColors.MenuBar;
+            this.panel1.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_マスタ用ボタン_閉じる;
+            this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Controls.Add(this.label大分類ID);
+            this.panel1.Location = new System.Drawing.Point(680, 120);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(220, 26);
+            this.panel1.TabIndex = 1442;
+            // 
+            // label大分類ID
+            // 
+            this.label大分類ID.AutoSize = true;
+            this.label大分類ID.BackColor = System.Drawing.Color.Transparent;
+            this.label大分類ID.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label大分類ID.ForeColor = System.Drawing.Color.Black;
+            this.label大分類ID.Location = new System.Drawing.Point(59, 1);
+            this.label大分類ID.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            this.label大分類ID.Name = "label大分類ID";
+            this.label大分類ID.Size = new System.Drawing.Size(88, 19);
+            this.label大分類ID.TabIndex = 1408;
+            this.label大分類ID.Text = "大分類ID";
+            this.toolTip1.SetToolTip(this.label大分類ID, "大分類検索");
+            this.label大分類ID.Click += new System.EventHandler(this.label大分類ID_Click);
+            this.label大分類ID.MouseEnter += new System.EventHandler(this.label大分類ID_MouseEnter);
+            this.label大分類ID.MouseLeave += new System.EventHandler(this.label大分類ID_MouseLeave);
+            // 
+            // panel4
+            // 
+            this.panel4.BackColor = System.Drawing.SystemColors.MenuBar;
+            this.panel4.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_マスタ用ボタン_閉じる;
+            this.panel4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel4.Controls.Add(this.label小分類ID);
+            this.panel4.Location = new System.Drawing.Point(69, 120);
+            this.panel4.Margin = new System.Windows.Forms.Padding(4);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(220, 26);
+            this.panel4.TabIndex = 1441;
             // 
             // labelMcName
             // 
             this.labelMcName.AutoSize = true;
             this.labelMcName.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.labelMcName.Location = new System.Drawing.Point(510, 148);
+            this.labelMcName.Location = new System.Drawing.Point(905, 148);
             this.labelMcName.Name = "labelMcName";
             this.labelMcName.Size = new System.Drawing.Size(67, 15);
             this.labelMcName.TabIndex = 1431;
             this.labelMcName.Text = "大分類名";
             this.labelMcName.Visible = false;
             // 
-            // panel10
-            // 
-            this.panel10.BackColor = System.Drawing.SystemColors.MenuBar;
-            this.panel10.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel10.Controls.Add(this.label3);
-            this.panel10.Controls.Add(this.label5);
-            this.panel10.Location = new System.Drawing.Point(4, 4);
-            this.panel10.Margin = new System.Windows.Forms.Padding(4);
-            this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(235, 25);
-            this.panel10.TabIndex = 1435;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Font = new System.Drawing.Font("MS UI Gothic", 10.2F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label3.ForeColor = System.Drawing.Color.DarkSlateBlue;
-            this.label3.Location = new System.Drawing.Point(106, 1);
-            this.label3.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(113, 17);
-            this.label3.TabIndex = 1432;
-            this.label3.Text = "外部キー：下線";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.Font = new System.Drawing.Font("MS UI Gothic", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label5.ForeColor = System.Drawing.Color.Firebrick;
-            this.label5.Location = new System.Drawing.Point(1, 1);
-            this.label5.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(96, 17);
-            this.label5.TabIndex = 1430;
-            this.label5.Text = "主キー：赤色";
-            // 
             // textBoxScID
             // 
-            this.textBoxScID.Location = new System.Drawing.Point(183, 122);
+            this.textBoxScID.Location = new System.Drawing.Point(297, 122);
             this.textBoxScID.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxScID.MaxLength = 2;
             this.textBoxScID.Name = "textBoxScID";
-            this.textBoxScID.Size = new System.Drawing.Size(131, 22);
-            this.textBoxScID.TabIndex = 1436;
+            this.textBoxScID.Size = new System.Drawing.Size(348, 22);
+            this.textBoxScID.TabIndex = 1;
             // 
             // textBoxMcID
             // 
-            this.textBoxMcID.Location = new System.Drawing.Point(513, 122);
+            this.textBoxMcID.Location = new System.Drawing.Point(908, 122);
             this.textBoxMcID.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxMcID.MaxLength = 2;
             this.textBoxMcID.Name = "textBoxMcID";
-            this.textBoxMcID.Size = new System.Drawing.Size(131, 22);
-            this.textBoxMcID.TabIndex = 1435;
+            this.textBoxMcID.Size = new System.Drawing.Size(348, 22);
+            this.textBoxMcID.TabIndex = 2;
             this.textBoxMcID.TextChanged += new System.EventHandler(this.textBoxMcID_TextChanged);
-            // 
-            // label大分類ID
-            // 
-            this.label大分類ID.AutoSize = true;
-            this.label大分類ID.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label大分類ID.ForeColor = System.Drawing.Color.Black;
-            this.label大分類ID.Location = new System.Drawing.Point(398, 123);
-            this.label大分類ID.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
-            this.label大分類ID.Name = "label大分類ID";
-            this.label大分類ID.Size = new System.Drawing.Size(88, 19);
-            this.label大分類ID.TabIndex = 1408;
-            this.label大分類ID.Text = "大分類ID";
             // 
             // panel2
             // 
@@ -561,18 +577,19 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             this.panel2.Controls.Add(this.buttonClose);
             this.panel2.Controls.Add(this.buttonClear);
             this.panel2.Controls.Add(this.buttonList);
-            this.panel2.Controls.Add(this.buttonLogout);
             this.panel2.Controls.Add(this.buttonSearch);
             this.panel2.Controls.Add(this.buttonRegist);
             this.panel2.Location = new System.Drawing.Point(224, 24);
             this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1755, 54);
-            this.panel2.TabIndex = 1378;
+            this.panel2.TabIndex = 7;
             // 
             // panel8
             // 
             this.panel8.BackColor = System.Drawing.SystemColors.MenuBar;
+            this.panel8.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_確定panel;
+            this.panel8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panel8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel8.Controls.Add(this.label営業所名);
             this.panel8.Controls.Add(this.labelEmpName);
@@ -583,13 +600,13 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             this.panel8.Location = new System.Drawing.Point(892, 4);
             this.panel8.Margin = new System.Windows.Forms.Padding(4);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(591, 44);
+            this.panel8.Size = new System.Drawing.Size(693, 44);
             this.panel8.TabIndex = 1407;
             // 
             // label営業所名
             // 
             this.label営業所名.AutoSize = true;
-            this.label営業所名.BackColor = System.Drawing.SystemColors.MenuBar;
+            this.label営業所名.BackColor = System.Drawing.Color.Transparent;
             this.label営業所名.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.label営業所名.Location = new System.Drawing.Point(4, 20);
             this.label営業所名.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -601,8 +618,9 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             // labelEmpName
             // 
             this.labelEmpName.AutoSize = true;
+            this.labelEmpName.BackColor = System.Drawing.Color.Transparent;
             this.labelEmpName.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.labelEmpName.Location = new System.Drawing.Point(493, 20);
+            this.labelEmpName.Location = new System.Drawing.Point(534, 20);
             this.labelEmpName.Name = "labelEmpName";
             this.labelEmpName.Size = new System.Drawing.Size(85, 19);
             this.labelEmpName.TabIndex = 1396;
@@ -611,9 +629,9 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             // label社員名
             // 
             this.label社員名.AutoSize = true;
-            this.label社員名.BackColor = System.Drawing.SystemColors.MenuBar;
+            this.label社員名.BackColor = System.Drawing.Color.Transparent;
             this.label社員名.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label社員名.Location = new System.Drawing.Point(406, 20);
+            this.label社員名.Location = new System.Drawing.Point(447, 20);
             this.label社員名.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label社員名.Name = "label社員名";
             this.label社員名.Size = new System.Drawing.Size(80, 19);
@@ -623,9 +641,9 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             // label社員ID
             // 
             this.label社員ID.AutoSize = true;
-            this.label社員ID.BackColor = System.Drawing.SystemColors.MenuBar;
+            this.label社員ID.BackColor = System.Drawing.Color.Transparent;
             this.label社員ID.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label社員ID.Location = new System.Drawing.Point(244, 20);
+            this.label社員ID.Location = new System.Drawing.Point(264, 20);
             this.label社員ID.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label社員ID.Name = "label社員ID";
             this.label社員ID.Size = new System.Drawing.Size(79, 19);
@@ -635,6 +653,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             // labelOfficeName
             // 
             this.labelOfficeName.AutoSize = true;
+            this.labelOfficeName.BackColor = System.Drawing.Color.Transparent;
             this.labelOfficeName.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.labelOfficeName.Location = new System.Drawing.Point(110, 20);
             this.labelOfficeName.Name = "labelOfficeName";
@@ -645,8 +664,9 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             // labelEmpID
             // 
             this.labelEmpID.AutoSize = true;
+            this.labelEmpID.BackColor = System.Drawing.Color.Transparent;
             this.labelEmpID.Font = new System.Drawing.Font("MS UI Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.labelEmpID.Location = new System.Drawing.Point(330, 20);
+            this.labelEmpID.Location = new System.Drawing.Point(350, 20);
             this.labelEmpID.Name = "labelEmpID";
             this.labelEmpID.Size = new System.Drawing.Size(69, 19);
             this.labelEmpID.TabIndex = 1394;
@@ -664,20 +684,30 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.DoubleBuffered = true;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "F_SmallClassification";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "F_SmallClassification";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Activated += new System.EventHandler(this.F_SmallClassification_Activated);
             this.Load += new System.EventHandler(this.F_SmallClassification_Load);
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
+            this.panel13.ResumeLayout(false);
+            this.panel13.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSmallClassification)).EndInit();
+            this.panel14.ResumeLayout(false);
+            this.panel14.PerformLayout();
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
-            this.panel10.ResumeLayout(false);
-            this.panel10.PerformLayout();
+            this.panel6.ResumeLayout(false);
+            this.panel6.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
@@ -686,20 +716,15 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox textBoxScName;
         private System.Windows.Forms.Button buttonUpdate;
         private System.Windows.Forms.Button buttonClose;
         private System.Windows.Forms.Button buttonClear;
         private System.Windows.Forms.Button buttonList;
-        private System.Windows.Forms.Button buttonLogout;
         private System.Windows.Forms.Button buttonSearch;
         private System.Windows.Forms.Button buttonRegist;
         private System.Windows.Forms.Label label小分類ID;
         private System.Windows.Forms.Panel panel7;
-        private System.Windows.Forms.TextBox textBoxScHidden;
         private System.Windows.Forms.CheckBox checkBoxScFlag;
-        private System.Windows.Forms.Label labelPrHidden;
         private System.Windows.Forms.Label labelPage;
         private System.Windows.Forms.DataGridView dataGridViewSmallClassification;
         private System.Windows.Forms.TextBox textBoxPageNo;
@@ -716,6 +741,18 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label大分類ID;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.TextBox textBoxScID;
+        private System.Windows.Forms.TextBox textBoxMcID;
+        private System.Windows.Forms.Label labelMcName;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Panel panel13;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox textBoxScHidden;
+        private System.Windows.Forms.Panel panel14;
+        private System.Windows.Forms.Panel panel6;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.TextBox textBoxScName;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Label label営業所名;
         private System.Windows.Forms.Label labelEmpName;
@@ -723,12 +760,6 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
         private System.Windows.Forms.Label label社員ID;
         private System.Windows.Forms.Label labelOfficeName;
         private System.Windows.Forms.Label labelEmpID;
-        private System.Windows.Forms.TextBox textBoxScID;
-        private System.Windows.Forms.TextBox textBoxMcID;
-        private System.Windows.Forms.Panel panel10;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label labelMcName;
-        private System.Windows.Forms.Button buttonMajorClassForm;
+        private System.Windows.Forms.Label labelNoTable;
     }
 }

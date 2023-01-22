@@ -46,7 +46,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
         private void SetFormDataGridView()
         {
             //dataGridViewのページサイズ指定
-            textBoxPageSize.Text = "10";
+            textBoxPageSize.Text = "15";
             //dataGridViewのページ番号指定
             textBoxPageNo.Text = "1";
             //読み取り専用に指定
@@ -85,20 +85,48 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
         ///////////////////////////////
         private void SetDataGridView()
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
+            if (textBoxPageNo.Text == "" || textBoxPageNo.Text == "0" || int.Parse(textBoxPageSize.Text) > 9)
+            {
+                textBoxPageNo.Text = "1";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             int pageNo = int.Parse(textBoxPageNo.Text) - 1;
             dataGridViewClient.DataSource = Client.Skip(pageSize * pageNo).Take(pageSize).ToList();
+
+            if (Client.Count == 0)
+            {
+                labelNoTable.Visible = true;
+            }
+            else
+            {
+                labelNoTable.Visible = false;
+            }
+
             //各列幅の指定
             dataGridViewClient.Columns[0].Width = 100;
-            dataGridViewClient.Columns[1].Width = 200;
+            dataGridViewClient.Columns[1].Width = 100;
             dataGridViewClient.Columns[2].Width = 110;
-            dataGridViewClient.Columns[3].Width = 400;
+            dataGridViewClient.Columns[3].Width = 300;
+            dataGridViewClient.Columns[4].Width = 110;
+            dataGridViewClient.Columns[5].Width = 100;
+            dataGridViewClient.Columns[6].Width = 110;
+            dataGridViewClient.Columns[7].Width = 110;
+            dataGridViewClient.Columns[8].AutoSizeMode = (DataGridViewAutoSizeColumnMode)DataGridViewAutoSizeColumnsMode.Fill;
 
             //各列の文字位置の指定
             dataGridViewClient.Columns[0].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewClient.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewClient.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewClient.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewClient.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewClient.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewClient.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewClient.Columns[5].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewClient.Columns[6].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewClient.Columns[7].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewClient.Columns[8].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
             //dataGridViewの総ページ数
             labelPage.Text = "/" + ((int)Math.Ceiling(Client.Count / (double)pageSize)) + "ページ";
@@ -113,6 +141,10 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
 
         private void buttonFirstPage_Click(object sender, EventArgs e)
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             dataGridViewClient.DataSource = Client.Take(pageSize).ToList();
 
@@ -124,6 +156,14 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
 
         private void buttonPreviousPage_Click(object sender, EventArgs e)
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
+            if (textBoxPageNo.Text == "" || textBoxPageNo.Text == "0" || int.Parse(textBoxPageSize.Text) > 9)
+            {
+                textBoxPageNo.Text = "1";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             int pageNo = int.Parse(textBoxPageNo.Text) - 2;
             dataGridViewClient.DataSource = Client.Skip(pageSize * pageNo).Take(pageSize).ToList();
@@ -139,6 +179,14 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
 
         private void buttonNextPage_Click(object sender, EventArgs e)
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
+            if (textBoxPageNo.Text == "" || textBoxPageNo.Text == "0" || int.Parse(textBoxPageSize.Text) > 9)
+            {
+                textBoxPageNo.Text = "1";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             int pageNo = int.Parse(textBoxPageNo.Text);
             //最終ページの計算
@@ -159,6 +207,14 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
 
         private void buttonLastPage_Click(object sender, EventArgs e)
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
+            if (textBoxPageNo.Text == "" || textBoxPageNo.Text == "0" || int.Parse(textBoxPageSize.Text) > 9)
+            {
+                textBoxPageNo.Text = "1";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             //最終ページの計算
             int pageNo = (int)Math.Ceiling(Client.Count / (double)pageSize) - 1;
@@ -170,59 +226,9 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
             textBoxPageNo.Text = (pageNo + 1).ToString();
         }
 
-        private void buttonCusSearch_Click(object sender, EventArgs e)
-        {
-            OpenForm(((Button)sender).Text);
-        }
-
-        private void OpenForm(string formName)
-        {
-            Form frm = new Form();
-            //引数より、開くフォームを設定
-            switch (formName)
-            {
-                case "営業所検索": //ボタンのテキスト名
-                    frm = new Master.FormEmployee.F_SalesOffice(); //フォームの名前
-                    break;
-            }
-
-            // すでに同じフォームが開かれているかどうかを確認する
-            bool isOpen = false;
-            Form openForm = null;
-            foreach (Form form in Application.OpenForms)
-            {
-                if (form.GetType() == frm.GetType())
-                {
-                    isOpen = true;
-                    openForm = form;
-                    break;
-                }
-            }
-
-            // 同じフォームが開かれていれば、そのフォームを最前面に持ってくる
-            if (isOpen)
-            {
-                openForm.BringToFront();
-            }
-            // 同じフォームが開かれていなければ、選択されたフォームを開く
-            else
-            {
-                frm.Show();
-            }
-        }
-
-        private void buttonLogout_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void buttonClose_Click(object sender, EventArgs e)
         {
-            // 入力エリアのクリア
-            ClearInput();
-
-            // データグリッドビューの表示
-            SetFormDataGridView();
+            this.Close();
         }
 
         ///////////////////////////////
@@ -248,12 +254,34 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
         {
             if (checkBoxClFlag.Checked)
             {
+                if (buttonUpdate.Enabled == false)
+                {
+                    BackColor = Color.Tomato;
+                    buttonUpdate.Text = "削除";
+                }
+                else
+                {
+                    BackColor = Color.Tomato;
+                    buttonUpdate.BackgroundImage = Properties.Resources.Fixed_削除;
+                    buttonUpdate.Text = "削除";
+                }
                 ClFlg = 2;
                 textBoxClHidden.Enabled = true;
                 return;
             }
             else
             {
+                if (buttonUpdate.Enabled == false)
+                {
+                    BackColor = Color.Gold;
+                    buttonUpdate.Text = "更新";
+                }
+                else
+                {
+                    BackColor = Color.Gold;
+                    buttonUpdate.BackgroundImage = Properties.Resources.Fixed_更新;
+                    buttonUpdate.Text = "更新";
+                }
                 ClFlg = 0;
                 textBoxClHidden.Enabled = false;
                 textBoxClHidden.Text = "";
@@ -371,6 +399,35 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
                 }
             }
 
+            if (textBoxClPostal.Text != "")
+            {
+                //MessageBox.Show("郵便番号は検索対象外です");
+                messageDsp.DspMsg("M4036");
+                checkBoxClFlag.Focus();
+                return false;
+            }
+            if (textBoxClAddress.Text != "")
+            {
+                //MessageBox.Show("住所は検索対象外です");
+                messageDsp.DspMsg("M4037");
+                checkBoxClFlag.Focus();
+                return false;
+            }
+            if (textBoxClFax.Text != "")
+            {
+                //MessageBox.Show("FAXは検索対象外です");
+                messageDsp.DspMsg("M4038");
+                checkBoxClFlag.Focus();
+                return false;
+            }
+            if (textBoxClPhone.Text != "")
+            {
+                //MessageBox.Show("電話番号は検索対象外です");
+                messageDsp.DspMsg("M4039");
+                checkBoxClFlag.Focus();
+                return false;
+            }
+
             // 管理フラグの適否
             if (checkBoxClFlag.CheckState == CheckState.Indeterminate)
             {
@@ -380,7 +437,6 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
                 return false;
             }
             return true;
-
         }
 
         ///////////////////////////////
@@ -466,6 +522,14 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
             int pageSize = int.Parse(textBoxPageSize.Text);
 
             dataGridViewClient.DataSource = Client;
+            if (Client.Count == 0)
+            {
+                labelNoTable.Visible = true;
+            }
+            else
+            {
+                labelNoTable.Visible = false;
+            }
 
             labelPage.Text = "/" + ((int)Math.Ceiling(Client.Count / (double)pageSize)) + "ページ";
             dataGridViewClient.Refresh();
@@ -510,7 +574,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
                 {
                     //MessageBox.Show("入力された営業所IDは存在しません");
                     messageDsp.DspMsg("M4026");
-                    textBoxClID.Focus();
+                    textBoxSoID.Focus();
                     return false;
                 }
                 // 営業所IDの半角数字チェック
@@ -569,7 +633,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
             // 郵便番号の数値チェック
             if (!String.IsNullOrEmpty(textBoxClPostal.Text.Trim()))
             {
-                if (!dataInputFormCheck.CheckNumeric(textBoxClPostal.Text.Trim()))
+                if (!dataInputFormCheck.CheckNumericWithHyphen(textBoxClPostal.Text.Trim()))
                 {
                     //MessageBox.Show("郵便番号は半角数値です");
                     messageDsp.DspMsg("M4029");
@@ -585,6 +649,13 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
                     return false;
                 }
             }
+            else
+            {
+                //MessageBox.Show("郵便番号が入力されていません");
+                messageDsp.DspMsg("M4040");
+                textBoxClPostal.Focus();
+                return false;
+            }
 
             // 住所の文字数チェック
             if (!String.IsNullOrEmpty(textBoxClAddress.Text.Trim()))
@@ -597,10 +668,18 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
                     return false;
                 }
             }
+            else
+            {
+                //MessageBox.Show("住所が入力されていません");
+                messageDsp.DspMsg("M4041");
+                textBoxClAddress.Focus();
+                return false;
+            }
+
             // FAXの半角数値チェック
             if (!String.IsNullOrEmpty(textBoxClFax.Text.Trim()))
             {
-                if (!dataInputFormCheck.CheckNumeric(textBoxClFax.Text.Trim()))
+                if (!dataInputFormCheck.CheckNumericWithHyphen(textBoxClFax.Text.Trim()))
                 {
                     //MessageBox.Show("FAXは半角数値です");
                     messageDsp.DspMsg("M4030");
@@ -616,10 +695,18 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
                     return false;
                 }
             }
+            else
+            {
+                //MessageBox.Show("FAXが入力されていません");
+                messageDsp.DspMsg("M4042");
+                textBoxClFax.Focus();
+                return false;
+            }
+
             // 電話番号の半角数値チェック
             if (!String.IsNullOrEmpty(textBoxClPhone.Text.Trim()))
             {
-                if (!dataInputFormCheck.CheckNumeric(textBoxClPhone.Text.Trim()))
+                if (!dataInputFormCheck.CheckNumericWithHyphen(textBoxClPhone.Text.Trim()))
                 {
                     //MessageBox.Show("電話番号は半角数値です");
                     messageDsp.DspMsg("M4032");
@@ -634,6 +721,13 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
                     textBoxClPhone.Focus();
                     return false;
                 }
+            }
+            else
+            {
+                //MessageBox.Show("電話番号が入力されていません");
+                messageDsp.DspMsg("M4043");
+                textBoxClPhone.Focus();
+                return false;
             }
 
             // 管理フラグの適否
@@ -838,7 +932,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
             // 郵便番号の数値チェック
             if (!String.IsNullOrEmpty(textBoxClPostal.Text.Trim()))
             {
-                if (!dataInputFormCheck.CheckNumeric(textBoxClPostal.Text.Trim()))
+                if (!dataInputFormCheck.CheckNumericWithHyphen(textBoxClPostal.Text.Trim()))
                 {
                     //MessageBox.Show("郵便番号は半角数値です");
                     messageDsp.DspMsg("M4029");
@@ -854,6 +948,13 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
                     return false;
                 }
             }
+            else
+            {
+                //MessageBox.Show("郵便番号が入力されていません");
+                messageDsp.DspMsg("M4040");
+                textBoxClPostal.Focus();
+                return false;
+            }
 
             // 住所の文字数チェック
             if (!String.IsNullOrEmpty(textBoxClAddress.Text.Trim()))
@@ -866,10 +967,18 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
                     return false;
                 }
             }
+            else
+            {
+                //MessageBox.Show("住所が入力されていません");
+                messageDsp.DspMsg("M4041");
+                textBoxClAddress.Focus();
+                return false;
+            }
+
             // FAXの半角数値チェック
             if (!String.IsNullOrEmpty(textBoxClFax.Text.Trim()))
             {
-                if (!dataInputFormCheck.CheckNumeric(textBoxClFax.Text.Trim()))
+                if (!dataInputFormCheck.CheckNumericWithHyphen(textBoxClFax.Text.Trim()))
                 {
                     //MessageBox.Show("FAXは半角数値です");
                     messageDsp.DspMsg("M4030");
@@ -885,10 +994,18 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
                     return false;
                 }
             }
+            else
+            {
+                //MessageBox.Show("FAXが入力されていません");
+                messageDsp.DspMsg("M4042");
+                textBoxClFax.Focus();
+                return false;
+            }
+
             // 電話番号の半角数値チェック
             if (!String.IsNullOrEmpty(textBoxClPhone.Text.Trim()))
             {
-                if (!dataInputFormCheck.CheckNumeric(textBoxClPhone.Text.Trim()))
+                if (!dataInputFormCheck.CheckNumericWithHyphen(textBoxClPhone.Text.Trim()))
                 {
                     //MessageBox.Show("電話番号は半角数値です");
                     messageDsp.DspMsg("M4032");
@@ -903,6 +1020,13 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
                     textBoxClPhone.Focus();
                     return false;
                 }
+            }
+            else
+            {
+                //MessageBox.Show("電話番号が入力されていません");
+                messageDsp.DspMsg("M4043");
+                textBoxClPhone.Focus();
+                return false;
             }
 
             // 管理フラグの適否
@@ -1015,26 +1139,29 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
             GetDataGridView();
         }
 
-        private void dataGridViewClient_CellClick(object sender, DataGridViewCellEventArgs e)
+            private void dataGridViewClient_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            //クリックされた行データをテキストボックスへ
-            textBoxClID.Text = dataGridViewClient.Rows[dataGridViewClient.CurrentRow.Index].Cells[0].Value.ToString();
-            textBoxSoID.Text = dataGridViewClient.Rows[dataGridViewClient.CurrentRow.Index].Cells[1].Value.ToString();
-            textBoxClName.Text = dataGridViewClient.Rows[dataGridViewClient.CurrentRow.Index].Cells[2].Value.ToString();
-            textBoxClAddress.Text = dataGridViewClient.Rows[dataGridViewClient.CurrentRow.Index].Cells[3].Value.ToString();
-            textBoxClPhone.Text = dataGridViewClient.Rows[dataGridViewClient.CurrentRow.Index].Cells[4].Value.ToString();
-            textBoxClPostal.Text = dataGridViewClient.Rows[dataGridViewClient.CurrentRow.Index].Cells[5].Value.ToString();
-            textBoxClFax.Text = dataGridViewClient.Rows[dataGridViewClient.CurrentRow.Index].Cells[6].Value.ToString();
-            int ClFlg2 = int.Parse(dataGridViewClient.Rows[dataGridViewClient.CurrentRow.Index].Cells[7].Value.ToString());
-            if (ClFlg2 == 0)
+            if (dataGridViewClient.CurrentRow != null)
             {
-                checkBoxClFlag.Checked = false;
+                //クリックされた行データをテキストボックスへ
+                textBoxClID.Text = dataGridViewClient.Rows[dataGridViewClient.CurrentRow.Index].Cells[0].Value.ToString();
+                textBoxSoID.Text = dataGridViewClient.Rows[dataGridViewClient.CurrentRow.Index].Cells[1].Value.ToString();
+                textBoxClName.Text = dataGridViewClient.Rows[dataGridViewClient.CurrentRow.Index].Cells[2].Value.ToString();
+                textBoxClAddress.Text = dataGridViewClient.Rows[dataGridViewClient.CurrentRow.Index].Cells[3].Value.ToString();
+                textBoxClPhone.Text = dataGridViewClient.Rows[dataGridViewClient.CurrentRow.Index].Cells[4].Value.ToString();
+                textBoxClPostal.Text = dataGridViewClient.Rows[dataGridViewClient.CurrentRow.Index].Cells[5].Value.ToString();
+                textBoxClFax.Text = dataGridViewClient.Rows[dataGridViewClient.CurrentRow.Index].Cells[6].Value.ToString();
+                int ClFlg2 = int.Parse(dataGridViewClient.Rows[dataGridViewClient.CurrentRow.Index].Cells[7].Value.ToString());
+                if (ClFlg2 == 0)
+                {
+                    checkBoxClFlag.Checked = false;
+                }
+                else if (ClFlg2 == 2)
+                {
+                    checkBoxClFlag.Checked = true;
+                }
+                textBoxClHidden.Text = dataGridViewClient.Rows[dataGridViewClient.CurrentRow.Index].Cells[8].Value.ToString();
             }
-            else if (ClFlg2 == 2)
-            {
-                checkBoxClFlag.Checked = true;
-            }
-            textBoxClHidden.Text = dataGridViewClient.Rows[dataGridViewClient.CurrentRow.Index].Cells[8].Value.ToString();
         }
 
         private void textBoxSoID_TextChanged(object sender, EventArgs e)
@@ -1073,6 +1200,79 @@ namespace SalesManagement_SysDev.Forms.Master.FormClient
             {
                 labelSoName.Visible = false;
                 labelSoName.Text = "営業所名";
+            }
+        }
+
+        private void label2営業所ID_Click(object sender, EventArgs e)
+        {
+            OpenForm(((Label)sender).Text);
+        }
+
+        private void OpenForm(string formName)
+        {
+            Form frm = new Form();
+            //引数より、開くフォームを設定
+            switch (formName)
+            {
+                case "営業所ID": //ボタンのテキスト名
+                    frm = new FormEmployee.F_SalesOffice(); //フォームの名前
+                    break;
+            }
+
+            // すでに同じフォームが開かれているかどうかを確認する
+            bool isOpen = false;
+            Form openForm = null;
+            foreach (Form form in Application.OpenForms)
+            {
+                if (form.GetType() == frm.GetType())
+                {
+                    isOpen = true;
+                    openForm = form;
+                    break;
+                }
+            }
+
+            // 同じフォームが開かれていれば、そのフォームを最前面に持ってくる
+            if (isOpen)
+            {
+                openForm.BringToFront();
+            }
+            // 同じフォームが開かれていなければ、選択されたフォームを開く
+            else
+            {
+                frm.Show();
+            }
+        }
+
+        private void label2営業所ID_MouseEnter(object sender, EventArgs e)
+        {
+            label2営業所ID.BackColor = Color.Aqua;
+        }
+
+        private void label2営業所ID_MouseLeave(object sender, EventArgs e)
+        {
+            label2営業所ID.BackColor = Color.Transparent;
+        }
+
+        //ログイン情報
+        private void F_Client_Activated(object sender, EventArgs e)
+        {
+            labelEmpName.Text = F_menu.loginName;
+            labelEmpID.Text = F_menu.loginEmID;
+            labelOfficeName.Text = F_menu.loginSalesOffice;
+            if(F_menu.loginSalesOffice != "本社")
+            {
+                buttonRegist.Enabled = false;
+                buttonUpdate.Enabled = false;
+                buttonRegist.BackgroundImage = Properties.Resources.Fixed_キャンセル使用不可;
+                buttonUpdate.BackgroundImage = Properties.Resources.Fixed_キャンセル使用不可;
+            }
+            if (F_Login.SysMode == 1) //開発者モード
+            {
+                buttonRegist.Enabled = true;
+                buttonUpdate.Enabled = true;
+                buttonRegist.BackgroundImage = Properties.Resources.Fixed_登録;
+                buttonUpdate.BackgroundImage = Properties.Resources.Fixed_更新;
             }
         }
     }

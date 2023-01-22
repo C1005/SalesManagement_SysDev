@@ -15,13 +15,14 @@ namespace SalesManagement_SysDev.Forms.Master.FormStock
         //メッセージ表示用クラスのインスタンス化
         MessageDsp messageDsp = new MessageDsp();
         //データベース在庫テーブルアクセス用クラスのインスタンス化
-        DbAccess.StockDataAccess StockDataAccess = new DbAccess.StockDataAccess();
+        DbAccess.StockDataAccess stockDataAccess = new DbAccess.StockDataAccess();
         //入力形式チェック用クラスのインスタンス化
         DataInputFormCheck dataInputFormCheck = new DataInputFormCheck();
         //データグリッドビュー用の在庫データ
         private static List<T_Stock> Stock;
         //管理フラグを数値型で入れるための変数
         int StFlg;
+        internal static int stflg = 0;
 
         public F_Stock()
         {
@@ -43,7 +44,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormStock
         private void SetFormDataGridView()
         {
             //dataGridViewのページサイズ指定
-            textBoxPageSize.Text = "10";
+            textBoxPageSize.Text = "15";
             //dataGridViewのページ番号指定
             textBoxPageNo.Text = "1";
             //読み取り専用に指定
@@ -66,9 +67,8 @@ namespace SalesManagement_SysDev.Forms.Master.FormStock
         ///////////////////////////////
         private void GetDataGridView()
         {
-
             // 在庫データの取得
-            Stock = StockDataAccess.GetStockData();
+            Stock = stockDataAccess.GetStockData();
 
             // DataGridViewに表示するデータを指定
             SetDataGridView();
@@ -82,21 +82,40 @@ namespace SalesManagement_SysDev.Forms.Master.FormStock
         ///////////////////////////////
         private void SetDataGridView()
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
+            if (textBoxPageNo.Text == "" || textBoxPageNo.Text == "0" || int.Parse(textBoxPageSize.Text) > 9)
+            {
+                textBoxPageNo.Text = "1";
+            }
+
             int pageSize = int.Parse(textBoxPageSize.Text);
             int pageNo = int.Parse(textBoxPageNo.Text) - 1;
             dataGridViewStock.DataSource = Stock.Skip(pageSize * pageNo).Take(pageSize).ToList();
+
+            if (Stock.Count == 0)
+            {
+                labelNoTable.Visible = true;
+            }
+            else
+            {
+                labelNoTable.Visible = false;
+            }
+
             //各列幅の指定
-            dataGridViewStock.Columns[0].Width = 80;
-            dataGridViewStock.Columns[1].Width = 80;
-            dataGridViewStock.Columns[2].Width = 80;
-            dataGridViewStock.Columns[3].Width = 80;
-            dataGridViewStock.Columns[4].Width = 400;
+            dataGridViewStock.Columns[0].Width = 150;
+            dataGridViewStock.Columns[1].Width = 150;
+            dataGridViewStock.Columns[2].Width = 130;
+            dataGridViewStock.Columns[3].Width = 160;
+            dataGridViewStock.Columns[4].AutoSizeMode = (DataGridViewAutoSizeColumnMode)DataGridViewAutoSizeColumnsMode.Fill;
 
             //各列の文字位置の指定
             dataGridViewStock.Columns[0].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewStock.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewStock.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewStock.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewStock.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewStock.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewStock.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewStock.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
             //dataGridViewの総ページ数
@@ -133,37 +152,67 @@ namespace SalesManagement_SysDev.Forms.Master.FormStock
             // 在庫IDの適否
             if (!String.IsNullOrEmpty(textBoxStID.Text.Trim()))
             {
-                // スタッフCDの半角英数字チェック
+                // 在庫IDの半角英数字チェック
                 if (!dataInputFormCheck.CheckNumeric(textBoxStID.Text.Trim()))
                 {
                     //MessageBox.Show("在庫IDは全て半角数字入力です");
-                    messageDsp.DspMsg("M3001");
+                    messageDsp.DspMsg("M9001");
                     textBoxStID.Focus();
                     return false;
                 }
                 // 在庫IDの文字数チェック
-                if (textBoxStID.TextLength > 2)
+                if (textBoxStID.TextLength > 6)
                 {
-                    //MessageBox.Show("在庫IDは2文字です");
-                    messageDsp.DspMsg("M3002");
+                    //MessageBox.Show("在庫IDは6文字です");
+                    messageDsp.DspMsg("M9002");
                     textBoxStID.Focus();
                     return false;
                 }
-
             }
 
-
-            if (textBoxStID.Text == "" && textBoxPrID.Text == "" && checkBoxStFlag.Checked == false)
+            // 商品ID入力時チェック
+            if (!String.IsNullOrEmpty(textBoxPrID.Text.Trim()))
             {
-                // データグリッドビューの表示
-                SetFormDataGridView();
+                // 商品IDの半角数字チェック
+                if (!dataInputFormCheck.CheckNumeric(textBoxPrID.Text.Trim()))
+                {
+                    //MessageBox.Show("商品IDは全て半角数字入力です");
+                    messageDsp.DspMsg("M9018");
+                    textBoxPrID.Focus();
+                    return false;
+                }
+                // 商品IDの文字数チェック
+                if (textBoxPrID.TextLength > 6)
+                {
+                    //MessageBox.Show("商品IDは6文字までです");
+                    messageDsp.DspMsg("M9019");
+                    textBoxPrID.Focus();
+                    return false;
+                }
+                // 商品IDが0ではないかチェック
+                if (int.Parse(textBoxPrID.Text.Trim()) == 0)
+                {
+                    //MessageBox.Show("商品IDは01から割り当ててください");
+                    messageDsp.DspMsg("M9020");
+                    textBoxPrID.Focus();
+                    return false;
+                }
+            }
+
+            //在庫数の検索不可チェック
+            if (textBoxStQuantity.Text != "")
+            {
+                //MessageBox.Show("在庫数は検索対象外です");
+                messageDsp.DspMsg("M9021");
+                textBoxStQuantity.Focus();
                 return false;
             }
+
             // 管理フラグの適否
             if (checkBoxStFlag.CheckState == CheckState.Indeterminate)
             {
                 //MessageBox.Show("管理フラグが不確定の状態です");
-                messageDsp.DspMsg("M3008");
+                messageDsp.DspMsg("M9005");
                 checkBoxStFlag.Focus();
                 return false;
             }
@@ -198,7 +247,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormStock
                     StFlag = StFlg //フラグがチェック状態なら非表示一覧表示内で検索、そうでなければ通常検索
                 };
                 // 在庫データの抽出
-                Stock = StockDataAccess.GetStockData(selectCondition);
+                Stock = stockDataAccess.GetStockData(selectCondition);
                 return;
             }
             else if (mPrID != "") // 名前で検索
@@ -210,7 +259,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormStock
                     StFlag = StFlg //フラグがチェック状態なら非表示一覧表示内で検索、そうでなければ通常検索
                 };
                 // 在庫データの抽出
-                Stock = StockDataAccess.GetStockData(selectCondition);
+                Stock = stockDataAccess.GetStockData(selectCondition);
                 return;
             }
             else if (mStFlg == true) // ただの非表示一覧表示
@@ -221,7 +270,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormStock
                     StFlag = StFlg //フラグがチェック状態なら非表示一覧表示内で検索、そうでなければ通常検索
                 };
                 // 在庫データの抽出
-                Stock = StockDataAccess.GetStockData(selectCondition);
+                Stock = stockDataAccess.GetStockData(selectCondition);
                 return;
             }
         }
@@ -240,13 +289,21 @@ namespace SalesManagement_SysDev.Forms.Master.FormStock
             int pageSize = int.Parse(textBoxPageSize.Text);
 
             dataGridViewStock.DataSource = Stock;
+            if (Stock.Count == 0)
+            {
+                labelNoTable.Visible = true;
+            }
+            else
+            {
+                labelNoTable.Visible = false;
+            }
 
             labelPage.Text = "/" + ((int)Math.Ceiling(Stock.Count / (double)pageSize)) + "ページ";
             dataGridViewStock.Refresh();
 
             if (Stock.Count == 0) //検索結果のデータ数が0ならエラー
             {
-                messageDsp.DspMsg("M1025");
+                messageDsp.DspMsg("M9022");
                 SetFormDataGridView();
                 return;
             }
@@ -284,23 +341,23 @@ namespace SalesManagement_SysDev.Forms.Master.FormStock
                 if (!dataInputFormCheck.CheckNumeric(textBoxStID.Text.Trim()))
                 {
                     //MessageBox.Show("在庫IDは全て半角英数字入力です");
-                    messageDsp.DspMsg("M3001");
+                    messageDsp.DspMsg("M9001");
                     textBoxStID.Focus();
                     return false;
                 }
                 // 在庫IDの文字数チェック
-                if (textBoxStID.TextLength > 2)
+                if (textBoxStID.TextLength > 6)
                 {
-                    //MessageBox.Show("在庫IDは2文字です");
-                    messageDsp.DspMsg("M3002");
+                    //MessageBox.Show("在庫IDは6文字です");
+                    messageDsp.DspMsg("M9002");
                     textBoxStID.Focus();
                     return false;
                 }
                 // 在庫IDの存在チェック
-                if (!StockDataAccess.CheckStockCDExistence(textBoxStID.Text.Trim()))
+                if (!stockDataAccess.CheckStockCDExistence(textBoxStID.Text.Trim()))
                 {
                     //MessageBox.Show("入力された在庫IDは存在しません");
-                    messageDsp.DspMsg("M3017");
+                    messageDsp.DspMsg("M9009");
                     textBoxStID.Focus();
                     return false;
                 }
@@ -308,7 +365,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormStock
             else
             {
                 //MessageBox.Show("在庫IDが入力されていません");
-                messageDsp.DspMsg("M3004");
+                messageDsp.DspMsg("M9004");
                 textBoxStID.Focus();
                 return false;
             }
@@ -321,23 +378,31 @@ namespace SalesManagement_SysDev.Forms.Master.FormStock
                 if (!dataInputFormCheck.CheckNumeric(textBoxPrID.Text.Trim()))
                 {
                     //MessageBox.Show("商品IDは全て半角英数字入力です");
-                    messageDsp.DspMsg("M3001");
+                    messageDsp.DspMsg("M9018");
                     textBoxPrID.Focus();
                     return false;
                 }
                 // 商品IDの文字数チェック
-                if (textBoxStID.TextLength > 2)
+                if (textBoxStID.TextLength > 6)
                 {
-                    //MessageBox.Show("商品IDは2文字です");
-                    messageDsp.DspMsg("M3002");
+                    //MessageBox.Show("商品IDは6文字です");
+                    messageDsp.DspMsg("M9019");
                     textBoxPrID.Focus();
                     return false;
                 }
-                // 商品IDの存在チェック
-                if (!StockDataAccess.CheckStockCDExistence(textBoxStID.Text.Trim()))
+                // 商品IDに一致するレコードの存在チェック
+                if (labelPrName.Text == "“UnknownID”")
                 {
                     //MessageBox.Show("入力された商品IDは存在しません");
-                    messageDsp.DspMsg("M3017");
+                    messageDsp.DspMsg("M9023");
+                    textBoxPrID.Focus();
+                    return false;
+                }
+                // 商品IDの重複チェック
+                if (stockDataAccess.CheckProductIDExistence(textBoxStID.Text.Trim(), textBoxPrID.Text.Trim()))
+                {
+                    //MessageBox.Show("入力された商品IDは既に存在します");
+                    messageDsp.DspMsg("M9024");
                     textBoxPrID.Focus();
                     return false;
                 }
@@ -345,7 +410,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormStock
             else
             {
                 //MessageBox.Show("商品IDが入力されていません");
-                messageDsp.DspMsg("M3004");
+                messageDsp.DspMsg("M9025");
                 textBoxPrID.Focus();
                 return false;
             }
@@ -357,7 +422,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormStock
                 if (!dataInputFormCheck.CheckNumeric(textBoxPrID.Text.Trim()))
                 {
                     //MessageBox.Show("在庫数は全て半角英数字入力です");
-                    messageDsp.DspMsg("M3001");
+                    messageDsp.DspMsg("M9026");
                     textBoxStQuantity.Focus();
                     return false;
                 }
@@ -365,15 +430,15 @@ namespace SalesManagement_SysDev.Forms.Master.FormStock
                 if (textBoxStID.TextLength > 4)
                 {
                     //MessageBox.Show("在庫数は4文字です");
-                    messageDsp.DspMsg("M3002");
+                    messageDsp.DspMsg("M9027");
                     textBoxStQuantity.Focus();
                     return false;
                 }
                 // 在庫数の存在チェック
-                if (!StockDataAccess.CheckStockCDExistence(textBoxStID.Text.Trim()))
+                if (!stockDataAccess.CheckStockCDExistence(textBoxStID.Text.Trim()))
                 {
                     //MessageBox.Show("入力された在庫数は存在しません");
-                    messageDsp.DspMsg("M3017");
+                    messageDsp.DspMsg("M9028");
                     textBoxStQuantity.Focus();
                     return false;
                 }
@@ -381,9 +446,30 @@ namespace SalesManagement_SysDev.Forms.Master.FormStock
             else
             {
                 //MessageBox.Show("在庫数が入力されていません");
-                messageDsp.DspMsg("M3004");
+                messageDsp.DspMsg("M9029");
                 textBoxStQuantity.Focus();
                 return false;
+            }
+
+            // 管理フラグの適否
+            if (checkBoxStFlag.CheckState == CheckState.Indeterminate)
+            {
+                //MessageBox.Show("管理フラグが不確定の状態です");
+                messageDsp.DspMsg("M9005");
+                checkBoxStFlag.Focus();
+                return false;
+            }
+
+            // 非表示理由の適否
+            if (checkBoxStFlag.Checked == true)
+            {
+                if (textBoxStHidden.Text == "")
+                {
+                    //MessageBox.Show("非表示理由の入力が必要です");
+                    messageDsp.DspMsg("M9006");
+                    textBoxStHidden.Focus();
+                    return false;
+                }
             }
             return true;
         }
@@ -419,18 +505,18 @@ namespace SalesManagement_SysDev.Forms.Master.FormStock
             if (StFlg == 0)
             {
                 // 更新確認メッセージ
-                DialogResult result = messageDsp.DspMsg("M3018");
+                DialogResult result = messageDsp.DspMsg("M9010");
                 if (result == DialogResult.Cancel)
                     return;
 
                 // 在庫情報の更新
-                bool flg = StockDataAccess.UpdateStockData(updStock);
+                bool flg = stockDataAccess.UpdateStockData(updStock);
                 if (flg == true)
                     //MessageBox.Show("データを更新しました。");
-                    messageDsp.DspMsg("M3019");
+                    messageDsp.DspMsg("M9011");
                 else
                     //MessageBox.Show("データの更新に失敗しました。");
-                    messageDsp.DspMsg("M3020");
+                    messageDsp.DspMsg("M9012");
 
                 textBoxStID.Focus();
 
@@ -450,18 +536,18 @@ namespace SalesManagement_SysDev.Forms.Master.FormStock
         {
 
             // 更新確認メッセージ
-            DialogResult result = messageDsp.DspMsg("M3022");
+            DialogResult result = messageDsp.DspMsg("M9014");
             if (result == DialogResult.Cancel)
                 return;
 
             // 在庫情報の更新
-            bool flg = StockDataAccess.DeleteStockData(delStock);
+            bool flg = stockDataAccess.DeleteStockData(delStock);
             if (flg == true)
                 //MessageBox.Show("データを削除しました。");
-                messageDsp.DspMsg("M3023");
+                messageDsp.DspMsg("M9015");
             else
                 //MessageBox.Show("データの削除に失敗しました。");
-                messageDsp.DspMsg("M3024");
+                messageDsp.DspMsg("M9016");
 
             textBoxStID.Focus();
 
@@ -507,12 +593,34 @@ namespace SalesManagement_SysDev.Forms.Master.FormStock
         {
             if (checkBoxStFlag.Checked == true)
             {
+                if(buttonUpdate.Enabled == false)
+                {
+                    BackColor = Color.Tomato;
+                    buttonUpdate.Text = "削除";
+                }
+                else
+                {
+                    BackColor = Color.Tomato;
+                    buttonUpdate.BackgroundImage = Properties.Resources.Fixed_削除;
+                    buttonUpdate.Text = "削除";
+                }
                 StFlg = 2;
                 textBoxStHidden.Enabled = true;
                 return;
             }
             else
             {
+                if (buttonUpdate.Enabled == false)
+                {
+                    BackColor = Color.Gold;
+                    buttonUpdate.Text = "更新";
+                }
+                else
+                {
+                    BackColor = Color.Gold;
+                    buttonUpdate.BackgroundImage = Properties.Resources.Fixed_更新;
+                    buttonUpdate.Text = "更新";
+                }
                 StFlg = 0;
                 textBoxStHidden.Enabled = false;
                 textBoxStHidden.Text = "";
@@ -520,19 +628,14 @@ namespace SalesManagement_SysDev.Forms.Master.FormStock
             }
         }
 
-        private void buttonLogout_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void buttonClose_Click(object sender, EventArgs e)
         {
-
+            this.Close();
         }
 
-        private void buttonPrdctSearch_Click(object sender, EventArgs e)
+        private void label商品ID_Click(object sender, EventArgs e)
         {
-            OpenForm(((Button)sender).Text);
+            OpenForm(((Label)sender).Text);
         }
 
         private void OpenForm(string formName)
@@ -541,7 +644,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormStock
             //引数より、開くフォームを設定
             switch (formName)
             {
-                case "商品検索":
+                case "商品ID":
                     frm = new Forms.Master.FormProduct.F_Product(); //フォルダも指定する必要がある
                     break;
             }
@@ -578,6 +681,10 @@ namespace SalesManagement_SysDev.Forms.Master.FormStock
 
         private void buttonFirstPage_Click(object sender, EventArgs e)
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             dataGridViewStock.DataSource = Stock.Take(pageSize).ToList();
 
@@ -589,6 +696,14 @@ namespace SalesManagement_SysDev.Forms.Master.FormStock
 
         private void buttonPreviousPage_Click(object sender, EventArgs e)
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
+            if (textBoxPageNo.Text == "" || textBoxPageNo.Text == "0" || int.Parse(textBoxPageSize.Text) > 9)
+            {
+                textBoxPageNo.Text = "1";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             int pageNo = int.Parse(textBoxPageNo.Text) - 2;
             dataGridViewStock.DataSource = Stock.Skip(pageSize * pageNo).Take(pageSize).ToList();
@@ -604,6 +719,14 @@ namespace SalesManagement_SysDev.Forms.Master.FormStock
 
         private void buttonNextPage_Click(object sender, EventArgs e)
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
+            if (textBoxPageNo.Text == "" || textBoxPageNo.Text == "0" || int.Parse(textBoxPageSize.Text) > 9)
+            {
+                textBoxPageNo.Text = "1";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             int pageNo = int.Parse(textBoxPageNo.Text);
             //最終ページの計算
@@ -624,6 +747,14 @@ namespace SalesManagement_SysDev.Forms.Master.FormStock
 
         private void buttonLastPage_Click(object sender, EventArgs e)
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
+            if (textBoxPageNo.Text == "" || textBoxPageNo.Text == "0" || int.Parse(textBoxPageSize.Text) > 9)
+            {
+                textBoxPageNo.Text = "1";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             //最終ページの計算
             int pageNo = (int)Math.Ceiling(Stock.Count / (double)pageSize) - 1;
@@ -635,22 +766,25 @@ namespace SalesManagement_SysDev.Forms.Master.FormStock
             textBoxPageNo.Text = (pageNo + 1).ToString();
         }
 
-        private void dataGridViewStock_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridViewStock_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            //クリックされた行データをテキストボックスへ
-            textBoxStID.Text = dataGridViewStock.Rows[dataGridViewStock.CurrentRow.Index].Cells[0].Value.ToString();
-            textBoxPrID.Text = dataGridViewStock.Rows[dataGridViewStock.CurrentRow.Index].Cells[1].Value.ToString();
-            textBoxStQuantity.Text = dataGridViewStock.Rows[dataGridViewStock.CurrentRow.Index].Cells[2].Value.ToString();
-            int StFlg2 = int.Parse(dataGridViewStock.Rows[dataGridViewStock.CurrentRow.Index].Cells[3].Value.ToString());
-            if (StFlg2 == 0)
+            if (dataGridViewStock.CurrentRow != null)
             {
-                checkBoxStFlag.Checked = false;
+                //クリックされた行データをテキストボックスへ
+                textBoxStID.Text = dataGridViewStock.Rows[dataGridViewStock.CurrentRow.Index].Cells[0].Value.ToString();
+                textBoxPrID.Text = dataGridViewStock.Rows[dataGridViewStock.CurrentRow.Index].Cells[1].Value.ToString();
+                textBoxStQuantity.Text = dataGridViewStock.Rows[dataGridViewStock.CurrentRow.Index].Cells[2].Value.ToString();
+                int StFlg2 = int.Parse(dataGridViewStock.Rows[dataGridViewStock.CurrentRow.Index].Cells[3].Value.ToString());
+                if (StFlg2 == 0)
+                {
+                    checkBoxStFlag.Checked = false;
+                }
+                else if (StFlg2 == 2)
+                {
+                    checkBoxStFlag.Checked = true;
+                }
+                textBoxStHidden.Text = dataGridViewStock.Rows[dataGridViewStock.CurrentRow.Index].Cells[4].Value.ToString();
             }
-            else if (StFlg2 == 2)
-            {
-                checkBoxStFlag.Checked = true;
-            }
-            textBoxStHidden.Text = dataGridViewStock.Rows[dataGridViewStock.CurrentRow.Index].Cells[4].Value.ToString();
         }
 
         private void textBoxPrID_TextChanged(object sender, EventArgs e)
@@ -689,6 +823,39 @@ namespace SalesManagement_SysDev.Forms.Master.FormStock
             {
                 labelPrName.Visible = false;
                 labelPrName.Text = "商品名";
+            }
+        }
+
+        private void label商品ID_MouseEnter(object sender, EventArgs e)
+        {
+            label商品ID.BackColor = Color.Aqua;
+        }
+
+        private void label商品ID_MouseLeave(object sender, EventArgs e)
+        {
+            label商品ID.BackColor = Color.Transparent;
+        }
+
+        private void F_Stock_Activated(object sender, EventArgs e)
+        {
+            labelEmpName.Text = F_menu.loginName;
+            labelEmpID.Text = F_menu.loginEmID;
+            labelOfficeName.Text = F_menu.loginSalesOffice;
+            if (!F_menu.loginSalesOffice.Contains("倉庫"))
+            {
+                buttonUpdate.Enabled = false;
+                buttonUpdate.BackgroundImage = Properties.Resources.Fixed_キャンセル使用不可;
+            }
+            if (F_Login.SysMode == 1) //開発者モード
+            {
+                buttonUpdate.Enabled = true;
+                buttonUpdate.BackgroundImage = Properties.Resources.Fixed_更新;
+            }
+            if (stflg == 1)
+            {
+                GetDataGridView();
+                stflg = 0;
+                NonMaster.FormChumon.F_Chumon.stflg = 1;
             }
         }
     }

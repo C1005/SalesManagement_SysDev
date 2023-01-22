@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(F_Login));
             this.panel5 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonClose = new System.Windows.Forms.Button();
@@ -42,6 +43,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btn_CleateDabase = new System.Windows.Forms.Button();
+            this.buttonSysMode = new System.Windows.Forms.Button();
             this.panel5.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -80,8 +82,7 @@
             this.buttonClose.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
             this.buttonClose.Name = "buttonClose";
             this.buttonClose.Size = new System.Drawing.Size(101, 42);
-            this.buttonClose.TabIndex = 1289;
-            this.buttonClose.TabStop = false;
+            this.buttonClose.TabIndex = 8;
             this.buttonClose.Text = "閉じる";
             this.buttonClose.UseVisualStyleBackColor = true;
             this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
@@ -97,23 +98,23 @@
             this.buttonSignup.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonSignup.Name = "buttonSignup";
             this.buttonSignup.Size = new System.Drawing.Size(101, 40);
-            this.buttonSignup.TabIndex = 3;
+            this.buttonSignup.TabIndex = 6;
             this.buttonSignup.Text = "新規登録";
             this.buttonSignup.UseVisualStyleBackColor = false;
             this.buttonSignup.Click += new System.EventHandler(this.buttonSignup_Click);
             // 
             // buttonLogin
             // 
-            this.buttonLogin.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_更新;
+            this.buttonLogin.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_ログイン;
             this.buttonLogin.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonLogin.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonLogin.Font = new System.Drawing.Font("MS UI Gothic", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.buttonLogin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(40)))), ((int)(((byte)(180)))));
+            this.buttonLogin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.buttonLogin.Location = new System.Drawing.Point(336, 360);
             this.buttonLogin.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonLogin.Name = "buttonLogin";
             this.buttonLogin.Size = new System.Drawing.Size(141, 61);
-            this.buttonLogin.TabIndex = 2;
+            this.buttonLogin.TabIndex = 4;
             this.buttonLogin.Text = "ログイン";
             this.buttonLogin.UseVisualStyleBackColor = true;
             this.buttonLogin.Click += new System.EventHandler(this.buttonLogon_Click);
@@ -125,7 +126,7 @@
             this.textBoxPassword.Name = "textBoxPassword";
             this.textBoxPassword.PasswordChar = '*';
             this.textBoxPassword.Size = new System.Drawing.Size(332, 22);
-            this.textBoxPassword.TabIndex = 1;
+            this.textBoxPassword.TabIndex = 3;
             // 
             // textBoxUserID
             // 
@@ -133,7 +134,7 @@
             this.textBoxUserID.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBoxUserID.Name = "textBoxUserID";
             this.textBoxUserID.Size = new System.Drawing.Size(332, 22);
-            this.textBoxUserID.TabIndex = 0;
+            this.textBoxUserID.TabIndex = 1;
             // 
             // labelPassword
             // 
@@ -158,7 +159,7 @@
             this.panel3.Margin = new System.Windows.Forms.Padding(4);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(621, 50);
-            this.panel3.TabIndex = 1302;
+            this.panel3.TabIndex = 5;
             // 
             // buttonClear
             // 
@@ -170,8 +171,7 @@
             this.buttonClear.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
             this.buttonClear.Name = "buttonClear";
             this.buttonClear.Size = new System.Drawing.Size(101, 42);
-            this.buttonClear.TabIndex = 1288;
-            this.buttonClear.TabStop = false;
+            this.buttonClear.TabIndex = 7;
             this.buttonClear.Text = "入力クリア";
             this.buttonClear.UseVisualStyleBackColor = true;
             this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
@@ -196,7 +196,7 @@
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(483, 54);
-            this.panel1.TabIndex = 1299;
+            this.panel1.TabIndex = 0;
             // 
             // panel2
             // 
@@ -208,7 +208,7 @@
             this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(483, 54);
-            this.panel2.TabIndex = 1301;
+            this.panel2.TabIndex = 2;
             // 
             // btn_CleateDabase
             // 
@@ -217,16 +217,33 @@
             this.btn_CleateDabase.Name = "btn_CleateDabase";
             this.btn_CleateDabase.Size = new System.Drawing.Size(141, 61);
             this.btn_CleateDabase.TabIndex = 1304;
+            this.btn_CleateDabase.TabStop = false;
             this.btn_CleateDabase.Text = "データベース生成";
             this.btn_CleateDabase.UseVisualStyleBackColor = true;
             this.btn_CleateDabase.Visible = false;
             this.btn_CleateDabase.Click += new System.EventHandler(this.btn_CleateDabase_Click_1);
             // 
+            // buttonSysMode
+            // 
+            this.buttonSysMode.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_ログアウト;
+            this.buttonSysMode.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonSysMode.Font = new System.Drawing.Font("MS UI Gothic", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonSysMode.ForeColor = System.Drawing.Color.White;
+            this.buttonSysMode.Location = new System.Drawing.Point(336, 360);
+            this.buttonSysMode.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonSysMode.Name = "buttonSysMode";
+            this.buttonSysMode.Size = new System.Drawing.Size(141, 61);
+            this.buttonSysMode.TabIndex = 4;
+            this.buttonSysMode.Text = "開発モード";
+            this.buttonSysMode.UseVisualStyleBackColor = true;
+            this.buttonSysMode.Visible = false;
+            this.buttonSysMode.Click += new System.EventHandler(this.buttonSysMode_Click);
+            // 
             // F_Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_ログイン;
+            this.BackgroundImage = global::SalesManagement_SysDev.Properties.Resources.Fixed_ログイン画面;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(802, 443);
             this.Controls.Add(this.btn_CleateDabase);
@@ -237,11 +254,14 @@
             this.Controls.Add(this.labelUserID);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
+            this.Controls.Add(this.buttonSysMode);
             this.DoubleBuffered = true;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "F_Login";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "販売管理システムログイン画面";
+            this.Load += new System.EventHandler(this.F_Login_Load);
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
             this.panel3.ResumeLayout(false);
@@ -267,6 +287,7 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btn_CleateDabase;
         private System.Windows.Forms.Button buttonClear;
+        private System.Windows.Forms.Button buttonSysMode;
     }
 }
 

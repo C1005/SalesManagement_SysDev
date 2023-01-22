@@ -24,83 +24,11 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
         //フラグを数値型で入れるための変数
         int ArStateFlg = 0;
         int ArFlg = 0;
+        internal static int stflg = 0;
 
         public F_Arrival()
         {
             InitializeComponent();
-        }
-
-        private void buttonCusSearch_Click(object sender, EventArgs e)
-        {
-            OpenForm(((Button)sender).Text);
-        }
-
-        private void buttonProductSearch_Click(object sender, EventArgs e)
-        {
-            OpenForm(((Button)sender).Text);
-        }
-
-        private void buttonEmSearch_Click(object sender, EventArgs e)
-        {
-            OpenForm(((Button)sender).Text);
-        }
-
-        private void buttonOrderSearch_Click(object sender, EventArgs e)
-        {
-            OpenForm(((Button)sender).Text);
-        }
-
-        private void buttonConfirmForm_Click(object sender, EventArgs e)
-        {
-            OpenForm(((Button)sender).Text);
-        }
-
-        private void OpenForm(string formName)
-        {
-            Form frm = new Form();
-            //引数より、開くフォームを設定
-            switch (formName)
-            {
-                case "顧客検索": //ボタンのテキスト名
-                    frm = new Master.FormClient.F_Client(); //フォームの名前
-                    break;
-                case "商品検索": //ボタンのテキスト名
-                    frm = new Master.FormProduct.F_Product(); //フォームの名前
-                    break;
-                case "社員検索": //ボタンのテキスト名
-                    frm = new Master.FormEmployee.F_Employee(); //フォームの名前
-                    break;
-                case "受注検索": //ボタンのテキスト名
-                    frm = new NonMaster.FormOrder.F_Order(); //フォームの名前
-                    break;
-                case "入荷確定画面へ": //ボタンのテキスト名
-                    frm = new F_ArrivalConfirm(); //フォームの名前
-                    break;
-            }
-
-            // すでに同じフォームが開かれているかどうかを確認する
-            bool isOpen = false;
-            Form openForm = null;
-            foreach (Form form in Application.OpenForms)
-            {
-                if (form.GetType() == frm.GetType())
-                {
-                    isOpen = true;
-                    openForm = form;
-                    break;
-                }
-            }
-
-            // 同じフォームが開かれていれば、そのフォームを最前面に持ってくる
-            if (isOpen)
-            {
-                openForm.BringToFront();
-            }
-            // 同じフォームが開かれていなければ、選択されたフォームを開く
-            else
-            {
-                frm.Show();
-            }
         }
 
         private void F_Arrival_Load(object sender, EventArgs e)
@@ -122,7 +50,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
         private void SetFormDataGridView()
         {
             //dataGridViewのページサイズ指定
-            textBoxPageSize.Text = "12";
+            textBoxPageSize.Text = "15";
             //dataGridViewのページ番号指定
             textBoxPageNo.Text = "1";
             //読み取り専用に指定
@@ -159,31 +87,52 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
         ///////////////////////////////
         private void SetDataGridView()
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
+            if (textBoxPageNo.Text == "" || textBoxPageNo.Text == "0" || int.Parse(textBoxPageSize.Text) > 9)
+            {
+                textBoxPageNo.Text = "1";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             int pageNo = int.Parse(textBoxPageNo.Text) - 1;
 
             filteredList = Arrival.Where(x => x.ArFlag != 2).ToList(); //ArFlagが2のレコードは排除する
             dataGridViewArrival.DataSource = filteredList.Skip(pageSize * pageNo).Take(pageSize).ToList();
 
+            if(filteredList.Count == 0)
+            {
+                labelNoTable.Visible = true;
+            }
+            else
+            {
+                labelNoTable.Visible = false;
+            }
+
             //各列幅の指定
-            dataGridViewArrival.Columns[0].Width = 100;
-            dataGridViewArrival.Columns[1].Width = 100;
-            dataGridViewArrival.Columns[2].Width = 100;
-            dataGridViewArrival.Columns[3].Width = 100;
-            dataGridViewArrival.Columns[4].Width = 200;
-            dataGridViewArrival.Columns[5].Width = 130;
-            dataGridViewArrival.Columns[6].Width = 110;
-            dataGridViewArrival.Columns[7].Width = 110;
-            dataGridViewArrival.Columns[8].Width = 400;
-            dataGridViewArrival.Columns[9].Width = 100;
-            dataGridViewArrival.Columns[10].Width = 100;
-            dataGridViewArrival.Columns[11].Width = 70;
+            //dataGridViewArrival.Columns[0].Width = 100;
+            //dataGridViewArrival.Columns[1].Width = 100;
+            //dataGridViewArrival.Columns[2].Width = 100;
+            //dataGridViewArrival.Columns[3].Width = 100;
+            //dataGridViewArrival.Columns[4].Width = 200;
+            //dataGridViewArrival.Columns[5].Width = 130;
+            //dataGridViewArrival.Columns[6].Width = 110;
+            //dataGridViewArrival.Columns[7].Width = 110;
+            //dataGridViewArrival.Columns[8].Width = 400;
+            //dataGridViewArrival.Columns[9].Width = 100;
+            //dataGridViewArrival.Columns[10].Width = 100;
+            //dataGridViewArrival.Columns[11].Width = 70;
+
+            // 自動サイズ調整を有効にする
+            dataGridViewArrival.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
             //各列の文字位置の指定
             dataGridViewArrival.Columns[0].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewArrival.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewArrival.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewArrival.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewArrival.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewArrival.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewArrival.Columns[5].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewArrival.Columns[6].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewArrival.Columns[7].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
@@ -221,7 +170,6 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
         ///////////////////////////////
         private bool GetValidDataAtSelect()
         {
-
             // 入荷ID入力時チェック
             if (!String.IsNullOrEmpty(textBoxArID.Text.Trim()))
             {
@@ -229,19 +177,12 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
                 if (!dataInputFormCheck.CheckNumeric(textBoxArID.Text.Trim()))
                 {
                     //MessageBox.Show("入荷IDは全て半角数字入力です");
-                    messageDsp.DspMsg("M11001");
-                    textBoxArID.Focus();
-                    return false;
-                }
-                // 入荷IDの文字数チェック
-                if (textBoxArID.TextLength > 2)
-                {
-                    //MessageBox.Show("入荷IDは2文字までです");
-                    messageDsp.DspMsg("M11002");
+                    messageDsp.DspMsg("M11054");
                     textBoxArID.Focus();
                     return false;
                 }
             }
+
             // 受注IDの適否
             if (!String.IsNullOrEmpty(textBoxOrID.Text.Trim()))
             {
@@ -249,7 +190,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
                 if (!dataInputFormCheck.CheckNumeric(textBoxOrID.Text.Trim()))
                 {
                     //MessageBox.Show("受注IDは全て半角数字入力です");
-                    messageDsp.DspMsg("M10054");
+                    messageDsp.DspMsg("M11063");
                     textBoxOrID.Focus();
                     return false;
                 }
@@ -258,19 +199,11 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
             // 顧客IDの適否
             if (!String.IsNullOrEmpty(textBoxClID.Text.Trim()))
             {
-                // 顧客IDに一致するレコードの存在チェック
-                if (labelClName.Text == "“UnknownID”")
-                {
-                    //MessageBox.Show("入力された顧客IDは存在しません");
-                    messageDsp.DspMsg("M10025");
-                    textBoxClID.Focus();
-                    return false;
-                }
                 // 顧客IDの半角数字チェック
                 if (!dataInputFormCheck.CheckNumeric(textBoxClID.Text.Trim()))
                 {
                     //MessageBox.Show("顧客IDは全て半角数字入力です");
-                    messageDsp.DspMsg("M10001");
+                    messageDsp.DspMsg("M11064");
                     textBoxClID.Focus();
                     return false;
                 }
@@ -278,7 +211,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
                 if (textBoxClID.TextLength > 6)
                 {
                     //MessageBox.Show("顧客IDは6文字です");
-                    messageDsp.DspMsg("M10002");
+                    messageDsp.DspMsg("M11002");
                     textBoxClID.Focus();
                     return false;
                 }
@@ -300,20 +233,11 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
                 /// 仕様書で社員IDがNULLを許容する管理は実行しない
                 /// ただし社員IDが必須入力の場合はCtrl + K + U でコメント解除してチェックさせてください
 
-                // 社員IDに一致するレコードの存在チェック
-                if (labelEmName.Text == "“UnknownID”")
-                {
-                    //MessageBox.Show("入力された社員IDは存在しません");
-                    messageDsp.DspMsg("M10041");
-                    textBoxEmID.Focus();
-                    return false;
-                }
-
                 // 社員IDの半角数字チェック
                 if (!dataInputFormCheck.CheckNumeric(textBoxEmID.Text.Trim()))
                 {
                     //MessageBox.Show("社員IDは全て半角数字入力です");
-                    messageDsp.DspMsg("M10005");
+                    messageDsp.DspMsg("M11005");
                     textBoxEmID.Focus();
                     return false;
                 }
@@ -321,7 +245,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
                 if (textBoxEmID.TextLength > 6)
                 {
                     //MessageBox.Show("社員IDは6文字です");
-                    messageDsp.DspMsg("M10006");
+                    messageDsp.DspMsg("M11006");
                     textBoxEmID.Focus();
                     return false;
                 }
@@ -330,27 +254,19 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
             // 営業所IDの適否
             if (!String.IsNullOrEmpty(textBoxSoID.Text.Trim()))
             {
-                // 営業所IDに一致するレコードの存在チェック
-                if (labelSoName.Text == "“UnknownID”")
-                {
-                    //MessageBox.Show("入力された営業所IDは存在しません");
-                    messageDsp.DspMsg("M10042");
-                    textBoxSoID.Focus();
-                    return false;
-                }
                 // 営業所IDの半角数字チェック
                 if (!dataInputFormCheck.CheckNumeric(textBoxSoID.Text.Trim()))
                 {
                     //MessageBox.Show("営業所IDは全て半角数字入力です");
-                    messageDsp.DspMsg("M10009");
+                    messageDsp.DspMsg("M11009");
                     textBoxSoID.Focus();
                     return false;
                 }
                 // 営業所IDの文字数チェック
                 if (textBoxSoID.TextLength > 2)
                 {
-                    //MessageBox.Show("営業所IDは6文字です");
-                    messageDsp.DspMsg("M10010");
+                    //MessageBox.Show("営業所IDは2文字です");
+                    messageDsp.DspMsg("M11010");
                     textBoxSoID.Focus();
                     return false;
                 }
@@ -361,8 +277,8 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
                 // 入荷詳細IDの半角数字チェック
                 if (!dataInputFormCheck.CheckNumeric(textBoxArDetailID.Text.Trim()))
                 {
-                    //MessageBox.Show("受注詳細IDは全て半角数字入力です");
-                    messageDsp.DspMsg("M10055");
+                    //MessageBox.Show("入荷詳細IDは全て半角数字入力です");
+                    messageDsp.DspMsg("M11055");
                     textBoxArDetailID.Focus();
                     return false;
                 }
@@ -375,7 +291,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
                 if (!dataInputFormCheck.CheckNumeric(textBoxPrID.Text.Trim()))
                 {
                     //MessageBox.Show("商品IDは全て半角数字入力です");
-                    messageDsp.DspMsg("M10016");
+                    messageDsp.DspMsg("M11016");
                     textBoxPrID.Focus();
                     return false;
                 }
@@ -383,42 +299,31 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
                 if (textBoxPrID.TextLength > 6)
                 {
                     //MessageBox.Show("商品IDは6文字です");
-                    messageDsp.DspMsg("M10017");
+                    messageDsp.DspMsg("M11017");
                     textBoxPrID.Focus();
                     return false;
                 }
             }
-            // 数量の適否
-            if (!String.IsNullOrEmpty(textBoxArQuantity.Text.Trim()))
+            if (dateTimePickerArDate.Checked == true)
             {
-                // 数量の半角数字チェック
-                if (!dataInputFormCheck.CheckNumeric(textBoxArQuantity.Text.Trim()))
-                {
-                    //MessageBox.Show("数量は全て半角数字入力です");
-                    messageDsp.DspMsg("M10020");
-                    textBoxArQuantity.Focus();
-                    return false;
-                }
-                // 数量の文字数チェック
-                if (textBoxArQuantity.TextLength > 4)
-                {
-                    //MessageBox.Show("数量は4文字です");
-                    messageDsp.DspMsg("M10021");
-                    textBoxArQuantity.Focus();
-                    return false;
-                }
-            }
-            if (textBoxArID.Text == "" && textBoxClID.Text == "" && checkBoxArFlag.Checked == false)
-            {
-                // データグリッドビューの表示
-                SetFormDataGridView();
+                //MessageBox.Show("受注年月日は検索対象外です");
+                messageDsp.DspMsg("M11065");
+                dateTimePickerArDate.Focus();
                 return false;
             }
+            if (textBoxArQuantity.Text != "")
+            {
+                //MessageBox.Show("数量は検索対象外です");
+                messageDsp.DspMsg("M11066");
+                textBoxArQuantity.Focus();
+                return false;
+            }
+
             // 状態フラグの適否
             if (checkBoxArStateFlag.CheckState == CheckState.Indeterminate)
             {
                 //MessageBox.Show("状態フラグが不確定の状態です");
-                messageDsp.DspMsg("M10027");
+                messageDsp.DspMsg("M11027");
                 checkBoxArStateFlag.Focus();
                 return false;
             }
@@ -426,7 +331,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
             if (checkBoxArFlag.CheckState == CheckState.Indeterminate)
             {
                 //MessageBox.Show("管理フラグが不確定の状態です");
-                messageDsp.DspMsg("M1008");
+                messageDsp.DspMsg("M11028");
                 checkBoxArFlag.Focus();
                 return false;
             }
@@ -610,13 +515,21 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
             int pageSize = int.Parse(textBoxPageSize.Text);
 
             dataGridViewArrival.DataSource = Arrival;
+            if (Arrival.Count == 0)
+            {
+                labelNoTable.Visible = true;
+            }
+            else
+            {
+                labelNoTable.Visible = false;
+            }
 
             labelPage.Text = "/" + ((int)Math.Ceiling(Arrival.Count / (double)pageSize)) + "ページ";
             dataGridViewArrival.Refresh();
 
             if (Arrival.Count == 0) //検索結果のデータ数が0ならエラー
             {
-                messageDsp.DspMsg("M1025");
+                messageDsp.DspMsg("M11067");
                 SetFormDataGridView();
             }
         }
@@ -636,7 +549,6 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
 
         private bool GetValidDataAtDelete()
         {
-
             // 入荷IDの未入力チェック
             if (!String.IsNullOrEmpty(textBoxArID.Text.Trim()))
             {
@@ -644,15 +556,15 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
                 if (!dataInputFormCheck.CheckNumeric(textBoxArID.Text.Trim()))
                 {
                     //MessageBox.Show("入荷IDは全て半角英数字入力です");
-                    messageDsp.DspMsg("M11001");
+                    messageDsp.DspMsg("M11068");
                     textBoxArID.Focus();
                     return false;
                 }
                 // 入荷IDの文字数チェック
-                if (textBoxArID.TextLength > 2)
+                if (textBoxArID.TextLength > 6)
                 {
-                    //MessageBox.Show("入荷IDは2文字です");
-                    messageDsp.DspMsg("M11002");
+                    //MessageBox.Show("入荷IDは6文字です");
+                    messageDsp.DspMsg("M11069");
                     textBoxArID.Focus();
                     return false;
                 }
@@ -660,7 +572,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
                 if (!arrivalDataAccess.CheckArrivalCDExistence(textBoxArID.Text.Trim()))
                 {
                     //MessageBox.Show("入力された入荷IDは存在しません");
-                    messageDsp.DspMsg("M11013");
+                    messageDsp.DspMsg("M11070");
                     textBoxArID.Focus();
                     return false;
                 }
@@ -668,44 +580,44 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
             else
             {
                 //MessageBox.Show("入荷IDが入力されていません");
-                messageDsp.DspMsg("M11004");
+                messageDsp.DspMsg("M11071");
                 textBoxArID.Focus();
                 return false;
             }
 
-            // 入荷詳細IDの未入力チェック
-            if (!String.IsNullOrEmpty(textBoxArDetailID.Text.Trim()))
+            // 受注IDの未入力チェック
+            if (!String.IsNullOrEmpty(textBoxOrID.Text.Trim()))
             {
-                // 入荷詳細IDの半角英数字チェック
-                if (!dataInputFormCheck.CheckNumeric(textBoxArDetailID.Text.Trim()))
+                // 受注IDの文字数チェック
+                if (textBoxOrID.TextLength > 6)
                 {
-                    //MessageBox.Show("入荷詳細IDは全て半角英数字入力です");
-                    messageDsp.DspMsg("M11005");
-                    textBoxArDetailID.Focus();
+                    //MessageBox.Show("受注IDは6文字です");
+                    messageDsp.DspMsg("M11072");
+                    textBoxOrID.Focus();
                     return false;
                 }
-                // 入荷詳細IDの文字数チェック
-                if (textBoxArDetailID.TextLength > 2)
+                // 受注IDの半角数字チェック
+                if (!dataInputFormCheck.CheckNumeric(textBoxOrID.Text.Trim()))
                 {
-                    //MessageBox.Show("入荷詳細IDは2文字です");
-                    messageDsp.DspMsg("M11006");
-                    textBoxArDetailID.Focus();
+                    //MessageBox.Show("受注IDは全て半角数字入力です");
+                    messageDsp.DspMsg("M11063");
+                    textBoxOrID.Focus();
                     return false;
                 }
-                // 入荷詳細IDの存在チェック
-                if (!arrivalDataAccess.CheckArrivalCDExistence(textBoxArDetailID.Text.Trim()))
+                // 受注IDの存在チェック
+                if (!arrivalDataAccess.CheckOrderIDExistence(textBoxArID.Text.Trim(), textBoxOrID.Text.Trim()))
                 {
-                    //MessageBox.Show("入力された入荷詳細IDは存在しません");
-                    messageDsp.DspMsg("M11007");
-                    textBoxArDetailID.Focus();
+                    //MessageBox.Show("入荷IDに関連する受注IDが一致しません");
+                    messageDsp.DspMsg("M11073");
+                    textBoxOrID.Focus();
                     return false;
                 }
             }
             else
             {
-                //MessageBox.Show("入荷詳細IDが入力されていません");
-                messageDsp.DspMsg("M11008");
-                textBoxArDetailID.Focus();
+                //MessageBox.Show("受注IDが入力されていません");
+                messageDsp.DspMsg("M11074");
+                textBoxOrID.Focus();
                 return false;
             }
 
@@ -713,7 +625,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
             if (checkBoxArFlag.CheckState == CheckState.Indeterminate)
             {
                 //MessageBox.Show("管理フラグが不確定の状態です");
-                messageDsp.DspMsg("M1008");
+                messageDsp.DspMsg("M11028");
                 checkBoxArFlag.Focus();
                 return false;
             }
@@ -722,7 +634,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
             if (checkBoxArFlag.Checked == false)
             {
                 //MessageBox.Show("管理フラグが未チェックです");
-                messageDsp.DspMsg("M10029");
+                messageDsp.DspMsg("M11075");
                 checkBoxArFlag.Focus();
                 return false;
             }
@@ -733,7 +645,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
                 if (textBoxArHidden.Text == "")
                 {
                     //MessageBox.Show("非表示理由の入力が必要です");
-                    messageDsp.DspMsg("M1023");
+                    messageDsp.DspMsg("M11030");
                     textBoxArHidden.Focus();
                     return false;
                 }
@@ -752,6 +664,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
             return new T_Arrival
             {
                 ArID = int.Parse(textBoxArID.Text.Trim()),
+                OrID = int.Parse(textBoxOrID.Text.Trim()),
                 ArFlag = ArFlg,
                 ArHidden = textBoxArHidden.Text.Trim()
             };
@@ -767,20 +680,52 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
         {
 
             // 削除確認メッセージ
-            DialogResult result = messageDsp.DspMsg("M1018");
+            DialogResult result = messageDsp.DspMsg("M11047");
             if (result == DialogResult.Cancel)
+            {
                 return;
+            }
 
             // 入荷情報の削除
             bool flg = arrivalDataAccess.DeleteArrivalData(delArrival);
             if (flg == true)
                 //MessageBox.Show("データを削除しました。");
-                messageDsp.DspMsg("M1019");
+                messageDsp.DspMsg("M11048");
             else
                 //MessageBox.Show("データの削除に失敗しました。");
-                messageDsp.DspMsg("M1020");
+                messageDsp.DspMsg("M11049");
 
             textBoxArID.Focus();
+
+            // 入力エリアのクリア
+            ClearInput();
+
+            // データグリッドビューの表示
+            GetDataGridView();
+
+            if (System.Windows.Forms.Form.ActiveForm != null) //nullエラー防止(特定の操作を行うと何故かnullが返り、例外エラーが出る
+            {
+                //開いている画面も自動リロード
+                ActForm();
+            }
+        }
+
+        private void ActForm()
+        {
+            NonMaster.FormOrder.F_Order.stflg = 1;
+            NonMaster.FormOrder.F_Order.ActiveForm.Activate();
+            NonMaster.FormChumon.F_Chumon.stflg = 1;
+            NonMaster.FormChumon.F_Chumon.ActiveForm.Activate();
+            NonMaster.FormSyukko.F_Syukko.stflg = 1;
+            NonMaster.FormSyukko.F_Syukko.ActiveForm.Activate();
+            NonMaster.FormArrival.F_ArrivalConfirm.stflg = 1;
+            NonMaster.FormArrival.F_ArrivalConfirm.ActiveForm.Activate();
+            NonMaster.FormShipment.F_Shipment.stflg = 1;
+            NonMaster.FormShipment.F_Shipment.ActiveForm.Activate();
+            NonMaster.FormSale.F_Sale.stflg = 1;
+            NonMaster.FormSale.F_Sale.ActiveForm.Activate();
+            Master.FormStock.F_Stock.stflg = 1;
+            Master.FormStock.F_Stock.ActiveForm.Activate();
         }
 
         private void buttonList_Click(object sender, EventArgs e)
@@ -821,72 +766,61 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
             checkBoxArFlag.Checked = false;
         }
 
-        private void buttonDetailClear_Click(object sender, EventArgs e)
-        {
-            // 受注詳細欄の入力エリアのクリア
-            textBoxArDetailID.Text = "";
-            textBoxPrID.Text = "";
-            textBoxArQuantity.Text = "";
-
-            // データグリッドビューの表示
-            SetFormDataGridView();
-        }
-
-        private void buttonLogout_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void buttonClose_Click(object sender, EventArgs e)
         {
+            if (frm2 != null)
+                frm2.Close();
             this.Close();
         }
 
         private void dataGridViewArrival_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            //クリックされた行データをテキストボックスへ
-            textBoxOrID.Text = dataGridViewArrival.Rows[dataGridViewArrival.CurrentRow.Index].Cells[0].Value.ToString();
-            textBoxSoID.Text = dataGridViewArrival.Rows[dataGridViewArrival.CurrentRow.Index].Cells[1].Value.ToString();
-            textBoxEmID.Text = dataGridViewArrival.Rows[dataGridViewArrival.CurrentRow.Index].Cells[2].Value.ToString();
-            textBoxClID.Text = dataGridViewArrival.Rows[dataGridViewArrival.CurrentRow.Index].Cells[3].Value.ToString();
-            textBoxArID.Text = dataGridViewArrival.Rows[dataGridViewArrival.CurrentRow.Index].Cells[4].Value.ToString();
+            if (dataGridViewArrival.CurrentRow != null)
+            {
+                //クリックされた行データをテキストボックスへ
+                textBoxArID.Text = dataGridViewArrival.Rows[dataGridViewArrival.CurrentRow.Index].Cells[0].Value.ToString();
+                textBoxSoID.Text = dataGridViewArrival.Rows[dataGridViewArrival.CurrentRow.Index].Cells[1].Value.ToString();
+                textBoxEmID.Text = dataGridViewArrival.Rows[dataGridViewArrival.CurrentRow.Index].Cells[2].Value.ToString();
+                textBoxClID.Text = dataGridViewArrival.Rows[dataGridViewArrival.CurrentRow.Index].Cells[3].Value.ToString();
+                textBoxOrID.Text = dataGridViewArrival.Rows[dataGridViewArrival.CurrentRow.Index].Cells[4].Value.ToString();
 
-            //日付が設定されていない場合、初期値として現在の日付を設定
-            if (dataGridViewArrival.Rows[dataGridViewArrival.CurrentRow.Index].Cells[5].Value == null)
-            {
-                dateTimePickerArDate.Value = DateTime.Now;
-                dateTimePickerArDate.Checked = false;
-            }
-            else
-            {
-                dateTimePickerArDate.Text = dataGridViewArrival.Rows[dataGridViewArrival.CurrentRow.Index].Cells[5].Value.ToString();
-            }
+                //日付が設定されていない場合、初期値として現在の日付を設定
+                if (dataGridViewArrival.Rows[dataGridViewArrival.CurrentRow.Index].Cells[5].Value == null)
+                {
+                    dateTimePickerArDate.Value = DateTime.Now;
+                    dateTimePickerArDate.Checked = false;
+                }
+                else
+                {
+                    dateTimePickerArDate.Text = dataGridViewArrival.Rows[dataGridViewArrival.CurrentRow.Index].Cells[5].Value.ToString();
+                }
 
-            //状態フラグの数値型をbool型に変換して取得
-            int OrStateFlg2 = int.Parse(dataGridViewArrival.Rows[dataGridViewArrival.CurrentRow.Index].Cells[6].Value.ToString());
-            if (OrStateFlg2 == 0)
-            {
-                checkBoxArStateFlag.Checked = false;
-            }
-            else
-            {
-                checkBoxArStateFlag.Checked = true;
-            }
-            //管理フラグの数値型をbool型に変換して取得
-            int OrFlg2 = int.Parse(dataGridViewArrival.Rows[dataGridViewArrival.CurrentRow.Index].Cells[7].Value.ToString());
-            if (OrFlg2 == 0)
-            {
-                checkBoxArFlag.Checked = false;
-            }
-            else if (OrFlg2 == 2)
-            {
-                checkBoxArFlag.Checked = true;
-            }
+                //状態フラグの数値型をbool型に変換して取得
+                int OrStateFlg2 = int.Parse(dataGridViewArrival.Rows[dataGridViewArrival.CurrentRow.Index].Cells[6].Value.ToString());
+                if (OrStateFlg2 == 0)
+                {
+                    checkBoxArStateFlag.Checked = false;
+                }
+                else
+                {
+                    checkBoxArStateFlag.Checked = true;
+                }
+                //管理フラグの数値型をbool型に変換して取得
+                int OrFlg2 = int.Parse(dataGridViewArrival.Rows[dataGridViewArrival.CurrentRow.Index].Cells[7].Value.ToString());
+                if (OrFlg2 == 0)
+                {
+                    checkBoxArFlag.Checked = false;
+                }
+                else if (OrFlg2 == 2)
+                {
+                    checkBoxArFlag.Checked = true;
+                }
 
-            textBoxArHidden.Text = dataGridViewArrival.Rows[dataGridViewArrival.CurrentRow.Index].Cells[8].Value.ToString();
-            textBoxArDetailID.Text = dataGridViewArrival.Rows[dataGridViewArrival.CurrentRow.Index].Cells[9].Value.ToString();
-            textBoxPrID.Text = dataGridViewArrival.Rows[dataGridViewArrival.CurrentRow.Index].Cells[10].Value.ToString();
-            textBoxArQuantity.Text = dataGridViewArrival.Rows[dataGridViewArrival.CurrentRow.Index].Cells[11].Value.ToString();
+                textBoxArHidden.Text = dataGridViewArrival.Rows[dataGridViewArrival.CurrentRow.Index].Cells[8].Value.ToString();
+                textBoxArDetailID.Text = dataGridViewArrival.Rows[dataGridViewArrival.CurrentRow.Index].Cells[9].Value.ToString();
+                textBoxPrID.Text = dataGridViewArrival.Rows[dataGridViewArrival.CurrentRow.Index].Cells[10].Value.ToString();
+                textBoxArQuantity.Text = dataGridViewArrival.Rows[dataGridViewArrival.CurrentRow.Index].Cells[11].Value.ToString();
+            }
         }
 
         private void checkBoxArStateFlag_CheckedChanged(object sender, EventArgs e)
@@ -927,6 +861,10 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
 
         private void buttonFirstPage_Click(object sender, EventArgs e)
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             dataGridViewArrival.DataSource = filteredList.Take(pageSize).ToList();
 
@@ -938,6 +876,14 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
 
         private void buttonPreviousPage_Click(object sender, EventArgs e)
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
+            if (textBoxPageNo.Text == "" || textBoxPageNo.Text == "0" || int.Parse(textBoxPageSize.Text) > 9)
+            {
+                textBoxPageNo.Text = "1";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             int pageNo = int.Parse(textBoxPageNo.Text) - 2;
             dataGridViewArrival.DataSource = filteredList.Skip(pageSize * pageNo).Take(pageSize).ToList();
@@ -953,6 +899,14 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
 
         private void buttonNextPage_Click(object sender, EventArgs e)
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
+            if (textBoxPageNo.Text == "" || textBoxPageNo.Text == "0" || int.Parse(textBoxPageSize.Text) > 9)
+            {
+                textBoxPageNo.Text = "1";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             int pageNo = int.Parse(textBoxPageNo.Text);
             //最終ページの計算
@@ -973,6 +927,14 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
 
         private void buttonLastPage_Click(object sender, EventArgs e)
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
+            if (textBoxPageNo.Text == "" || textBoxPageNo.Text == "0" || int.Parse(textBoxPageSize.Text) > 9)
+            {
+                textBoxPageNo.Text = "1";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             //最終ページの計算
             int pageNo = (int)Math.Ceiling(filteredList.Count / (double)pageSize) - 1;
@@ -1128,26 +1090,42 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
                 var context = new SalesManagement_DevContext();
                 try
                 {
+                    labelStateFlag.Text = "確定済"; //ラベルがUnknow状態で再度入力実行されたときに確定済に戻しておく
                     int mOrID = int.Parse(textBoxOrID.Text);
                     var mOrder = context.T_Orders.Single(x => x.OrID == mOrID); //入力されたOrIDで一致する一件のレコードを探す
-                    if (mOrder.OrFlag == 2)
+                    if (mOrder.OrFlag == 2 && mOrder.OrStateFlag == 1) //確定と非表示両方表示
                     {
                         labelFlag.Visible = true;
-                    }
-                    if (mOrder.OrStateFlag == 1)
-                    {
                         labelStateFlag.Visible = true;
                     }
-                    int mClID = mOrder.ClID;
-                    int mEmID = mOrder.EmID;
-                    int mSoID = mOrder.SoID;
-                    textBoxClID.Text = mClID.ToString();
-                    textBoxEmID.Text = mEmID.ToString();
-                    textBoxSoID.Text = mSoID.ToString();
+                    else
+                    {
+                        if (mOrder.OrFlag == 2) //管理フラグを表示するか
+                        {
+                            labelFlag.Visible = true;
+                        }
+                        else
+                        {
+                            labelFlag.Visible = false;
+                        }
+                        if (mOrder.OrStateFlag == 1) //状態フラグを表示するか
+                        {
+                            labelStateFlag.Visible = true;
+                        }
+                        else
+                        {
+                            labelStateFlag.Visible = false;
+                        }
+                    }
+                    int mClID = mOrder.ClID; //関連するIDを取得
+                    int mSoID = mOrder.SoID; //上記同様
+                    textBoxClID.Text = mClID.ToString(); //取得したIDを自動入力
+                    textBoxSoID.Text = mSoID.ToString(); //上記同様
                     context.Dispose();
                 }
                 catch
                 {
+                    labelFlag.Visible = false;
                     labelStateFlag.Visible = true;
                     labelStateFlag.Text = "“UnknownID”";
                     context.Dispose();
@@ -1201,6 +1179,164 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormArrival
             {
                 labelPrName.Visible = false;
                 labelPrName.Text = "商品名";
+            }
+        }
+
+        private void label顧客ID_Click(object sender, EventArgs e)
+        {
+            OpenForm(((Label)sender).Text);
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+            OpenForm(((Label)sender).Text);
+        }
+
+        private void label2営業所ID_Click(object sender, EventArgs e)
+        {
+            OpenForm(((Label)sender).Text);
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+            OpenForm(((Label)sender).Text);
+        }
+
+        private void label商品ID_Click(object sender, EventArgs e)
+        {
+            OpenForm(((Label)sender).Text);
+        }
+
+        private void buttonConfirmForm_Click(object sender, EventArgs e)
+        {
+            OpenForm(((Button)sender).Text);
+        }
+
+        private Form frm2;
+        private void OpenForm(string formName)
+        {
+            Form frm = new Form();
+            //引数より、開くフォームを設定
+            switch (formName)
+            {
+                case "顧客ID": //ボタンのテキスト名
+                    frm = new Master.FormClient.F_Client(); //フォームの名前
+                    break;
+                case "商品ID": //ボタンのテキスト名
+                    frm = new Master.FormProduct.F_Product(); //フォームの名前
+                    break;
+                case "社員ID": //ボタンのテキスト名
+                    frm = new Master.FormEmployee.F_Employee(); //フォームの名前
+                    break;
+                case "受注ID": //ボタンのテキスト名
+                    frm = new FormOrder.F_Order(); //フォームの名前
+                    break;
+                case "営業所ID": //ボタンのテキスト名
+                    frm = new Master.FormEmployee.F_SalesOffice(); //フォームの名前
+                    break;
+                case "入荷確定画面へ": //ボタンのテキスト名
+                    frm = new F_ArrivalConfirm(); //フォームの名前
+                    frm2 = frm;
+                    break;
+            }
+
+            // すでに同じフォームが開かれているかどうかを確認する
+            bool isOpen = false;
+            Form openForm = null;
+            foreach (Form form in Application.OpenForms)
+            {
+                if (form.GetType() == frm.GetType())
+                {
+                    isOpen = true;
+                    openForm = form;
+                    break;
+                }
+            }
+
+            // 同じフォームが開かれていれば、そのフォームを最前面に持ってくる
+            if (isOpen)
+            {
+                openForm.BringToFront();
+            }
+            // 同じフォームが開かれていなければ、選択されたフォームを開く
+            else
+            {
+                frm.Show();
+            }
+        }
+
+        private void label顧客ID_MouseEnter(object sender, EventArgs e)
+        {
+            label顧客ID.BackColor = Color.Aqua;
+        }
+
+        private void label顧客ID_MouseLeave(object sender, EventArgs e)
+        {
+            label顧客ID.BackColor = Color.Transparent;
+        }
+
+        private void label2_MouseEnter(object sender, EventArgs e)
+        {
+            label2.BackColor = Color.Aqua;
+        }
+
+        private void label2_MouseLeave(object sender, EventArgs e)
+        {
+            label2.BackColor = Color.Transparent;
+        }
+
+        private void label2営業所ID_MouseEnter(object sender, EventArgs e)
+        {
+            label2営業所ID.BackColor = Color.Aqua;
+        }
+
+        private void label2営業所ID_MouseLeave(object sender, EventArgs e)
+        {
+            label2営業所ID.BackColor = Color.Transparent;
+        }
+
+        private void label6_MouseEnter(object sender, EventArgs e)
+        {
+            label6.BackColor = Color.Aqua;
+        }
+
+        private void label6_MouseLeave(object sender, EventArgs e)
+        {
+            label6.BackColor = Color.Transparent;
+        }
+
+        private void label商品ID_MouseEnter(object sender, EventArgs e)
+        {
+            label商品ID.BackColor = Color.Aqua;
+        }
+
+        private void label商品ID_MouseLeave(object sender, EventArgs e)
+        {
+            label商品ID.BackColor = Color.Transparent;
+        }
+
+        private void F_Arrival_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (frm2 != null)
+                frm2.Close();
+        }
+
+        private void F_Arrival_Activated(object sender, EventArgs e)
+        {
+            labelEmpName.Text = F_menu.loginName;
+            labelEmpID.Text = F_menu.loginEmID;
+            labelOfficeName.Text = F_menu.loginSalesOffice;
+            if (F_menu.loginSalesOffice == "本社")
+            {
+                buttonDelete.Enabled = false;
+                buttonDelete.BackgroundImage = Properties.Resources.Fixed_キャンセル使用不可;
+                buttonConfirmForm.Enabled = false;
+                buttonConfirmForm.BackgroundImage = Properties.Resources.Fixed_キャンセル使用不可;
+            }
+            if (stflg == 1)
+            {
+                GetDataGridView();
+                stflg = 0;
             }
         }
     }

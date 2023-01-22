@@ -25,6 +25,69 @@ namespace SalesManagement_SysDev.Forms.DbAccess
             }
             return flg;
         }
+
+        //仮登録機能
+        public bool CheckProductIDExistence(string productID, string hattyuID)
+        {
+            bool flg = false;
+            try
+            {
+                var context = new SalesManagement_DevContext();
+                if(NonMaster.FormHattyu.F_Hattyu.provisionalMode == true)
+                {
+                    //仮登録中の発注詳細テーブル内で商品IDで一致するデータが存在するか
+                    flg = context.T_HattyuDetailProvisionals.Any(x => x.PrID.ToString() == productID);
+                }
+                else
+                {
+                    //発注詳細テーブルの中で商品IDで一致するデータが存在するか
+                    var HattyuDetailTables = context.T_HattyuDetails.Where(x => x.HaID.ToString() == hattyuID);
+                    flg = HattyuDetailTables.Any(x => x.PrID.ToString() == productID);
+                }
+                context.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "例外エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return flg;
+        }
+
+        //更新機能
+        public bool CheckProductIDExistence2(string productID, string hattyuID, string HaDetailID)
+        {
+            bool flg = false;
+            try
+            {
+                var context = new SalesManagement_DevContext();
+                if (NonMaster.FormHattyu.F_Hattyu.provisionalMode == true)
+                {
+                    //現在選択されている発注詳細IDを除く処理(同じ詳細IDで数量だけを更新するとき、重複エラーを出さないようにするための処理)
+                    var a = GetHattyuProvisionalData();
+                    var b = a.Single(x => x.HaDetailID.ToString() == HaDetailID);
+                    a.Remove(b);
+
+                    //仮登録中の発注詳細テーブル内で商品IDで一致するデータが存在するか
+                    flg = a.Any(x => x.PrID.ToString() == productID);
+                }
+                else
+                {
+                    //現在選択されている発注詳細IDを除く処理(同じ詳細IDで数量だけを更新するとき、重複エラーを出さないようにするための処理)
+                    var a = context.T_HattyuDetails.Where(x => x.HaID.ToString() == hattyuID).ToList();
+                    var b = a.Single(x => x.HaDetailID.ToString() == HaDetailID);
+                    a.Remove(b);
+
+                    //発注詳細テーブルの中で商品IDで一致するデータが存在するか
+                    flg = a.Any(x => x.PrID.ToString() == productID);
+                }
+                context.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "例外エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return flg;
+        }
         public bool CheckHattyuDetailCDExistence(string hattyuDetailID)
         {
             bool flg = false;
@@ -338,13 +401,135 @@ namespace SalesManagement_SysDev.Forms.DbAccess
             try
             {
                 var context = new SalesManagement_DevContext();
+
                 var hattyu = context.T_Hattyus.Single(x => x.HaID == updHattyu.HaID);
-                hattyu.MaID = updHattyu.MaID;
-                hattyu.EmID = updHattyu.EmID;
-                hattyu.HaDate = updHattyu.HaDate;
-                hattyu.WaWarehouseFlag = updHattyu.WaWarehouseFlag;
-                hattyu.HaFlag = updHattyu.HaFlag;
-                hattyu.HaHidden = hattyu.HaHidden;
+                var Warehousing = context.T_Warehousings.SingleOrDefault(x => x.HaID == updHattyu.HaID);
+
+                if(hattyu.WaWarehouseFlag == 1)
+                {
+                    if (Forms.NonMaster.FormHattyu.F_Hattyu.HaFlg == 0)
+                    {
+                        //非表示レコードかつ、checkBoxには管理フラグが外されているか(非表示から復元されるか)
+                        if (hattyu.HaFlag == 2 && NonMaster.FormHattyu.F_Hattyu.HaFlg == 0)
+                        {
+                            //まず今のレコードの発注IDに一致する入庫レコードが存在するか、そしてレコードが入庫確定済か(これは在庫減らす処理がされてるかを判断)
+                            if (Warehousing != null && Warehousing.WaShelfFlag == 1)
+                            {
+                                //非表示レコードかつ、checkBoxには管理フラグが外されているか(非表示から復元されるか)
+                                if (hattyu.HaFlag == 2 && NonMaster.FormHattyu.F_Hattyu.HaFlg != 2)
+                                {
+                                    int i = 0;
+                                    //レコード復元されたときに在庫数を増やす(元に戻す)
+                                    var hattyuDetail = context.T_HattyuDetails.Where(x => x.HaID == updHattyu.HaID).ToList();
+                                    foreach (var p in hattyuDetail)
+                                    {
+                                        i++;
+                                        //商品IDは重複しない前提
+                                        var StockUndo = context.T_Stocks.SingleOrDefault(x => x.PrID == p.PrID);
+                                        StockUndo.StQuantity = StockUndo.StQuantity + p.HaQuantity;
+                                        if (StockUndo.StQuantity < 0)
+                                        {
+                                            MessageBox.Show($"'発注ID {updHattyu.HaID}'に一致する確定済み'入庫ID {Warehousing.WaID}'の {i}件目の数量が\n現在庫数よりも多いため復元できません", "在庫不足", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                            context.Dispose();
+                                            return false;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("確定済みのデータは更新できません\n削除のみ機能します", "更新不可", 0, MessageBoxIcon.Error);
+                            return false;
+                        }
+
+                        hattyu.HaFlag = updHattyu.HaFlag;
+                        hattyu.HaHidden = updHattyu.HaHidden;
+
+                        if (Warehousing != null)
+                        {
+                            Warehousing.WaFlag = updHattyu.HaFlag;
+                            Warehousing.WaHidden = updHattyu.HaHidden;
+                        }
+                    }
+                    else
+                    {
+                        //まず今のレコードの発注IDに一致する入庫レコードが存在するか、そしてレコードが入庫確定済か(これは在庫減らす処理がされてるかを判断)
+                        if (Warehousing != null && Warehousing.WaShelfFlag == 1)
+                        {
+                            //入庫確定済レコードを非表示にする
+                            if (hattyu.HaFlag != 2 && NonMaster.FormHattyu.F_Hattyu.HaFlg == 2)
+                            {
+                                //レコード削除されたときに在庫数を減らす(元に戻す)
+                                var hattyuDetail = context.T_HattyuDetails.Where(x => x.HaID == updHattyu.HaID).ToList();
+                                foreach (var p in hattyuDetail)
+                                {
+                                    //商品IDは重複しない前提
+                                    var StockUndo = context.T_Stocks.SingleOrDefault(x => x.PrID == p.PrID);
+                                    StockUndo.StQuantity = StockUndo.StQuantity - p.HaQuantity;
+                                }
+                            }
+                        }
+                        hattyu.HaFlag = updHattyu.HaFlag;
+                        hattyu.HaHidden = updHattyu.HaHidden;
+
+                        if (Warehousing != null)
+                        {
+                            Warehousing.WaFlag = updHattyu.HaFlag;
+                            Warehousing.WaHidden = updHattyu.HaHidden;
+                        }
+                    }
+                }
+                else //未確定のレコードは通常の更新機能が実行される
+                {
+                    //まず今のレコードの発注IDに一致する入庫レコードが存在するか、そしてレコードが入庫確定済か(これは在庫減らす処理がされてるかを判断)
+                    if (Warehousing != null && Warehousing.WaShelfFlag == 1)
+                    {
+                        //入庫確定済レコードを非表示にする
+                        if (hattyu.HaFlag != 2 && NonMaster.FormHattyu.F_Hattyu.HaFlg == 2)
+                        {
+                            //レコード削除されたときに在庫数を減らす(元に戻す)
+                            var hattyuDetail = context.T_HattyuDetails.Where(x => x.HaID == updHattyu.HaID).ToList();
+                            foreach (var p in hattyuDetail)
+                            {
+                                //商品IDは重複しない前提
+                                var StockUndo = context.T_Stocks.SingleOrDefault(x => x.PrID == p.PrID);
+                                StockUndo.StQuantity = StockUndo.StQuantity - p.HaQuantity;
+                            }
+                        }
+                        //非表示レコードかつ、checkBoxには管理フラグが外されているか(非表示から復元されるか)
+                        if (hattyu.HaFlag == 2 && NonMaster.FormHattyu.F_Hattyu.HaFlg != 2)
+                        {
+                            int i = 0;
+                            //レコード復元されたときに在庫数を増やす(元に戻す)
+                            var hattyuDetail = context.T_HattyuDetails.Where(x => x.HaID == updHattyu.HaID).ToList();
+                            foreach (var p in hattyuDetail)
+                            {
+                                i++;
+                                //商品IDは重複しない前提
+                                var StockUndo = context.T_Stocks.SingleOrDefault(x => x.PrID == p.PrID);
+                                StockUndo.StQuantity = StockUndo.StQuantity + p.HaQuantity;
+                                if (StockUndo.StQuantity < 0)
+                                {
+                                    MessageBox.Show($"'発注ID {updHattyu.HaID}'に一致する確定済み'入庫ID {Warehousing.WaID}'の {i}件目の数量が\n現在庫数よりも多いため復元できません", "在庫不足", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    context.Dispose();
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                    hattyu.MaID = updHattyu.MaID;
+                    hattyu.EmID = updHattyu.EmID;
+                    hattyu.HaDate = updHattyu.HaDate;
+                    hattyu.HaFlag = updHattyu.HaFlag;
+                    hattyu.HaHidden = updHattyu.HaHidden;
+
+                    if (Warehousing != null)
+                    {
+                        Warehousing.WaFlag = updHattyu.HaFlag;
+                        Warehousing.WaHidden = updHattyu.HaHidden;
+                    }
+                }
 
                 context.SaveChanges();
                 context.Dispose();
@@ -357,6 +542,7 @@ namespace SalesManagement_SysDev.Forms.DbAccess
                 return false;
             }
         }
+
         public bool UpdateHattyuDetailData(T_HattyuDetail updHattyuDetail)
         {
             try
@@ -377,25 +563,7 @@ namespace SalesManagement_SysDev.Forms.DbAccess
                 return false;
             }
         }
-        //public bool ConfirmHattyuData(T_Hattyu conHattyu)
-        //{
-        //    try
-        //    {
-        //        var context = new SalesManagement_DevContext();
-        //        var hattyu = context.T_Hattyus.Single(x => x.HaID == conHattyu.HaID);
-        //        hattyu.WaWarehouseFlag = conHattyu.WaWarehouseFlag;
 
-        //        context.SaveChanges();
-        //        context.Dispose();
-
-        //        return true;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show(ex.Message, "例外エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //        return false;
-        //    }
-        //}
         public bool UpdateHattyuDetailProvisionalData(Entity.T_HattyuDetailProvisional updHattyuDetailProvisional)
         {
             try
@@ -415,6 +583,179 @@ namespace SalesManagement_SysDev.Forms.DbAccess
                 MessageBox.Show(ex.Message, "例外エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
+        }
+
+        //確定検索用
+        public List<T_HattyuDsp> SearchHattyuConfirm(T_HattyuDsp selectCondition)
+        {
+            List<T_HattyuDsp> Hattyu = GetHattyuData();
+            try
+            {
+                if (NonMaster.FormHattyu.F_HattyuUpdate.mHaID != "")
+                {
+                    Hattyu = Hattyu.Where(x =>
+                                                        x.HaID.ToString().Contains(selectCondition.HaID.ToString())).ToList();
+                }
+                else if (NonMaster.FormHattyu.F_HattyuUpdate.mMaID != "")
+                {
+                    Hattyu = Hattyu.Where(x =>
+                                                        x.MaID.ToString().Contains(selectCondition.MaID.ToString())).ToList();
+                }
+                else if (NonMaster.FormHattyu.F_HattyuUpdate.mDate != false)
+                {
+                    Hattyu = Hattyu.Where(x =>
+                                                        x.HaDate.ToString().Contains(selectCondition.HaDate.ToString())).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "例外エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return Hattyu;
+        }
+
+        public bool CheckStateFlagExistence(string hattyuID)
+        {
+            bool flg = false;
+            try
+            {
+                var context = new SalesManagement_DevContext();
+                //状態フラグで一致するデータが存在するか
+                var HaDate = context.T_Hattyus.Where(x => x.HaID.ToString() == hattyuID).ToList();
+                flg = HaDate.Any(x => x.WaWarehouseFlag == 1);
+                context.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "例外エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return flg;
+        }
+        public bool CheckFlagExistence(string hattyuID)
+        {
+            bool flg = false;
+            try
+            {
+                var context = new SalesManagement_DevContext();
+                //管理フラグで一致するデータが存在するか
+                var HaDate = context.T_Hattyus.Where(x => x.HaID.ToString() == hattyuID).ToList();
+                flg = HaDate.Any(x => x.HaFlag == 2);
+                context.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "例外エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return flg;
+        }
+
+        public bool ConfirmHattyuData(T_Hattyu conHattyu)
+        {
+            try
+            {
+                var context = new SalesManagement_DevContext();
+
+                //確定する1件の発注情報を得る
+                var hattyu = context.T_Hattyus.Single(x => x.HaID == conHattyu.HaID);
+
+                //発注情報を入庫情報として1件の注文レコードを新規作成
+                var warehousing = new T_Warehousing
+                {
+                    HaID = hattyu.HaID,
+                    EmID = hattyu.EmID,
+                    WaDate = DateTime.Now,
+                    WaFlag = 0,
+                    WaShelfFlag = 0,
+                    WaHidden = hattyu.HaHidden
+                };
+
+                hattyu.WaWarehouseFlag = conHattyu.WaWarehouseFlag; //発注状態フラグ'01'を反映
+                context.T_Warehousings.Add(warehousing); //入庫テーブル反映(一旦、主キーを自動採番取得のために登録しておく)
+                context.SaveChanges();
+
+                //確定する1件の発注情報を得る
+                var hattyuDetail = context.T_HattyuDetails.Where(x => x.HaID == conHattyu.HaID).ToList();
+
+                // 入庫データの取得
+                List<T_Warehousing> Warehousing = GetWarehousingTable();
+                // T_Warehousingから、直前にAddした末尾の行を取得する
+                T_Warehousing lastWarehousingTable = Warehousing[Warehousing.Count - 1];
+                // 末尾行のIDを取得
+                int WarehousingID = lastWarehousingTable.WaID;
+
+                List<T_WarehousingDetail> warehousingDetail = new List<T_WarehousingDetail>();
+                foreach (var p in hattyuDetail)
+                {
+                    warehousingDetail.Add(new T_WarehousingDetail()
+                    {
+                        WaID = WarehousingID,
+                        PrID = p.PrID,
+                        WaQuantity = p.HaQuantity
+                    });
+                }
+
+                context.T_WarehousingDetails.AddRange(warehousingDetail); //入庫詳細テーブル反映
+                context.SaveChanges();
+
+                context.Dispose();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "例外エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
+        ///////////////////////////////
+        //メソッド名：GetWarehousingData()
+        //引　数   ：なし
+        //戻り値   ：入庫データ
+        //機　能   ：入庫データの取得
+        ///////////////////////////////
+        public List<T_Warehousing> GetWarehousingTable()
+        {
+            List<T_Warehousing> warehousing = new List<T_Warehousing>();
+            try
+            {
+                var context = new SalesManagement_DevContext();
+                // tbはIEnumerable型
+                var tb = from t1 in context.T_Warehousings
+
+                         select new
+                         {
+                             t1.WaID,
+                             t1.HaID,
+                             t1.EmID,
+                             t1.WaDate,
+                             t1.WaShelfFlag,
+                             t1.WaFlag,
+                             t1.WaHidden
+                         };
+
+                // IEnumerable型のデータをList型へ
+
+                foreach (var p in tb)
+                {
+                    warehousing.Add(new T_Warehousing()
+                    {
+                        WaID = p.WaID,
+                        HaID = p.HaID,
+                        EmID = p.EmID,
+                        WaDate = p.WaDate,
+                        WaShelfFlag = p.WaShelfFlag,
+                        WaFlag = p.WaFlag,
+                        WaHidden = p.WaHidden
+                    });
+                }
+                context.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "例外エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return warehousing;
         }
     }
 }

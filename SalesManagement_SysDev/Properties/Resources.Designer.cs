@@ -63,19 +63,9 @@ namespace SalesManagement_SysDev.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap Fixed_top_panel1 {
+        internal static System.Drawing.Bitmap Fixed_Menu_ログイン制限 {
             get {
-                object obj = ResourceManager.GetObject("Fixed_top_panel1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap Fixed_top_panel2 {
-            get {
-                object obj = ResourceManager.GetObject("Fixed_top_panel2", resourceCulture);
+                object obj = ResourceManager.GetObject("Fixed_Menu_ログイン制限", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -86,6 +76,16 @@ namespace SalesManagement_SysDev.Properties {
         internal static System.Drawing.Bitmap Fixed_top_枠線 {
             get {
                 object obj = ResourceManager.GetObject("Fixed_top_枠線", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Fixed_キャンセル使用不可 {
+            get {
+                object obj = ResourceManager.GetObject("Fixed_キャンセル使用不可", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -133,6 +133,16 @@ namespace SalesManagement_SysDev.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap Fixed_マスタ以外panel {
+            get {
+                object obj = ResourceManager.GetObject("Fixed_マスタ以外panel", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap Fixed_マスタ以外用ボタン {
             get {
                 object obj = ResourceManager.GetObject("Fixed_マスタ以外用ボタン", resourceCulture);
@@ -143,9 +153,29 @@ namespace SalesManagement_SysDev.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap Fixed_マスタ以外用ボタン_発注関連_ {
+            get {
+                object obj = ResourceManager.GetObject("Fixed_マスタ以外用ボタン(発注関連)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap Fixed_マスタ用ボタン {
             get {
                 object obj = ResourceManager.GetObject("Fixed_マスタ用ボタン", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Fixed_マスタ用ボタン_閉じる {
+            get {
+                object obj = ResourceManager.GetObject("Fixed_マスタ用ボタン-閉じる", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -176,6 +206,16 @@ namespace SalesManagement_SysDev.Properties {
         internal static System.Drawing.Bitmap Fixed_ログイン {
             get {
                 object obj = ResourceManager.GetObject("Fixed_ログイン", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Fixed_ログイン画面 {
+            get {
+                object obj = ResourceManager.GetObject("Fixed_ログイン画面", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -273,6 +313,16 @@ namespace SalesManagement_SysDev.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap Fixed_確定panel {
+            get {
+                object obj = ResourceManager.GetObject("Fixed_確定panel", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap Fixed_確定画面類 {
             get {
                 object obj = ResourceManager.GetObject("Fixed_確定画面類", resourceCulture);
@@ -306,6 +356,16 @@ namespace SalesManagement_SysDev.Properties {
         internal static System.Drawing.Bitmap Fixed_陥没panel {
             get {
                 object obj = ResourceManager.GetObject("Fixed_陥没panel", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Fixed_集計panel {
+            get {
+                object obj = ResourceManager.GetObject("Fixed_集計panel", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -356,6 +416,16 @@ namespace SalesManagement_SysDev.Properties {
         internal static System.Drawing.Bitmap 営業所検索 {
             get {
                 object obj = ResourceManager.GetObject("営業所検索", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap 詳細欄用ラベルpanel {
+            get {
+                object obj = ResourceManager.GetObject("詳細欄用ラベルpanel", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

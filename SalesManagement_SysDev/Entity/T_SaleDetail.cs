@@ -17,7 +17,7 @@ namespace SalesManagement_SysDev
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
         [Required]
-        [Column("SaDatailID", TypeName = "INT", Order = 8)]
+        [Column("SaDetailID", TypeName = "INT", Order = 8)]
         [DisplayName("売上明細ID")]
         public int SaDetailID { get; set; }         //売上明細ID
 

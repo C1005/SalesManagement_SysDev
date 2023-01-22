@@ -24,8 +24,9 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
         private static List<T_HattyuDsp> filteredList;
         //フラグを数値型で入れるための変数
         int WaWarehouseFlg = 0;
-        int HaFlg = 0;
-        bool provisionalMode = false;
+        internal static int HaFlg = 0;
+        internal static bool provisionalMode = false;
+        internal static int stflg = 0;
 
         public F_Hattyu()
         {
@@ -61,7 +62,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
         private void SetFormDataGridView()
         {
             //dataGridViewのページサイズ指定
-            textBoxPageSize.Text = "12";
+            textBoxPageSize.Text = "15";
             //dataGridViewのページ番号指定
             textBoxPageNo.Text = "1";
             //読み取り専用に指定
@@ -107,6 +108,14 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
         ///////////////////////////////
         private void SetDataGridView()
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
+            if (textBoxPageNo.Text == "" || textBoxPageNo.Text == "0" || int.Parse(textBoxPageSize.Text) > 9)
+            {
+                textBoxPageNo.Text = "1";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             int pageNo = int.Parse(textBoxPageNo.Text) - 1;
             if (provisionalMode == true)
@@ -117,6 +126,15 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             {
                 filteredList = Hattyu.Where(x => x.HaFlag != 2).ToList(); //HaFlagが2のレコードは排除する
                 dataGridViewHattyu.DataSource = filteredList.Skip(pageSize * pageNo).Take(pageSize).ToList();
+
+                if (filteredList.Count == 0)
+                {
+                    labelNoTable.Visible = true;
+                }
+                else
+                {
+                    labelNoTable.Visible = false;
+                }
             }
 
             //各列幅の指定
@@ -126,8 +144,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             dataGridViewHattyu.Columns[3].Width = 130;
             dataGridViewHattyu.Columns[4].Width = 130;
             dataGridViewHattyu.Columns[5].Width = 110;
-
-            dataGridViewHattyu.Columns[6].Width = 400;
+            dataGridViewHattyu.Columns[6].AutoSizeMode = (DataGridViewAutoSizeColumnMode)DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewHattyu.Columns[7].Width = 100;
             dataGridViewHattyu.Columns[8].Width = 100;
             dataGridViewHattyu.Columns[9].Width = 70;
@@ -157,25 +174,32 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             dataGridViewHattyu.Refresh();
         }
 
-        private void buttonMakerSearch_Click(object sender, EventArgs e)
+        private void label発注ID_Click(object sender, EventArgs e)
         {
-            OpenForm(((Button)sender).Text);
+            OpenForm(((Label)sender).Text);
         }
 
-        private void buttonProductSearch_Click(object sender, EventArgs e)
+        private void label発注社員ID_Click(object sender, EventArgs e)
         {
-            OpenForm(((Button)sender).Text);
+            OpenForm(((Label)sender).Text);
         }
 
-        private void buttonEmployeeSearch_Click(object sender, EventArgs e)
+        private void label商品ID_Click(object sender, EventArgs e)
         {
-            OpenForm(((Button)sender).Text);
+            OpenForm(((Label)sender).Text);
         }
 
         private void buttonConfirmForm_Click(object sender, EventArgs e)
         {
+            if (provisionalMode == true)
+            {
+                MessageBox.Show("仮登録中は発注更新画面に移動することはできません", "ロック中", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             OpenForm(((Button)sender).Text);
         }
+
+        private Form frm2;
 
         private void OpenForm(string formName)
         {
@@ -183,17 +207,18 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             //引数より、開くフォームを設定
             switch (formName)
             {
-                case "メーカ検索": //ボタンのテキスト名
+                case "メーカID": //ボタンのテキスト名
                     frm = new Master.FormProduct.F_Maker(); //フォームの名前
                     break;
-                case "商品検索": //ボタンのテキスト名
+                case "商品ID": //ボタンのテキスト名
                     frm = new Master.FormProduct.F_Product(); //フォームの名前
                     break;
-                case "社員検索": //ボタンのテキスト名
+                case "発注社員ID": //ボタンのテキスト名
                     frm = new Master.FormEmployee.F_Employee(); //フォームの名前
                     break;
                 case "発注更新画面へ": //ボタンのテキスト名
                     frm = new F_HattyuUpdate(); //フォームの名前
+                    frm2 = frm;
                     break;
             }
 
@@ -421,7 +446,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
 
             // データグリッドビューの表示
             GetDataGridView();
-
+            lastpage();
         }
 
         private void buttonProvisionalCancel_Click(object sender, EventArgs e)
@@ -524,26 +549,26 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
                 // メーカIDの適否
                 if (!String.IsNullOrEmpty(textBoxMaID.Text.Trim()))
                 {
-                    // 営業所IDに一致するレコードの存在チェック
+                    // メーカIDに一致するレコードの存在チェック
                     if (labelMaName.Text == "“UnknownID”")
                     {
-                        //MessageBox.Show("入力された営業所IDは存在しません");
+                        //MessageBox.Show("入力されたメーカIDは存在しません");
                         messageDsp.DspMsg("M13050");
                         textBoxMaID.Focus();
                         return false;
                     }
-                    // 営業所IDの半角数字チェック
+                    // メーカIDの半角数字チェック
                     if (!dataInputFormCheck.CheckNumeric(textBoxMaID.Text.Trim()))
                     {
-                        //MessageBox.Show("営業所IDは全て半角数字入力です");
+                        //MessageBox.Show("メーカIDは全て半角数字入力です");
                         messageDsp.DspMsg("M13005");
                         textBoxMaID.Focus();
                         return false;
                     }
-                    // 営業所IDの文字数チェック
+                    // メーカIDの文字数チェック
                     if (textBoxMaID.TextLength > 4)
                     {
-                        //MessageBox.Show("営業所IDは4文字です");
+                        //MessageBox.Show("メーカIDは4文字です");
                         messageDsp.DspMsg("M13006");
                         textBoxMaID.Focus();
                         return false;
@@ -551,7 +576,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
                 }
                 else
                 {
-                    //MessageBox.Show("営業所IDが入力されていません");
+                    //MessageBox.Show("メーカIDが入力されていません");
                     messageDsp.DspMsg("M13008");
                     textBoxMaID.Focus();
                     return false;
@@ -560,36 +585,36 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
                 // 発注社員IDの適否
                 if (!String.IsNullOrEmpty(textBoxEmID.Text.Trim()))
                 {
-                    // 社員IDが0ではないかチェック
+                    // 発注社員IDが0ではないかチェック
                     if (int.Parse(textBoxEmID.Text.Trim()) == 0)
                     {
-                        //MessageBox.Show("社員IDは01から割り当ててください");
+                        //MessageBox.Show("発注社員IDは01から割り当ててください");
                         messageDsp.DspMsg("M13003");
                         textBoxEmID.Focus();
                         return false;
                     }
 
-                    // 社員IDに一致するレコードの存在チェック
+                    // 発注社員IDに一致するレコードの存在チェック
                     if (labelEmName.Text == "“UnknownID”")
                     {
-                        //MessageBox.Show("入力された社員IDは存在しません");
+                        //MessageBox.Show("入力された発注社員IDは存在しません");
                         messageDsp.DspMsg("M13031");
                         textBoxEmID.Focus();
                         return false;
                     }
 
-                    // 社員IDの半角数字チェック
+                    // 発注社員IDの半角数字チェック
                     if (!dataInputFormCheck.CheckNumeric(textBoxEmID.Text.Trim()))
                     {
-                        //MessageBox.Show("社員IDは全て半角数字入力です");
+                        //MessageBox.Show("発注社員IDは全て半角数字入力です");
                         messageDsp.DspMsg("M13001");
                         textBoxEmID.Focus();
                         return false;
                     }
-                    // 社員IDの文字数チェック
+                    // 発注社員IDの文字数チェック
                     if (textBoxEmID.TextLength > 6)
                     {
-                        //MessageBox.Show("社員IDは6文字です");
+                        //MessageBox.Show("発注社員IDは6文字です");
                         messageDsp.DspMsg("M13002");
                         textBoxEmID.Focus();
                         return false;
@@ -597,7 +622,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
                 }
                 else
                 {
-                    //MessageBox.Show("社員IDが入力されていません");
+                    //MessageBox.Show("発注社員IDが入力されていません");
                     messageDsp.DspMsg("M13004");
                     textBoxEmID.Focus();
                     return false;
@@ -607,7 +632,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
                 // (不明な場合はリーダーまで)
                 if (dateTimePickerHaDate.Checked == false)
                 {
-                    //MessageBox.Show("受注年月日は必須です");
+                    //MessageBox.Show("発注年月日は必須です");
                     messageDsp.DspMsg("M13033");
                     dateTimePickerHaDate.Focus();
                     return false;
@@ -649,6 +674,14 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
                     textBoxPrID.Focus();
                     return false;
                 }
+                // 商品IDの重複チェック
+                if (hattyuDataAccess.CheckProductIDExistence(textBoxPrID.Text.Trim(), textBoxHaID.Text.Trim()))
+                {
+                    string i = textBoxHaID.Text.Trim();
+                    MessageBox.Show($"入力された'発注ID{i}'の詳細テーブル内で商品IDが重複します。", "入力確認", 0, (MessageBoxIcon)16);
+                    textBoxHaID.Focus();
+                    return false;
+                }
             }
             else
             {
@@ -677,6 +710,14 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
                     textBoxHaQuantity.Focus();
                     return false;
                 }
+                // 数量の０チェック
+                if (textBoxHaQuantity.Text == "0")
+                {
+                    //MessageBox.Show("数量は01以上です");
+                    messageDsp.DspMsg("M13054");
+                    textBoxHaQuantity.Focus();
+                    return false;
+                }
             }
             else
             {
@@ -686,19 +727,19 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
                 return false;
             }
 
-            // 状態フラグの適否
+            // 入庫済フラグの適否
             if (checkBoxWaWarehouseFlag.CheckState == CheckState.Indeterminate)
             {
-                //MessageBox.Show("状態フラグが不確定の状態です");
+                //MessageBox.Show("入庫済フラグが不確定の状態です");
                 messageDsp.DspMsg("M13017");
                 checkBoxWaWarehouseFlag.Focus();
                 return false;
             }
 
-            // 状態フラグの適否２
+            // 入庫済フラグの適否２
             if (checkBoxWaWarehouseFlag.Checked == true)
             {
-                //MessageBox.Show("登録では管理フラグは適用されません");
+                //MessageBox.Show("登録では入庫済フラグは適用されません");
                 messageDsp.DspMsg("M13045");
                 checkBoxWaWarehouseFlag.Focus();
                 return false;
@@ -801,9 +842,20 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
         private void ProvisionalHattyu(Entity.T_HattyuProvisional regHattyuProvisional, Entity.T_HattyuDetailProvisional regHattyuDetailProvisional)
         {
             // 登録確認メッセージ
-            DialogResult result = messageDsp.DspMsg("M13024");
-            if (result == DialogResult.Cancel)
-                return;
+            if(provisionalMode == true)
+            {
+                //発注詳細テーブルを追加してよろしいですか？
+                DialogResult result = messageDsp.DspMsg("M13051");
+                if (result == DialogResult.Cancel)
+                    return;
+            }
+            else
+            {
+                //発注データを仮登録してよろしいですか？
+                DialogResult result = messageDsp.DspMsg("M13024");
+                if (result == DialogResult.Cancel)
+                    return;
+            }
 
             // 受注情報の仮登録
             bool flg = hattyuDataAccess.AddHattyuProvisionalData(regHattyuProvisional, provisionalMode);
@@ -813,8 +865,37 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
                                                                                                  //T_HattyuProvisional regHattyuProvisionalの割り当て済みメインHaIDを受注詳細にもっていく
                 if (flg == true)
                 {
-                    //MessageBox.Show("データを仮登録しました。");
-                    messageDsp.DspMsg("M13025");
+                    if(provisionalMode == true)
+                    {
+                        //MessageBox.Show("発注詳細テーブルを追加しました。");
+                        messageDsp.DspMsg("M13052");
+                    }
+                    else
+                    {
+                        //MessageBox.Show("データを仮登録しました。");
+                        messageDsp.DspMsg("M13025");
+                    }
+                }
+                else
+                {
+                    if(provisionalMode == true)
+                    {
+                        //MessageBox.Show("発注詳細テーブルの追加に失敗しました。");
+                        messageDsp.DspMsg("M13053");
+                    }
+                    else
+                    {
+                        //MessageBox.Show("データの仮登録に失敗しました。");
+                        messageDsp.DspMsg("M13026");
+                    }         
+                }
+            }
+            else
+            {
+                if (provisionalMode == true)
+                {
+                    //MessageBox.Show("発注詳細テーブルの追加に失敗しました。");
+                    messageDsp.DspMsg("M13053");
                 }
                 else
                 {
@@ -822,10 +903,14 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
                     messageDsp.DspMsg("M13026");
                 }
             }
+
+            if (provisionalMode == false)
+            {
+                firstpage();
+            }
             else
             {
-                //MessageBox.Show("データの仮登録に失敗しました。");
-                messageDsp.DspMsg("M13026");
+                lastpage();
             }
 
             provisionalMode = true; //仮登録用グリッドビュー(DB)に切り替えるための変数
@@ -878,10 +963,10 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
                 // 発注IDの適否
                 if (!String.IsNullOrEmpty(textBoxHaID.Text.Trim()))
                 {
-                    // 受注IDの半角数字チェック
+                    // 発注IDの半角数字チェック
                     if (!dataInputFormCheck.CheckNumeric(textBoxHaID.Text.Trim()))
                     {
-                        //MessageBox.Show("受注IDは全て半角数字入力です");
+                        //MessageBox.Show("発注IDは全て半角数字入力です");
                         messageDsp.DspMsg("M13043");
                         textBoxHaID.Focus();
                         return false;
@@ -891,26 +976,26 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
                 // メーカIDの適否
                 if (!String.IsNullOrEmpty(textBoxMaID.Text.Trim()))
                 {
-                    // 営業所IDに一致するレコードの存在チェック
+                    // メーカIDに一致するレコードの存在チェック
                     if (labelMaName.Text == "“UnknownID”")
                     {
-                        //MessageBox.Show("入力された営業所IDは存在しません");
+                        //MessageBox.Show("入力されたメーカIDは存在しません");
                         messageDsp.DspMsg("M13050");
                         textBoxMaID.Focus();
                         return false;
                     }
-                    // 営業所IDの半角数字チェック
+                    // メーカIDの半角数字チェック
                     if (!dataInputFormCheck.CheckNumeric(textBoxMaID.Text.Trim()))
                     {
-                        //MessageBox.Show("営業所IDは全て半角数字入力です");
+                        //MessageBox.Show("メーカIDは全て半角数字入力です");
                         messageDsp.DspMsg("M13005");
                         textBoxMaID.Focus();
                         return false;
                     }
-                    // 営業所IDの文字数チェック
+                    // メーカIDの文字数チェック
                     if (textBoxMaID.TextLength > 4)
                     {
-                        //MessageBox.Show("営業所IDは4文字です");
+                        //MessageBox.Show("メーカIDは4文字です");
                         messageDsp.DspMsg("M13006");
                         textBoxMaID.Focus();
                         return false;
@@ -920,49 +1005,49 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
                 // 発注社員IDの適否
                 if (!String.IsNullOrEmpty(textBoxEmID.Text.Trim()))
                 {
-                    // 社員IDが0ではないかチェック
+                    // 発注社員IDが0ではないかチェック
                     if (int.Parse(textBoxEmID.Text.Trim()) == 0)
                     {
-                        //MessageBox.Show("社員IDは01から割り当ててください");
+                        //MessageBox.Show("発注社員IDは01から割り当ててください");
                         messageDsp.DspMsg("M13003");
                         textBoxEmID.Focus();
                         return false;
                     }
 
-                    // 社員IDに一致するレコードの存在チェック
+                    // 発注社員IDに一致するレコードの存在チェック
                     if (labelEmName.Text == "“UnknownID”")
                     {
-                        //MessageBox.Show("入力された社員IDは存在しません");
+                        //MessageBox.Show("入力された発注社員IDは存在しません");
                         messageDsp.DspMsg("M13031");
                         textBoxEmID.Focus();
                         return false;
                     }
 
-                    // 社員IDの半角数字チェック
+                    // 発注社員IDの半角数字チェック
                     if (!dataInputFormCheck.CheckNumeric(textBoxEmID.Text.Trim()))
                     {
-                        //MessageBox.Show("社員IDは全て半角数字入力です");
+                        //MessageBox.Show("発注社員IDは全て半角数字入力です");
                         messageDsp.DspMsg("M13001");
                         textBoxEmID.Focus();
                         return false;
                     }
-                    // 社員IDの文字数チェック
+                    // 発注社員IDの文字数チェック
                     if (textBoxEmID.TextLength > 6)
                     {
-                        //MessageBox.Show("社員IDは6文字です");
+                        //MessageBox.Show("発注社員IDは6文字です");
                         messageDsp.DspMsg("M13002");
                         textBoxEmID.Focus();
                         return false;
                     }
                 }
 
-                // 受注詳細IDの未入力チェック
+                // 発注詳細IDの未入力チェック
                 if (!String.IsNullOrEmpty(textBoxHaDetailID.Text.Trim()))
                 {
-                    // 受注詳細IDの半角数字チェック
+                    // 発注詳細IDの半角数字チェック
                     if (!dataInputFormCheck.CheckNumeric(textBoxHaDetailID.Text.Trim()))
                     {
-                        //MessageBox.Show("受注詳細IDは全て半角数字入力です");
+                        //MessageBox.Show("発注詳細IDは全て半角数字入力です");
                         messageDsp.DspMsg("M13044");
                         textBoxHaDetailID.Focus();
                         return false;
@@ -990,10 +1075,25 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
                     }
                 }
 
-                // 状態フラグの適否
+                if (dateTimePickerHaDate.Checked == true)
+                {
+                    //MessageBox.Show("発注年月日は検索対象外です");
+                    messageDsp.DspMsg("M13055");
+                    dateTimePickerHaDate.Focus();
+                    return false;
+                }
+                if (textBoxHaQuantity.Text != "")
+                {
+                    //MessageBox.Show("数量は検索対象外です");
+                    messageDsp.DspMsg("M13056");
+                    textBoxHaQuantity.Focus();
+                    return false;
+                }
+
+                // 入庫済フラグの適否
                 if (checkBoxWaWarehouseFlag.CheckState == CheckState.Indeterminate)
                 {
-                    //MessageBox.Show("状態フラグが不確定の状態です");
+                    //MessageBox.Show("入庫済フラグが不確定の状態です");
                     messageDsp.DspMsg("M13017");
                     checkBoxWaWarehouseFlag.Focus();
                     return false;
@@ -1156,6 +1256,14 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             int pageSize = int.Parse(textBoxPageSize.Text);
 
             dataGridViewHattyu.DataSource = Hattyu;
+            if (Hattyu.Count == 0)
+            {
+                labelNoTable.Visible = true;
+            }
+            else
+            {
+                labelNoTable.Visible = false;
+            }
 
             labelPage.Text = "/" + ((int)Math.Ceiling(Hattyu.Count / (double)pageSize)) + "ページ";
             dataGridViewHattyu.Refresh();
@@ -1205,30 +1313,38 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
         {
             if (provisionalMode == false)
             {
-                // 受注IDの未入力チェック
+                // 発注IDの未入力チェック
                 if (!String.IsNullOrEmpty(textBoxHaID.Text.Trim()))
                 {
-                    // 受注IDの半角数字チェック
-                    if (!dataInputFormCheck.CheckNumeric(textBoxHaID.Text.Trim()))
+                    // 発注IDの文字数チェック
+                    if (textBoxHaID.TextLength > 6)
                     {
-                        //MessageBox.Show("受注IDは全て半角数字入力です");
-                        messageDsp.DspMsg("M13043");
+                        //MessageBox.Show("発注IDは6文字です");
+                        messageDsp.DspMsg("M13057");
                         textBoxHaID.Focus();
                         return false;
                     }
-                    // 受注IDの存在チェック
+                    // 発注IDの半角数字チェック
+                    if (!dataInputFormCheck.CheckNumeric(textBoxHaID.Text.Trim()))
+                    {
+                        //MessageBox.Show("発注IDは全て半角数字入力です");
+                        messageDsp.DspMsg("M13058");
+                        textBoxHaID.Focus();
+                        return false;
+                    }
+                    // 発注IDの存在チェック
                     if (!hattyuDataAccess.CheckHattyuCDExistence(textBoxHaID.Text.Trim()))
                     {
-                        //MessageBox.Show("入力された受注IDは存在しません");
-                        messageDsp.DspMsg("M13039");
+                        //MessageBox.Show("入力された発注IDは存在しません");
+                        messageDsp.DspMsg("M13059");
                         textBoxHaID.Focus();
                         return false;
                     }
                 }
                 else
                 {
-                    //MessageBox.Show("受注IDが入力されていません");
-                    messageDsp.DspMsg("M13040");
+                    //MessageBox.Show("発注IDが入力されていません");
+                    messageDsp.DspMsg("M13060");
                     textBoxHaID.Focus();
                     return false;
                 }
@@ -1236,26 +1352,26 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
                 // メーカIDの適否
                 if (!String.IsNullOrEmpty(textBoxMaID.Text.Trim()))
                 {
-                    // 営業所IDに一致するレコードの存在チェック
+                    // メーカIDに一致するレコードの存在チェック
                     if (labelMaName.Text == "“UnknownID”")
                     {
-                        //MessageBox.Show("入力された営業所IDは存在しません");
+                        //MessageBox.Show("入力されたメーカIDは存在しません");
                         messageDsp.DspMsg("M13050");
                         textBoxMaID.Focus();
                         return false;
                     }
-                    // 営業所IDの半角数字チェック
+                    // メーカIDの半角数字チェック
                     if (!dataInputFormCheck.CheckNumeric(textBoxMaID.Text.Trim()))
                     {
-                        //MessageBox.Show("営業所IDは全て半角数字入力です");
+                        //MessageBox.Show("メーカIDは全て半角数字入力です");
                         messageDsp.DspMsg("M13005");
                         textBoxMaID.Focus();
                         return false;
                     }
-                    // 営業所IDの文字数チェック
+                    // メーカIDの文字数チェック
                     if (textBoxMaID.TextLength > 4)
                     {
-                        //MessageBox.Show("営業所IDは4文字です");
+                        //MessageBox.Show("メーカIDは4文字です");
                         messageDsp.DspMsg("M13006");
                         textBoxMaID.Focus();
                         return false;
@@ -1263,7 +1379,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
                 }
                 else
                 {
-                    //MessageBox.Show("営業所IDが入力されていません");
+                    //MessageBox.Show("メーカIDが入力されていません");
                     messageDsp.DspMsg("M13008");
                     textBoxMaID.Focus();
                     return false;
@@ -1272,36 +1388,36 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
                 // 発注社員IDの適否
                 if (!String.IsNullOrEmpty(textBoxEmID.Text.Trim()))
                 {
-                    // 社員IDが0ではないかチェック
+                    // 発注社員IDが0ではないかチェック
                     if (int.Parse(textBoxEmID.Text.Trim()) == 0)
                     {
-                        //MessageBox.Show("社員IDは01から割り当ててください");
+                        //MessageBox.Show("発注社員IDは01から割り当ててください");
                         messageDsp.DspMsg("M13003");
                         textBoxEmID.Focus();
                         return false;
                     }
 
-                    // 社員IDに一致するレコードの存在チェック
+                    // 発注社員IDに一致するレコードの存在チェック
                     if (labelEmName.Text == "“UnknownID”")
                     {
-                        //MessageBox.Show("入力された社員IDは存在しません");
+                        //MessageBox.Show("入力された発注社員IDは存在しません");
                         messageDsp.DspMsg("M13031");
                         textBoxEmID.Focus();
                         return false;
                     }
 
-                    // 社員IDの半角数字チェック
+                    // 発注社員IDの半角数字チェック
                     if (!dataInputFormCheck.CheckNumeric(textBoxEmID.Text.Trim()))
                     {
-                        //MessageBox.Show("社員IDは全て半角数字入力です");
+                        //MessageBox.Show("発注社員IDは全て半角数字入力です");
                         messageDsp.DspMsg("M13001");
                         textBoxEmID.Focus();
                         return false;
                     }
-                    // 社員IDの文字数チェック
+                    // 発注社員IDの文字数チェック
                     if (textBoxEmID.TextLength > 6)
                     {
-                        //MessageBox.Show("社員IDは6文字です");
+                        //MessageBox.Show("発注社員IDは6文字です");
                         messageDsp.DspMsg("M13002");
                         textBoxEmID.Focus();
                         return false;
@@ -1309,7 +1425,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
                 }
                 else
                 {
-                    //MessageBox.Show("社員IDが入力されていません");
+                    //MessageBox.Show("発注社員IDが入力されていません");
                     messageDsp.DspMsg("M13004");
                     textBoxEmID.Focus();
                     return false;
@@ -1319,28 +1435,28 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
                 // (不明な場合はリーダーまで)
                 if (dateTimePickerHaDate.Checked == false)
                 {
-                    //MessageBox.Show("受注年月日は必須です");
+                    //MessageBox.Show("発注年月日は必須です");
                     messageDsp.DspMsg("M13033");
                     dateTimePickerHaDate.Focus();
                     return false;
                 }
             }
 
-            // 受注詳細IDの未入力チェック
+            // 発注詳細IDの未入力チェック
             if (!String.IsNullOrEmpty(textBoxHaDetailID.Text.Trim()))
             {
-                // 受注詳細IDの半角数字チェック
+                // 発注詳細IDの半角数字チェック
                 if (!dataInputFormCheck.CheckNumeric(textBoxHaDetailID.Text.Trim()))
                 {
-                    //MessageBox.Show("受注詳細IDは全て半角数字入力です");
+                    //MessageBox.Show("発注詳細IDは全て半角数字入力です");
                     messageDsp.DspMsg("M13044");
                     textBoxHaDetailID.Focus();
                     return false;
                 }
-                // 受注詳細IDの存在チェック
+                // 発注詳細IDの存在チェック
                 if (!hattyuDataAccess.CheckHattyuDetailCDExistence(textBoxHaDetailID.Text.Trim()))
                 {
-                    //MessageBox.Show("入力された受注詳細IDは存在しません");
+                    //MessageBox.Show("入力された発注詳細IDは存在しません");
                     messageDsp.DspMsg("M13041");
                     textBoxHaDetailID.Focus();
                     return false;
@@ -1348,7 +1464,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             }
             else
             {
-                //MessageBox.Show("受注詳細IDが入力されていません");
+                //MessageBox.Show("発注詳細IDが入力されていません");
                 messageDsp.DspMsg("M13042");
                 textBoxHaDetailID.Focus();
                 return false;
@@ -1389,6 +1505,14 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
                     textBoxPrID.Focus();
                     return false;
                 }
+                // 商品IDの重複チェック
+                if (hattyuDataAccess.CheckProductIDExistence2(textBoxPrID.Text.Trim(), textBoxHaID.Text.Trim(), textBoxHaDetailID.Text.Trim()))
+                {
+                    string i = textBoxHaID.Text.Trim();
+                    MessageBox.Show($"入力された'発注ID{i}'の詳細テーブル内で商品IDが重複します。", "入力確認", 0, (MessageBoxIcon)16);
+                    textBoxPrID.Focus();
+                    return false;
+                }
             }
             else
             {
@@ -1417,12 +1541,38 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
                     textBoxHaQuantity.Focus();
                     return false;
                 }
+                // 数量の０チェック
+                if (textBoxHaQuantity.Text == "0")
+                {
+                    //MessageBox.Show("数量は01以上です");
+                    messageDsp.DspMsg("M13054");
+                    textBoxHaQuantity.Focus();
+                    return false;
+                }
             }
             else
             {
                 //MessageBox.Show("数量が入力されていません");
                 messageDsp.DspMsg("M13015");
                 textBoxHaQuantity.Focus();
+                return false;
+            }
+
+            // 入庫済フラグの適否
+            if (checkBoxWaWarehouseFlag.CheckState == CheckState.Indeterminate)
+            {
+                //MessageBox.Show("入庫済フラグが不確定の状態です");
+                messageDsp.DspMsg("M13017");
+                checkBoxWaWarehouseFlag.Focus();
+                return false;
+            }
+
+            // 管理フラグの適否
+            if (checkBoxHaFlag.CheckState == CheckState.Indeterminate)
+            {
+                //MessageBox.Show("管理フラグが不確定の状態です");
+                messageDsp.DspMsg("M13018");
+                checkBoxHaFlag.Focus();
                 return false;
             }
 
@@ -1436,33 +1586,6 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
                     textBoxHaHidden.Focus();
                     return false;
                 }
-            }
-
-            // 状態フラグの適否
-            if (checkBoxWaWarehouseFlag.CheckState == CheckState.Indeterminate)
-            {
-                //MessageBox.Show("状態フラグが不確定の状態です");
-                messageDsp.DspMsg("M13017");
-                checkBoxWaWarehouseFlag.Focus();
-                return false;
-            }
-
-            // 状態フラグの適否２
-            if (checkBoxWaWarehouseFlag.Checked == true)
-            {
-                //MessageBox.Show("登録では管理フラグは適用されません");
-                messageDsp.DspMsg("M13045");
-                checkBoxWaWarehouseFlag.Focus();
-                return false;
-            }
-
-            // 管理フラグの適否
-            if (checkBoxHaFlag.CheckState == CheckState.Indeterminate)
-            {
-                //MessageBox.Show("管理フラグが不確定の状態です");
-                messageDsp.DspMsg("M13018");
-                checkBoxHaFlag.Focus();
-                return false;
             }
             return true;
         }
@@ -1503,7 +1626,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
                 HaDetailID = int.Parse(textBoxHaDetailID.Text.Trim()),
                 HaID = CopyHaID,
                 PrID = int.Parse(textBoxPrID.Text.Trim()),
-                HaQuantity = int.Parse(textBoxHaQuantity.Text.Trim()),
+                HaQuantity = int.Parse(textBoxHaQuantity.Text.Trim())
             };
         }
         private Entity.T_HattyuDetailProvisional GenerateDataAtDetailProvisionalUpdate()
@@ -1512,7 +1635,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             {
                 HaDetailID = int.Parse(textBoxHaDetailID.Text.Trim()),
                 PrID = int.Parse(textBoxPrID.Text.Trim()),
-                HaQuantity = int.Parse(textBoxHaQuantity.Text.Trim()),
+                HaQuantity = int.Parse(textBoxHaQuantity.Text.Trim())
             };
         }
         ///////////////////////////////
@@ -1560,6 +1683,12 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
 
                 // データグリッドビューの表示
                 GetDataGridView();
+
+                if (System.Windows.Forms.Form.ActiveForm != null) //nullエラー防止(特定の操作を行うと何故かnullが返り、例外エラーが出る
+                {
+                    //開いている画面も自動リロード
+                    ActForm();
+                }
             }
 
             else if (HaFlg == 2)
@@ -1604,7 +1733,24 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
 
             // データグリッドビューの表示
             GetDataGridView();
+
+            if (System.Windows.Forms.Form.ActiveForm != null) //nullエラー防止(特定の操作を行うと何故かnullが返り、例外エラーが出る
+            {
+                //開いている画面も自動リロード
+                ActForm();
+            }
         }
+
+        private void ActForm()
+        {
+            NonMaster.FormHattyu.F_HattyuUpdate.stflg = 1;
+            NonMaster.FormHattyu.F_HattyuUpdate.ActiveForm.Activate();
+            NonMaster.FormWarehousing.F_Warehousing.stflg = 1;
+            NonMaster.FormWarehousing.F_Warehousing.ActiveForm.Activate();
+            Master.FormStock.F_Stock.stflg = 1;
+            Master.FormStock.F_Stock.ActiveForm.Activate();
+        }
+
         private void UpdateHattyuProvisional(Entity.T_HattyuDetailProvisional updHattyuDetailProvisional)
         {
             // 更新確認メッセージ
@@ -1641,28 +1787,43 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             if (provisionalMode == true)
             {
                 labelProvisional.Visible = true;
-                buttonProvisionalCancel.Visible = true;
+                buttonProvisionalCancel.Enabled = true;
+                buttonProvisionalCancel.BackgroundImage.Dispose();
+                buttonProvisionalCancel.BackgroundImage = Properties.Resources.Fixed_削除;
+                buttonProvisionalCancel.ForeColor = Color.Maroon;
+                buttonRegist.Enabled = true;
+                buttonRegist.BackgroundImage.Dispose();
+                buttonRegist.BackgroundImage = Properties.Resources.Fixed_登録;
+                buttonProvisional.Text = "追 加";
                 labelMark1.Visible = true;
                 labelMark2.Visible = true;
                 textBoxHaID.Enabled = false;
                 textBoxEmID.Enabled = false;
                 textBoxMaID.Enabled = false;
                 dateTimePickerHaDate.Enabled = false;
-                textBoxHaDetailID.Enabled = false;
                 checkBoxWaWarehouseFlag.Enabled = false;
                 checkBoxHaFlag.Enabled = false;
+
+                if (frm2 != null)
+                    frm2.Close();
             }
             else
             {
                 labelProvisional.Visible = false;
-                buttonProvisionalCancel.Visible = false;
+                buttonProvisionalCancel.BackgroundImage.Dispose();
+                buttonProvisionalCancel.BackgroundImage = Properties.Resources.Fixed_キャンセル使用不可;
+                buttonProvisionalCancel.ForeColor = Color.DimGray;
+                buttonProvisionalCancel.Enabled = false;
+                buttonRegist.BackgroundImage.Dispose();
+                buttonRegist.BackgroundImage = Properties.Resources.Fixed_キャンセル使用不可;
+                buttonRegist.Enabled = false;
+                buttonProvisional.Text = "仮登録";
                 labelMark1.Visible = false;
                 labelMark2.Visible = false;
                 textBoxHaID.Enabled = true;
                 textBoxEmID.Enabled = true;
                 textBoxMaID.Enabled = true;
                 dateTimePickerHaDate.Enabled = true;
-                textBoxHaDetailID.Enabled = true;
                 checkBoxWaWarehouseFlag.Enabled = true;
                 checkBoxHaFlag.Enabled = true;
             }
@@ -1707,12 +1868,34 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
         {
             if (checkBoxHaFlag.Checked == true)
             {
+                if (buttonUpdate.Enabled == false)
+                {
+                    BackColor = Color.Tomato;
+                    buttonUpdate.Text = "削除";
+                }
+                else
+                {
+                    BackColor = Color.Tomato;
+                    buttonUpdate.BackgroundImage = Properties.Resources.Fixed_削除;
+                    buttonUpdate.Text = "削除";
+                }
                 HaFlg = 2;
                 textBoxHaHidden.Enabled = true;
                 return;
             }
             else if (checkBoxHaFlag.Checked == false)
             {
+                if (buttonUpdate.Enabled == false)
+                {
+                    BackColor = Color.Gold;
+                    buttonUpdate.Text = "更新";
+                }
+                else
+                {
+                    BackColor = Color.Gold;
+                    buttonUpdate.BackgroundImage = Properties.Resources.Fixed_更新;
+                    buttonUpdate.Text = "更新";
+                }
                 HaFlg = 0;
                 textBoxHaHidden.Enabled = false;
                 textBoxHaHidden.Text = "";
@@ -1722,47 +1905,50 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
 
         private void dataGridViewHattyu_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            //クリックされた行データをテキストボックスへ
-            textBoxHaID.Text = dataGridViewHattyu.Rows[dataGridViewHattyu.CurrentRow.Index].Cells[0].Value.ToString();
-            textBoxMaID.Text = dataGridViewHattyu.Rows[dataGridViewHattyu.CurrentRow.Index].Cells[1].Value.ToString();
-            textBoxEmID.Text = dataGridViewHattyu.Rows[dataGridViewHattyu.CurrentRow.Index].Cells[2].Value.ToString();
+            if (dataGridViewHattyu.CurrentRow != null)
+            {
+                //クリックされた行データをテキストボックスへ
+                textBoxHaID.Text = dataGridViewHattyu.Rows[dataGridViewHattyu.CurrentRow.Index].Cells[0].Value.ToString();
+                textBoxMaID.Text = dataGridViewHattyu.Rows[dataGridViewHattyu.CurrentRow.Index].Cells[1].Value.ToString();
+                textBoxEmID.Text = dataGridViewHattyu.Rows[dataGridViewHattyu.CurrentRow.Index].Cells[2].Value.ToString();
 
-            //日付が設定されていない場合、初期値として現在の日付を設定
-            if (dataGridViewHattyu.Rows[dataGridViewHattyu.CurrentRow.Index].Cells[3].Value == null)
-            {
-                dateTimePickerHaDate.Value = DateTime.Now;
-                dateTimePickerHaDate.Checked = false;
-            }
-            else
-            {
-                dateTimePickerHaDate.Text = dataGridViewHattyu.Rows[dataGridViewHattyu.CurrentRow.Index].Cells[3].Value.ToString();
-            }
+                //日付が設定されていない場合、初期値として現在の日付を設定
+                if (dataGridViewHattyu.Rows[dataGridViewHattyu.CurrentRow.Index].Cells[3].Value == null)
+                {
+                    dateTimePickerHaDate.Value = DateTime.Now;
+                    dateTimePickerHaDate.Checked = false;
+                }
+                else
+                {
+                    dateTimePickerHaDate.Text = dataGridViewHattyu.Rows[dataGridViewHattyu.CurrentRow.Index].Cells[3].Value.ToString();
+                }
 
-            //状態フラグの数値型をbool型に変換して取得
-            int WaWarehouseFlg2 = int.Parse(dataGridViewHattyu.Rows[dataGridViewHattyu.CurrentRow.Index].Cells[4].Value.ToString());
-            if (WaWarehouseFlg2 == 0)
-            {
-                checkBoxWaWarehouseFlag.Checked = false;
-            }
-            else
-            {
-                checkBoxWaWarehouseFlag.Checked = true;
-            }
-            //管理フラグの数値型をbool型に変換して取得
-            int HaFlg2 = int.Parse(dataGridViewHattyu.Rows[dataGridViewHattyu.CurrentRow.Index].Cells[5].Value.ToString());
-            if (HaFlg2 == 0)
-            {
-                checkBoxHaFlag.Checked = false;
-            }
-            else if (HaFlg2 == 2)
-            {
-                checkBoxHaFlag.Checked = true;
-            }
+                //入庫済フラグの数値型をbool型に変換して取得
+                int WaWarehouseFlg2 = int.Parse(dataGridViewHattyu.Rows[dataGridViewHattyu.CurrentRow.Index].Cells[4].Value.ToString());
+                if (WaWarehouseFlg2 == 0)
+                {
+                    checkBoxWaWarehouseFlag.Checked = false;
+                }
+                else
+                {
+                    checkBoxWaWarehouseFlag.Checked = true;
+                }
+                //管理フラグの数値型をbool型に変換して取得
+                int HaFlg2 = int.Parse(dataGridViewHattyu.Rows[dataGridViewHattyu.CurrentRow.Index].Cells[5].Value.ToString());
+                if (HaFlg2 == 0)
+                {
+                    checkBoxHaFlag.Checked = false;
+                }
+                else if (HaFlg2 == 2)
+                {
+                    checkBoxHaFlag.Checked = true;
+                }
 
-            textBoxHaHidden.Text = dataGridViewHattyu.Rows[dataGridViewHattyu.CurrentRow.Index].Cells[6].Value.ToString();
-            textBoxHaDetailID.Text = dataGridViewHattyu.Rows[dataGridViewHattyu.CurrentRow.Index].Cells[7].Value.ToString();
-            textBoxPrID.Text = dataGridViewHattyu.Rows[dataGridViewHattyu.CurrentRow.Index].Cells[8].Value.ToString();
-            textBoxHaQuantity.Text = dataGridViewHattyu.Rows[dataGridViewHattyu.CurrentRow.Index].Cells[9].Value.ToString();
+                textBoxHaHidden.Text = dataGridViewHattyu.Rows[dataGridViewHattyu.CurrentRow.Index].Cells[6].Value.ToString();
+                textBoxHaDetailID.Text = dataGridViewHattyu.Rows[dataGridViewHattyu.CurrentRow.Index].Cells[7].Value.ToString();
+                textBoxPrID.Text = dataGridViewHattyu.Rows[dataGridViewHattyu.CurrentRow.Index].Cells[8].Value.ToString();
+                textBoxHaQuantity.Text = dataGridViewHattyu.Rows[dataGridViewHattyu.CurrentRow.Index].Cells[9].Value.ToString();
+            }
         }
 
         private void textBoxPrID_TextChanged(object sender, EventArgs e)
@@ -1894,19 +2080,10 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             SetFormDataGridView();
         }
 
-        private void buttonDetailClear_Click(object sender, EventArgs e)
-        {
-            // 受注詳細欄の入力エリアのクリア
-            textBoxHaDetailID.Text = "";
-            textBoxPrID.Text = "";
-            textBoxHaQuantity.Text = "";
-
-            // データグリッドビューの表示
-            SetFormDataGridView();
-        }
-
         private void buttonClose_Click(object sender, EventArgs e)
         {
+            if (frm2 != null)
+                frm2.Close();
             this.Close();
         }
 
@@ -1917,6 +2094,15 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
 
         private void buttonFirstPage_Click(object sender, EventArgs e)
         {
+            firstpage();
+        }
+
+        private void firstpage()
+        {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
 
             if (provisionalMode == true)
@@ -1937,6 +2123,14 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
 
         private void buttonPreviousPage_Click(object sender, EventArgs e)
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
+            if (textBoxPageNo.Text == "" || textBoxPageNo.Text == "0" || int.Parse(textBoxPageSize.Text) > 9)
+            {
+                textBoxPageNo.Text = "1";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             int pageNo = int.Parse(textBoxPageNo.Text) - 2;
 
@@ -1961,6 +2155,14 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
 
         private void buttonNextPage_Click(object sender, EventArgs e)
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
+            if (textBoxPageNo.Text == "" || textBoxPageNo.Text == "0" || int.Parse(textBoxPageSize.Text) > 9)
+            {
+                textBoxPageNo.Text = "1";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             int pageNo = int.Parse(textBoxPageNo.Text);
 
@@ -2027,6 +2229,19 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
 
         private void buttonLastPage_Click(object sender, EventArgs e)
         {
+            lastpage();
+        }
+
+        private void lastpage()
+        {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
+            if (textBoxPageNo.Text == "" || textBoxPageNo.Text == "0" || int.Parse(textBoxPageSize.Text) > 9)
+            {
+                textBoxPageNo.Text = "1";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             //最終ページの計算
             int pageNo;
@@ -2056,9 +2271,63 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             textBoxPageNo.Text = (pageNo + 1).ToString();
         }
 
-        private void buttonLogout_Click(object sender, EventArgs e)
+        private void label発注ID_MouseEnter(object sender, EventArgs e)
         {
+            label発注ID.BackColor = Color.Aqua;
+        }
 
+        private void label発注ID_MouseLeave(object sender, EventArgs e)
+        {
+            label発注ID.BackColor = Color.Transparent;
+        }
+
+        private void label発注社員ID_MouseEnter(object sender, EventArgs e)
+        {
+            label発注社員ID.BackColor = Color.Aqua;
+        }
+
+        private void label発注社員ID_MouseLeave(object sender, EventArgs e)
+        {
+            label発注社員ID.BackColor = Color.Transparent;
+        }
+
+        private void label商品ID_MouseEnter(object sender, EventArgs e)
+        {
+            label商品ID.BackColor = Color.Aqua;
+        }
+
+        private void label商品ID_MouseLeave(object sender, EventArgs e)
+        {
+            label商品ID.BackColor = Color.Transparent;
+        }
+
+        private void F_Hattyu_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (frm2 != null)
+                frm2.Close();
+        }
+
+        private void F_Hattyu_Activated(object sender, EventArgs e)
+        {
+            labelEmpName.Text = F_menu.loginName;
+            labelEmpID.Text = F_menu.loginEmID;
+            labelOfficeName.Text = F_menu.loginSalesOffice;
+            if (F_menu.loginSalesOffice == "本社")
+            {
+                buttonRegist.Enabled = false;
+                buttonRegist.BackgroundImage = Properties.Resources.Fixed_キャンセル使用不可;
+                buttonUpdate.Enabled = false;
+                buttonUpdate.BackgroundImage = Properties.Resources.Fixed_キャンセル使用不可;
+                buttonProvisional.Enabled = false;
+                buttonProvisional.BackgroundImage = Properties.Resources.Fixed_キャンセル使用不可;
+                buttonConfirmForm.Enabled = false;
+                buttonConfirmForm.BackgroundImage = Properties.Resources.Fixed_キャンセル使用不可;
+            }
+            if (stflg == 1)
+            {
+                GetDataGridView();
+                stflg = 0;
+            }
         }
     }
 }

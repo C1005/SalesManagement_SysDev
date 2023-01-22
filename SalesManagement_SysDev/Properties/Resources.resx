@@ -124,9 +124,6 @@
   <data name="Fixed_マスタ以外1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Fixed_マスタ以外1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Fixed_top_panel2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Fixed_top_panel2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="MenuPanel_A" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\MenuPanel_A.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -142,11 +139,17 @@
   <data name="MenuPanel_C" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\MenuPanel_C.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Fixed_Menu_ログイン制限" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed_Menu_ログイン制限.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Fixed_マスタ" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Fixed_マスタ.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Fixed_更新" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Fixed_更新.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Fixed_ログイン画面" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed_ログイン画面.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Fixed_確定画面類" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Fixed_確定画面類.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -157,11 +160,20 @@
   <data name="Fixed_検索" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Fixed_検索.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Fixed_管理画面へ" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed_管理画面へ.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Fixed_確定panel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed_確定panel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Fixed_管理画面移動" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Fixed_管理画面移動.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Fixed_登録" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Fixed_登録.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Fixed_マスタ以外用ボタン(発注関連)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed_マスタ以外用ボタン(発注関連).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Fixed_マスタ用ボタン" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Fixed_マスタ用ボタン.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -178,14 +190,17 @@
   <data name="Fixed_一覧表示" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Fixed_一覧表示.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Fixed_キャンセル使用不可" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed_キャンセル使用不可.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="営業所検索" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\営業所検索.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Fixed_top_panel1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Fixed_top_panel1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="詳細欄用ラベルpanel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\詳細欄用ラベルpanel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Fixed_管理画面へ" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Fixed_管理画面へ.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Fixed_マスタ用ボタン2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed_マスタ用ボタン2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Fixed_マスタ以外用ボタン" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Fixed_マスタ以外用ボタン.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -199,13 +214,19 @@
   <data name="Fixed_top_枠線" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Fixed_top_枠線.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Fixed_マスタ以外panel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed_マスタ以外panel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Fixed_マスタ用ボタン-閉じる" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed_マスタ用ボタン-閉じる.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="ロード画面" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ロード画面.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Fixed_発注更新ボタン" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Fixed_発注更新ボタン.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Fixed_マスタ用ボタン2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Fixed_マスタ用ボタン2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Fixed_集計panel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed_集計panel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

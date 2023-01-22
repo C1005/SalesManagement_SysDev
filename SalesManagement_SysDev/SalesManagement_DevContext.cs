@@ -34,7 +34,7 @@ namespace SalesManagement_SysDev
         public DbSet<T_OrderDetail> T_OrderDetails { get; set; }
         public DbSet<Entity.T_OrderProvisional> T_OrderProvisionals { get; set; }
         public DbSet<Entity.T_OrderDetailProvisional> T_OrderDetailProvisionals { get; set; }
-        public DbSet<T_Sale> T_Sale { get; set; }
+        public DbSet<T_Sale> T_Sales { get; set; }
         public DbSet<T_SaleDetail> T_SaleDetails { get; set; }
         public DbSet<T_Shipment> T_Shipments { get; set; }
         public DbSet<T_ShipmentDetail> T_ShipmentDetails { get; set; }

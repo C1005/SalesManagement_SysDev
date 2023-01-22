@@ -15,7 +15,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
         //メッセージ表示用クラスのインスタンス化
         MessageDsp messageDsp = new MessageDsp();
         //データベース出荷テーブルアクセス用クラスのインスタンス化
-        DbAccess.ShipmentDataAccess ShipmentDataAccess = new DbAccess.ShipmentDataAccess();
+        DbAccess.ShipmentDataAccess shipmentDataAccess = new DbAccess.ShipmentDataAccess();
         //入力形式チェック用クラスのインスタンス化
         DataInputFormCheck dataInputFormCheck = new DataInputFormCheck();
         //データグリッドビュー用の出荷データ
@@ -23,6 +23,8 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
         private static List<T_ShipmentDsp> filteredList;
         //管理フラグを数値型で入れるための変数
         int ShFlg;
+        int ShStateFlg;
+        internal static int stflg = 0;
 
         public F_Shipment()
         {
@@ -34,26 +36,32 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
             OpenForm(((Button)sender).Text);
         }
 
-        private void buttonCusSearch_Click(object sender, EventArgs e)
+        private void label顧客ID_Click(object sender, EventArgs e)
         {
-            OpenForm(((Button)sender).Text);
+            OpenForm(((Label)sender).Text);
         }
 
-        private void buttonProductSearch_Click(object sender, EventArgs e)
+        private void label2_Click(object sender, EventArgs e)
         {
-            OpenForm(((Button)sender).Text);
+            OpenForm(((Label)sender).Text);
         }
 
-        private void buttonEmSearch_Click(object sender, EventArgs e)
+        private void label2営業所ID_Click(object sender, EventArgs e)
         {
-            OpenForm(((Button)sender).Text);
+            OpenForm(((Label)sender).Text);
         }
 
-        private void buttonOrderSearch_Click(object sender, EventArgs e)
+        private void label6_Click(object sender, EventArgs e)
         {
-            OpenForm(((Button)sender).Text);
+            OpenForm(((Label)sender).Text);
         }
 
+        private void label商品ID_Click(object sender, EventArgs e)
+        {
+            OpenForm(((Label)sender).Text);
+        }
+
+        private Form frm2;
         private void OpenForm(string formName)
         {
             Form frm = new Form();
@@ -62,17 +70,21 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
             {
                 case "出荷確定画面へ": //ボタンのテキスト名
                     frm = new F_ShipmentConfirm(); //フォームの名前
+                    frm2 = frm;
                     break;
-                case "顧客検索": //ボタンのテキスト名
+                case "顧客ID": //ボタンのテキスト名
                     frm = new Master.FormClient.F_Client(); //フォームの名前
                     break;
-                case "商品検索": //ボタンのテキスト名
+                case "商品ID": //ボタンのテキスト名
                     frm = new Master.FormProduct.F_Product(); //フォームの名前
                     break;
-                case "社員検索": //ボタンのテキスト名
+                case "社員ID": //ボタンのテキスト名
                     frm = new Master.FormEmployee.F_Employee(); //フォームの名前
                     break;
-                case "受注検索": //ボタンのテキスト名
+                case "営業所ID": //ボタンのテキスト名
+                    frm = new Master.FormEmployee.F_SalesOffice(); //フォームの名前
+                    break;
+                case "受注ID": //ボタンのテキスト名
                     frm = new NonMaster.FormOrder.F_Order(); //フォームの名前
                     break;
             }
@@ -120,7 +132,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
         private void SetFormDataGridView()
         {
             //dataGridViewのページサイズ指定
-            textBoxPageSize.Text = "10";
+            textBoxPageSize.Text = "15";
             //dataGridViewのページ番号指定
             textBoxPageNo.Text = "1";
             //読み取り専用に指定
@@ -144,7 +156,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
         {
 
             // 出荷データの取得
-            Shipment = ShipmentDataAccess.GetShipmentData();
+            Shipment = shipmentDataAccess.GetShipmentData();
 
             // DataGridViewに表示するデータを指定
             SetDataGridView();
@@ -157,32 +169,53 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
         ///////////////////////////////
         private void SetDataGridView()
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
+            if (textBoxPageNo.Text == "" || textBoxPageNo.Text == "0" || int.Parse(textBoxPageSize.Text) > 9)
+            {
+                textBoxPageNo.Text = "1";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             int pageNo = int.Parse(textBoxPageNo.Text) - 1;
             filteredList = Shipment.Where(x => x.ShFlag != 2).ToList(); //OrFlagが2のレコードは排除する
-            dataGridViewShipment.DataSource = Shipment.Skip(pageSize * pageNo).Take(pageSize).ToList();
+            dataGridViewShipment.DataSource = filteredList.Skip(pageSize * pageNo).Take(pageSize).ToList();
+
+            if (filteredList.Count == 0)
+            {
+                labelNoTable.Visible = true;
+            }
+            else
+            {
+                labelNoTable.Visible = false;
+            }
+
             //各列幅の指定
-            dataGridViewShipment.Columns[0].Width = 70;
-            dataGridViewShipment.Columns[1].Width = 70;
-            dataGridViewShipment.Columns[2].Width = 70;
-            dataGridViewShipment.Columns[3].Width = 70;
-            dataGridViewShipment.Columns[4].Width = 70;
-            dataGridViewShipment.Columns[5].Width = 70;
-            dataGridViewShipment.Columns[6].Width = 70;
-            dataGridViewShipment.Columns[7].Width = 70;
-            dataGridViewShipment.Columns[8].Width = 70;
-            dataGridViewShipment.Columns[9].Width = 70;
-            dataGridViewShipment.Columns[10].Width = 70;
-            dataGridViewShipment.Columns[11].Width = 50;
+            //dataGridViewShipment.Columns[0].Width = 70;
+            //dataGridViewShipment.Columns[1].Width = 70;
+            //dataGridViewShipment.Columns[2].Width = 70;
+            //dataGridViewShipment.Columns[3].Width = 70;
+            //dataGridViewShipment.Columns[4].Width = 70;
+            //dataGridViewShipment.Columns[5].Width = 70;
+            //dataGridViewShipment.Columns[6].Width = 70;
+            //dataGridViewShipment.Columns[7].Width = 70;
+            //dataGridViewShipment.Columns[8].Width = 70;
+            //dataGridViewShipment.Columns[9].Width = 70;
+            //dataGridViewShipment.Columns[10].Width = 70;
+            //dataGridViewShipment.Columns[11].Width = 50;
+
+            // 自動サイズ調整を有効にする
+            dataGridViewShipment.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
             //各列の文字位置の指定
             dataGridViewShipment.Columns[0].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewShipment.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewShipment.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewShipment.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewShipment.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewShipment.Columns[5].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewShipment.Columns[6].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewShipment.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewShipment.Columns[5].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewShipment.Columns[6].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewShipment.Columns[7].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewShipment.Columns[8].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewShipment.Columns[9].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
@@ -190,7 +223,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
             dataGridViewShipment.Columns[11].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 
             //dataGridViewの総ページ数
-            labelPage.Text = "/" + ((int)Math.Ceiling(Shipment.Count / (double)pageSize)) + "ページ";
+            labelPage.Text = "/" + ((int)Math.Ceiling(filteredList.Count / (double)pageSize)) + "ページ";
 
             dataGridViewShipment.Refresh();
         }
@@ -220,113 +253,120 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
         private bool GetValidDataAtSelect()
         {
 
-            // 役職ID入力時チェック
+            // 出荷ID入力時チェック
             if (!String.IsNullOrEmpty(textBoxShID.Text.Trim()))
             {
-                // 役職IDの半角数字チェック
+                // 出荷IDの半角数字チェック
                 if (!dataInputFormCheck.CheckNumeric(textBoxShID.Text.Trim()))
                 {
-                    //MessageBox.Show("役職IDは全て半角数字入力です");
-                    messageDsp.DspMsg("M1001");
-                    textBoxShID.Focus();
-                    return false;
-                }
-                // 役職IDの文字数チェック
-                if (textBoxShID.TextLength > 2)
-                {
-                    //MessageBox.Show("役職IDは2文字までです");
-                    messageDsp.DspMsg("M1002");
+                    //MessageBox.Show("出荷IDは全て半角数字入力です");
+                    messageDsp.DspMsg("M15062");
                     textBoxShID.Focus();
                     return false;
                 }
             }
 
-            // 役職IDの半角数字チェック
+            // 顧客IDの入力時チェック
             if (!String.IsNullOrEmpty(textBoxClID.Text.Trim()))
             {
                 if (!dataInputFormCheck.CheckNumeric(textBoxClID.Text.Trim()))
                 {
-                    //MessageBox.Show("役職IDは全て半角数字入力です");
-                    messageDsp.DspMsg("M1001");
+                    //MessageBox.Show("顧客IDは全て半角数字入力です");
+                    messageDsp.DspMsg("M15001");
                     textBoxClID.Focus();
                     return false;
                 }
-                // 役職IDの文字数チェック
-                if (textBoxClID.TextLength > 2)
+                // 顧客IDの文字数チェック
+                if (textBoxClID.TextLength > 6)
                 {
-                    //MessageBox.Show("役職IDは2文字までです");
-                    messageDsp.DspMsg("M1002");
+                    //MessageBox.Show("顧客IDは6文字までです");
+                    messageDsp.DspMsg("M15002");
                     textBoxClID.Focus();
                     return false;
                 }
             }
 
+            // 社員IDの入力時チェック
             if (!String.IsNullOrEmpty(textBoxEmID.Text.Trim()))
             {
-                // 役職IDの半角数字チェック
+                // 社員IDの半角数字チェック
                 if (!dataInputFormCheck.CheckNumeric(textBoxEmID.Text.Trim()))
                 {
-                    //MessageBox.Show("役職IDは全て半角数字入力です");
-                    messageDsp.DspMsg("M1001");
+                    //MessageBox.Show("社員IDは全て半角数字入力です");
+                    messageDsp.DspMsg("M15005");
                     textBoxEmID.Focus();
                     return false;
                 }
-                // 役職IDの文字数チェック
-                if (textBoxEmID.TextLength > 2)
+                // 社員IDの文字数チェック
+                if (textBoxEmID.TextLength > 6)
                 {
-                    //MessageBox.Show("役職IDは2文字までです");
-                    messageDsp.DspMsg("M1002");
+                    //MessageBox.Show("社員IDは6文字までです");
+                    messageDsp.DspMsg("M15006");
                     textBoxEmID.Focus();
                     return false;
                 }
             }
 
-
-            // 役職IDの半角数字チェック
+            // 営業所IDの入力時チェック
             if (!String.IsNullOrEmpty(textBoxSoID.Text.Trim()))
             {
                 if (!dataInputFormCheck.CheckNumeric(textBoxSoID.Text.Trim()))
                 {
-                    //MessageBox.Show("役職IDは全て半角数字入力です");
-                    messageDsp.DspMsg("M1001");
+                    //MessageBox.Show("営業所IDは全て半角数字入力です");
+                    messageDsp.DspMsg("M15009");
                     textBoxSoID.Focus();
                     return false;
                 }
-                // 役職IDの文字数チェック
+                // 営業所IDの文字数チェック
                 if (textBoxSoID.TextLength > 2)
                 {
-                    //MessageBox.Show("役職IDは2文字までです");
-                    messageDsp.DspMsg("M1002");
+                    //MessageBox.Show("営業所IDは2文字までです");
+                    messageDsp.DspMsg("M15010");
                     textBoxSoID.Focus();
                     return false;
                 }
             }
 
-            // 役職IDの半角数字チェック
+            // 受注IDの入力時チェック
             if (!String.IsNullOrEmpty(textBoxOrID.Text.Trim()))
             {
                 if (!dataInputFormCheck.CheckNumeric(textBoxOrID.Text.Trim()))
                 {
-                    //MessageBox.Show("役職IDは全て半角数字入力です");
-                    messageDsp.DspMsg("M1001");
+                    //MessageBox.Show("受注IDは全て半角数字入力です");
+                    messageDsp.DspMsg("M15013");
                     textBoxOrID.Focus();
                     return false;
                 }
-                // 役職IDの文字数チェック
-                if (textBoxOrID.TextLength > 2)
+                // 受注IDの文字数チェック
+                if (textBoxOrID.TextLength > 6)
                 {
-                    //MessageBox.Show("役職IDは2文字までです");
-                    messageDsp.DspMsg("M1002");
+                    //MessageBox.Show("受注IDは6文字までです");
+                    messageDsp.DspMsg("M15014");
                     textBoxOrID.Focus();
                     return false;
                 }
+            }
+
+            if (dateTimePickerShFinishDate.Checked == true)
+            {
+                //MessageBox.Show("注文年月日は検索対象外です");
+                messageDsp.DspMsg("M15063");
+                dateTimePickerShFinishDate.Focus();
+                return false;
+            }
+            if (textBoxShDquantity.Text != "")
+            {
+                //MessageBox.Show("数量は検索対象外です");
+                messageDsp.DspMsg("M15064");
+                textBoxShDquantity.Focus();
+                return false;
             }
 
             // 状態フラグの適否
             if (checkBoxShStateFlag.CheckState == CheckState.Indeterminate)
             {
                 //MessageBox.Show("状態フラグが不確定の状態です");
-                messageDsp.DspMsg("M10027");
+                messageDsp.DspMsg("M15027");
                 checkBoxShStateFlag.Focus();
                 return false;
             }
@@ -335,7 +375,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
             if (checkBoxShFlag.CheckState == CheckState.Indeterminate)
             {
                 //MessageBox.Show("管理フラグが不確定の状態です");
-                messageDsp.DspMsg("M10028");
+                messageDsp.DspMsg("M15028");
                 checkBoxShFlag.Focus();
                 return false;
             }
@@ -400,7 +440,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
                     ShFlag = ShFlg //フラグがチェック状態なら非表示一覧表示内で検索、そうでなければ通常検索
                 };
                 // 営業所データの抽出
-                Shipment = ShipmentDataAccess.GetShipmentData(selectCondition);
+                Shipment = shipmentDataAccess.GetShipmentData(selectCondition);
                 return;
             }
             else if (mShDetailID != "")
@@ -413,7 +453,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
                     ShFlag = ShFlg //フラグがチェック状態なら非表示一覧表示内で検索、そうでなければ通常検索
                 };
                 // 営業所データの抽出
-                Shipment = ShipmentDataAccess.GetShipmentData(selectCondition);
+                Shipment = shipmentDataAccess.GetShipmentData(selectCondition);
                 return;
             }
             else if (mClID != "")
@@ -426,7 +466,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
                     ShFlag = ShFlg //フラグがチェック状態なら非表示一覧表示内で検索、そうでなければ通常検索
                 };
                 // 営業所データの抽出
-                Shipment = ShipmentDataAccess.GetShipmentData(selectCondition);
+                Shipment = shipmentDataAccess.GetShipmentData(selectCondition);
                 return;
             }
             else if (mOrID != "")
@@ -439,7 +479,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
                     ShFlag = ShFlg //フラグがチェック状態なら非表示一覧表示内で検索、そうでなければ通常検索
                 };
                 // 営業所データの抽出
-                Shipment = ShipmentDataAccess.GetShipmentData(selectCondition);
+                Shipment = shipmentDataAccess.GetShipmentData(selectCondition);
                 return;
             }
             else if (mSoID != "")
@@ -452,7 +492,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
                     ShFlag = ShFlg //フラグがチェック状態なら非表示一覧表示内で検索、そうでなければ通常検索
                 };
                 // 営業所データの抽出
-                Shipment = ShipmentDataAccess.GetShipmentData(selectCondition);
+                Shipment = shipmentDataAccess.GetShipmentData(selectCondition);
                 return;
             }
             else if (mEmID != "")
@@ -465,7 +505,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
                     ShFlag = ShFlg //フラグがチェック状態なら非表示一覧表示内で検索、そうでなければ通常検索
                 };
                 // 営業所データの抽出
-                Shipment = ShipmentDataAccess.GetShipmentData(selectCondition);
+                Shipment = shipmentDataAccess.GetShipmentData(selectCondition);
                 return;
             }
             else if (mShFlg == 2)
@@ -476,7 +516,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
                     ShFlag = mShFlg //フラグがチェック状態なら非表示一覧表示内で検索、そうでなければ通常検索
                 };
                 // データの抽出
-                Shipment = ShipmentDataAccess.SearchShipmentData(selectCondition);
+                Shipment = shipmentDataAccess.SearchShipmentData(selectCondition);
                 return;
             }
             else if (mShStateFlg == 1)
@@ -487,7 +527,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
                     ShStateFlag = mShStateFlg //フラグがチェック状態なら非表示一覧表示内で検索、そうでなければ通常検索
                 };
                 // データの抽出
-                Shipment = ShipmentDataAccess.SearchShipmentData(selectCondition);
+                Shipment = shipmentDataAccess.SearchShipmentData(selectCondition);
                 return;
             }
             else if (mPrID != "")
@@ -500,7 +540,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
                     ShFlag = ShFlg //フラグがチェック状態なら非表示一覧表示内で検索、そうでなければ通常検索
                 };
                 // 営業所データの抽出
-                Shipment = ShipmentDataAccess.GetShipmentData(selectCondition);
+                Shipment = shipmentDataAccess.GetShipmentData(selectCondition);
                 return;
             }
         }
@@ -518,13 +558,21 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
             int pageSize = int.Parse(textBoxPageSize.Text);
 
             dataGridViewShipment.DataSource = Shipment;
+            if (Shipment.Count == 0)
+            {
+                labelNoTable.Visible = true;
+            }
+            else
+            {
+                labelNoTable.Visible = false;
+            }
 
             labelPage.Text = "/" + ((int)Math.Ceiling(Shipment.Count / (double)pageSize)) + "ページ";
             dataGridViewShipment.Refresh();
 
             if (Shipment.Count == 0) //検索結果のデータ数が0ならエラー
             {
-                messageDsp.DspMsg("M1025");
+                messageDsp.DspMsg("M15037");
                 SetFormDataGridView();
             }
         }
@@ -554,39 +602,75 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
         private bool GetValidDataAtDelete()
         {
 
-            // 役職IDの未入力チェック
+            // 出荷IDの未入力チェック
             if (!String.IsNullOrEmpty(textBoxShID.Text.Trim()))
             {
-                // 役職IDの半角英数字チェック
+                // 出荷IDの半角英数字チェック
                 if (!dataInputFormCheck.CheckNumeric(textBoxShID.Text.Trim()))
                 {
-                    //MessageBox.Show("役職IDは全て半角英数字入力です");
-                    messageDsp.DspMsg("M1001");
+                    //MessageBox.Show("出荷IDは全て半角英数字入力です");
+                    messageDsp.DspMsg("M15065");
                     textBoxShID.Focus();
                     return false;
                 }
-                // 役職IDの文字数チェック
-                if (textBoxShID.TextLength > 2)
+                // 出荷IDの文字数チェック
+                if (textBoxShID.TextLength > 6)
                 {
-                    //MessageBox.Show("役職IDは2文字です");
-                    messageDsp.DspMsg("M1002");
+                    //MessageBox.Show("出荷IDは6文字です");
+                    messageDsp.DspMsg("M15066");
                     textBoxShID.Focus();
                     return false;
                 }
-                // 役職IDの存在チェック
-                if (!ShipmentDataAccess.CheckShipmentCDExistence(textBoxShID.Text.Trim()))
+                // 出荷IDの存在チェック
+                if (!shipmentDataAccess.CheckShipmentCDExistence(textBoxShID.Text.Trim()))
                 {
-                    //MessageBox.Show("入力された役職IDは存在しません");
-                    messageDsp.DspMsg("M1013");
+                    //MessageBox.Show("入力された出荷IDは存在しません");
+                    messageDsp.DspMsg("M15067");
                     textBoxShID.Focus();
                     return false;
                 }
             }
             else
             {
-                //MessageBox.Show("役職IDが入力されていません");
-                messageDsp.DspMsg("M1004");
+                //MessageBox.Show("出荷IDが入力されていません");
+                messageDsp.DspMsg("M15068");
                 textBoxShID.Focus();
+                return false;
+            }
+
+            // 受注IDの未入力チェック
+            if (!String.IsNullOrEmpty(textBoxOrID.Text.Trim()))
+            {
+                // 受注IDの文字数チェック
+                if (textBoxOrID.TextLength > 6)
+                {
+                    //MessageBox.Show("受注IDは6文字です");
+                    messageDsp.DspMsg("M15014");
+                    textBoxOrID.Focus();
+                    return false;
+                }
+                // 受注IDの半角数字チェック
+                if (!dataInputFormCheck.CheckNumeric(textBoxOrID.Text.Trim()))
+                {
+                    //MessageBox.Show("受注IDは全て半角数字入力です");
+                    messageDsp.DspMsg("M15013");
+                    textBoxOrID.Focus();
+                    return false;
+                }
+                // 受注IDの存在チェック
+                if (!shipmentDataAccess.CheckOrderIDExistence(textBoxShID.Text.Trim(), textBoxOrID.Text.Trim()))
+                {
+                    //MessageBox.Show("出荷IDに関連する受注IDが一致しません");
+                    messageDsp.DspMsg("M15015");
+                    textBoxOrID.Focus();
+                    return false;
+                }
+            }
+            else
+            {
+                //MessageBox.Show("受注IDが入力されていません");
+                messageDsp.DspMsg("M15069");
+                textBoxOrID.Focus();
                 return false;
             }
 
@@ -594,7 +678,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
             if (checkBoxShFlag.CheckState == CheckState.Indeterminate)
             {
                 //MessageBox.Show("管理フラグが不確定の状態です");
-                messageDsp.DspMsg("M10028");
+                messageDsp.DspMsg("M15028");
                 checkBoxShFlag.Focus();
                 return false;
             }
@@ -603,7 +687,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
             if (checkBoxShFlag.Checked == false)
             {
                 //MessageBox.Show("管理フラグが未チェックです");
-                messageDsp.DspMsg("M10029");
+                messageDsp.DspMsg("M15070");
                 checkBoxShFlag.Focus();
                 return false;
             }
@@ -614,7 +698,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
                 if (textBoxShHidden.Text == "")
                 {
                     //MessageBox.Show("非表示理由の入力が必要です");
-                    messageDsp.DspMsg("M1023");
+                    messageDsp.DspMsg("M15030");
                     textBoxShHidden.Focus();
                     return false;
                 }
@@ -634,6 +718,7 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
             return new T_Shipment
             {
                 ShID = int.Parse(textBoxShID.Text.Trim()),
+                OrID = int.Parse(textBoxOrID.Text.Trim()),
                 ShFlag = ShFlg,
                 ShHidden = textBoxShHidden.Text.Trim()
             };
@@ -643,18 +728,20 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
         {
 
             // 更新確認メッセージ
-            DialogResult result = messageDsp.DspMsg("M1018");
+            DialogResult result = messageDsp.DspMsg("M15038");
             if (result == DialogResult.Cancel)
+            {
                 return;
+            }
 
             // 役職情報の更新
-            bool flg = ShipmentDataAccess.DeleteShipmentData(delShipment);
+            bool flg = shipmentDataAccess.DeleteShipmentData(delShipment);
             if (flg == true)
                 //MessageBox.Show("データを削除しました。");
-                messageDsp.DspMsg("M1019");
+                messageDsp.DspMsg("M15039");
             else
                 //MessageBox.Show("データの削除に失敗しました。");
-                messageDsp.DspMsg("M1020");
+                messageDsp.DspMsg("M15040");
 
             textBoxShID.Focus();
 
@@ -663,53 +750,82 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
 
             // データグリッドビューの表示
             GetDataGridView();
+
+            if (System.Windows.Forms.Form.ActiveForm != null) //nullエラー防止(特定の操作を行うと何故かnullが返り、例外エラーが出る
+            {
+                //開いている画面も自動リロード
+                ActForm();
+            }
         }
+
+        private void ActForm()
+        {
+            NonMaster.FormOrder.F_Order.stflg = 1;
+            NonMaster.FormOrder.F_Order.ActiveForm.Activate();
+            NonMaster.FormChumon.F_Chumon.stflg = 1;
+            NonMaster.FormChumon.F_Chumon.ActiveForm.Activate();
+            NonMaster.FormSyukko.F_Syukko.stflg = 1;
+            NonMaster.FormSyukko.F_Syukko.ActiveForm.Activate();
+            NonMaster.FormArrival.F_Arrival.stflg = 1;
+            NonMaster.FormArrival.F_Arrival.ActiveForm.Activate();
+            NonMaster.FormShipment.F_ShipmentConfirm.stflg = 1;
+            NonMaster.FormShipment.F_ShipmentConfirm.ActiveForm.Activate();
+            NonMaster.FormSale.F_Sale.stflg = 1;
+            NonMaster.FormSale.F_Sale.ActiveForm.Activate();
+            Master.FormStock.F_Stock.stflg = 1;
+            Master.FormStock.F_Stock.ActiveForm.Activate();
+        }
+
 
         private void dataGridViewShipment_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            //クリックされた行データをテキストボックスへ
-            textBoxShID.Text = dataGridViewShipment.Rows[dataGridViewShipment.CurrentRow.Index].Cells[0].Value.ToString();
-            textBoxClID.Text = dataGridViewShipment.Rows[dataGridViewShipment.CurrentRow.Index].Cells[1].Value.ToString();
-            textBoxEmID.Text = dataGridViewShipment.Rows[dataGridViewShipment.CurrentRow.Index].Cells[2].Value.ToString();
-            textBoxSoID.Text = dataGridViewShipment.Rows[dataGridViewShipment.CurrentRow.Index].Cells[3].Value.ToString();
-            textBoxOrID.Text = dataGridViewShipment.Rows[dataGridViewShipment.CurrentRow.Index].Cells[4].Value.ToString();
+            if (dataGridViewShipment.CurrentRow != null)
+            {
+                //クリックされた行データをテキストボックスへ
+                textBoxShID.Text = dataGridViewShipment.Rows[dataGridViewShipment.CurrentRow.Index].Cells[0].Value.ToString();
+                textBoxClID.Text = dataGridViewShipment.Rows[dataGridViewShipment.CurrentRow.Index].Cells[1].Value.ToString();
+                textBoxEmID.Text = dataGridViewShipment.Rows[dataGridViewShipment.CurrentRow.Index].Cells[2].Value.ToString();
+                textBoxSoID.Text = dataGridViewShipment.Rows[dataGridViewShipment.CurrentRow.Index].Cells[3].Value.ToString();
+                textBoxOrID.Text = dataGridViewShipment.Rows[dataGridViewShipment.CurrentRow.Index].Cells[4].Value.ToString();
 
-            //日付が設定されていない場合、初期値として現在の日付を設定
-            if (dataGridViewShipment.Rows[dataGridViewShipment.CurrentRow.Index].Cells[5].Value == null)
-            {
-                dateTimePickerShFinishDate.Value = DateTime.Now;
-                dateTimePickerShFinishDate.Checked = false;
-            }
-            else
-            {
-                dateTimePickerShFinishDate.Text = dataGridViewShipment.Rows[dataGridViewShipment.CurrentRow.Index].Cells[6].Value.ToString();
-            }
+                //状態フラグの数値型をbool型に変換して取得
+                int ShStateFlg2 = int.Parse(dataGridViewShipment.Rows[dataGridViewShipment.CurrentRow.Index].Cells[5].Value.ToString());
+                if (ShStateFlg2 == 0)
+                {
+                    checkBoxShStateFlag.Checked = false;
+                }
+                else
+                {
+                    checkBoxShStateFlag.Checked = true;
+                }
 
-            //状態フラグの数値型をbool型に変換して取得
-            int ShStateFlg2 = int.Parse(dataGridViewShipment.Rows[dataGridViewShipment.CurrentRow.Index].Cells[5].Value.ToString());
-            if (ShStateFlg2 == 0)
-            {
-                checkBoxShStateFlag.Checked = false;
-            }
-            else
-            {
-                checkBoxShStateFlag.Checked = true;
-            }
-            //管理フラグの数値型をbool型に変換して取得
-            int ShFlg2 = int.Parse(dataGridViewShipment.Rows[dataGridViewShipment.CurrentRow.Index].Cells[7].Value.ToString());
-            if (ShFlg2 == 0)
-            {
-                checkBoxShFlag.Checked = false;
-            }
-            else if (ShFlg2 == 2)
-            {
-                checkBoxShFlag.Checked = true;
-            }
+                //日付が設定されていない場合、初期値として現在の日付を設定
+                if (dataGridViewShipment.Rows[dataGridViewShipment.CurrentRow.Index].Cells[6].Value == null)
+                {
+                    dateTimePickerShFinishDate.Value = DateTime.Now;
+                    dateTimePickerShFinishDate.Checked = false;
+                }
+                else
+                {
+                    dateTimePickerShFinishDate.Text = dataGridViewShipment.Rows[dataGridViewShipment.CurrentRow.Index].Cells[6].Value.ToString();
+                }
 
-            textBoxShHidden.Text = dataGridViewShipment.Rows[dataGridViewShipment.CurrentRow.Index].Cells[8].Value.ToString();
-            textBoxShDetailID.Text = dataGridViewShipment.Rows[dataGridViewShipment.CurrentRow.Index].Cells[9].Value.ToString();
-            textBoxPrID.Text = dataGridViewShipment.Rows[dataGridViewShipment.CurrentRow.Index].Cells[10].Value.ToString();
-            textBoxShDquantity.Text = dataGridViewShipment.Rows[dataGridViewShipment.CurrentRow.Index].Cells[11].Value.ToString();
+                //管理フラグの数値型をbool型に変換して取得
+                int ShFlg2 = int.Parse(dataGridViewShipment.Rows[dataGridViewShipment.CurrentRow.Index].Cells[7].Value.ToString());
+                if (ShFlg2 == 0)
+                {
+                    checkBoxShFlag.Checked = false;
+                }
+                else if (ShFlg2 == 2)
+                {
+                    checkBoxShFlag.Checked = true;
+                }
+
+                textBoxShHidden.Text = dataGridViewShipment.Rows[dataGridViewShipment.CurrentRow.Index].Cells[8].Value.ToString();
+                textBoxShDetailID.Text = dataGridViewShipment.Rows[dataGridViewShipment.CurrentRow.Index].Cells[9].Value.ToString();
+                textBoxPrID.Text = dataGridViewShipment.Rows[dataGridViewShipment.CurrentRow.Index].Cells[10].Value.ToString();
+                textBoxShDquantity.Text = dataGridViewShipment.Rows[dataGridViewShipment.CurrentRow.Index].Cells[11].Value.ToString();
+            }
         }
 
         private void buttonList_Click(object sender, EventArgs e)
@@ -760,12 +876,33 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
 
         private void checkBoxShStateFlag_CheckedChanged(object sender, EventArgs e)
         {
-
+            if (checkBoxShStateFlag.Checked == true)
+            {
+                ShStateFlg = 1;
+                return;
+            }
+            else if (checkBoxShStateFlag.Checked == false)
+            {
+                ShStateFlg = 0;
+                return;
+            }
         }
 
         private void checkBoxShFlag_CheckedChanged(object sender, EventArgs e)
         {
-
+            if (checkBoxShFlag.Checked == true)
+            {
+                ShFlg = 2;
+                textBoxShHidden.Enabled = true;
+                return;
+            }
+            else if (checkBoxShFlag.Checked == false)
+            {
+                ShFlg = 0;
+                textBoxShHidden.Enabled = false;
+                textBoxShHidden.Text = "";
+                return;
+            }
         }
 
         private void buttonPageSizeChange_Click(object sender, EventArgs e)
@@ -775,6 +912,10 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
 
         private void buttonFirstPage_Click(object sender, EventArgs e)
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             dataGridViewShipment.DataSource = filteredList.Take(pageSize).ToList();
 
@@ -786,6 +927,14 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
 
         private void buttonPreviousPage_Click(object sender, EventArgs e)
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
+            if (textBoxPageNo.Text == "" || textBoxPageNo.Text == "0" || int.Parse(textBoxPageSize.Text) > 9)
+            {
+                textBoxPageNo.Text = "1";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             int pageNo = int.Parse(textBoxPageNo.Text) - 2;
             dataGridViewShipment.DataSource = filteredList.Skip(pageSize * pageNo).Take(pageSize).ToList();
@@ -801,6 +950,14 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
 
         private void buttonNextPage_Click(object sender, EventArgs e)
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
+            if (textBoxPageNo.Text == "" || textBoxPageNo.Text == "0" || int.Parse(textBoxPageSize.Text) > 9)
+            {
+                textBoxPageNo.Text = "1";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             int pageNo = int.Parse(textBoxPageNo.Text);
             //最終ページの計算
@@ -821,6 +978,14 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
 
         private void buttonLastPage_Click(object sender, EventArgs e)
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
+            if (textBoxPageNo.Text == "" || textBoxPageNo.Text == "0" || int.Parse(textBoxPageSize.Text) > 9)
+            {
+                textBoxPageNo.Text = "1";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             //最終ページの計算
             int pageNo = (int)Math.Ceiling(filteredList.Count / (double)pageSize) - 1;
@@ -834,27 +999,321 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormShipment
 
         private void textBoxClID_TextChanged(object sender, EventArgs e)
         {
-
+            if (textBoxClID.Text != "")
+            {
+                var context = new SalesManagement_DevContext();
+                try
+                {
+                    int mClID = int.Parse(textBoxClID.Text);
+                    var mClient = context.M_Clients.Single(x => x.ClID == mClID);
+                    if (mClient.ClFlag == 2)
+                    {
+                        string mClName = mClient.ClName;
+                        labelClName.Text = "(非表示)" + mClName;
+                        labelClName.Visible = true;
+                        context.Dispose();
+                    }
+                    else
+                    {
+                        string mClName = mClient.ClName;
+                        labelClName.Text = mClName;
+                        labelClName.Visible = true;
+                        context.Dispose();
+                    }
+                    int mSoID = mClient.SoID;
+                    textBoxSoID.Text = mSoID.ToString();
+                }
+                catch
+                {
+                    labelClName.Visible = true;
+                    labelClName.Text = "“UnknownID”";
+                    context.Dispose();
+                    return;
+                }
+            }
+            else
+            {
+                labelClName.Visible = false;
+                labelClName.Text = "顧客名";
+                textBoxSoID.Text = "";
+            }
         }
 
         private void textBoxEmID_TextChanged(object sender, EventArgs e)
         {
-
+            if (textBoxEmID.Text != "")
+            {
+                var context = new SalesManagement_DevContext();
+                try
+                {
+                    string mEmName;
+                    int mEmID = int.Parse(textBoxEmID.Text);
+                    var mEmployee = context.M_Employees.Single(x => x.EmID == mEmID);
+                    if (mEmployee.EmFlag == 2)
+                    {
+                        mEmName = mEmployee.EmName;
+                        labelEmName.Text = "(非表示)" + mEmName;
+                        labelEmName.Visible = true;
+                        context.Dispose();
+                    }
+                    else
+                    {
+                        mEmName = mEmployee.EmName;
+                        labelEmName.Text = mEmName;
+                        labelEmName.Visible = true;
+                        context.Dispose();
+                    }
+                    if (textBoxClID.Text == "")
+                    {
+                        int mSoID = mEmployee.SoID;
+                        textBoxSoID.Text = mSoID.ToString();
+                    }
+                }
+                catch
+                {
+                    // 仕様書で社員IDがNULLを許容する管理のみifを実行
+                    // ただし社員IDが必須入力の場合はifを排除してください
+                    if (int.Parse(textBoxEmID.Text) == 0)
+                    {
+                        labelEmName.Text = "“NULLとして設定”";
+                        labelEmName.Visible = true;
+                        context.Dispose();
+                        return;
+                    }
+                    labelEmName.Text = "“UnknownID”";
+                    labelEmName.Visible = true;
+                    textBoxSoID.Text = "";
+                    context.Dispose();
+                    return;
+                }
+            }
+            else
+            {
+                labelEmName.Visible = false;
+                labelEmName.Text = "社員名";
+                textBoxSoID.Text = "";
+            }
         }
 
         private void textBoxSoID_TextChanged(object sender, EventArgs e)
         {
-
-        }
-
-        private void textBoxOrID_TextChanged(object sender, EventArgs e)
-        {
-
+            if (textBoxSoID.Text != "")
+            {
+                var context = new SalesManagement_DevContext();
+                try
+                {
+                    int mSoID = int.Parse(textBoxSoID.Text);
+                    var mSalesOffice = context.M_SalesOffices.Single(x => x.SoID == mSoID);
+                    if (mSalesOffice.SoFlag == 2)
+                    {
+                        string mSoName = mSalesOffice.SoName;
+                        labelSoName.Text = "(非表示)" + mSoName;
+                        labelSoName.Visible = true;
+                        context.Dispose();
+                    }
+                    else
+                    {
+                        string mSoName = mSalesOffice.SoName;
+                        labelSoName.Text = mSoName;
+                        labelSoName.Visible = true;
+                        context.Dispose();
+                    }
+                }
+                catch
+                {
+                    labelSoName.Visible = true;
+                    labelSoName.Text = "“UnknownID”";
+                    context.Dispose();
+                    return;
+                }
+            }
+            else
+            {
+                labelSoName.Visible = false;
+                labelSoName.Text = "営業所名";
+            }
         }
 
         private void textBoxPrID_TextChanged(object sender, EventArgs e)
         {
+            if (textBoxPrID.Text != "")
+            {
+                var context = new SalesManagement_DevContext();
+                try
+                {
+                    int mPrID = int.Parse(textBoxPrID.Text);
+                    var mProduct = context.M_Products.Single(x => x.PrID == mPrID);
+                    if (mProduct.PrFlag == 2)
+                    {
+                        string mPrName = mProduct.PrName;
+                        int mPrice = mProduct.Price;
+                        labelPrName.Text = "(非表示)" + mPrName;
+                        labelPrName.Visible = true;
+                        context.Dispose();
+                    }
+                    else
+                    {
+                        string mPrName = mProduct.PrName;
+                        int mPrice = mProduct.Price;
+                        labelPrName.Text = mPrName;
+                        labelPrName.Visible = true;
+                        context.Dispose();
+                    }
+                }
+                catch
+                {
+                    labelPrName.Text = "“UnknownID”";
+                    labelPrName.Visible = true;
+                    context.Dispose();
+                    return;
+                }
+            }
+            else
+            {
+                labelPrName.Visible = false;
+                labelPrName.Text = "商品名";
+            }
+        }
 
+        private void textBoxOrID_TextChanged(object sender, EventArgs e)
+        {
+            if (textBoxOrID.Text != "")
+            {
+                var context = new SalesManagement_DevContext();
+                try
+                {
+                    labelStateFlag.Text = "確定済"; //ラベルがUnknow状態で再度入力実行されたときに確定済に戻しておく
+                    int mOrID = int.Parse(textBoxOrID.Text);
+                    var mOrder = context.T_Orders.Single(x => x.OrID == mOrID); //入力されたOrIDで一致する一件のレコードを探す
+                    if (mOrder.OrFlag == 2 && mOrder.OrStateFlag == 1) //確定と非表示両方表示
+                    {
+                        labelFlag.Visible = true;
+                        labelStateFlag.Visible = true;
+                    }
+                    else
+                    {
+                        if (mOrder.OrFlag == 2) //管理フラグを表示するか
+                        {
+                            labelFlag.Visible = true;
+                        }
+                        else
+                        {
+                            labelFlag.Visible = false;
+                        }
+                        if (mOrder.OrStateFlag == 1) //状態フラグを表示するか
+                        {
+                            labelStateFlag.Visible = true;
+                        }
+                        else
+                        {
+                            labelStateFlag.Visible = false;
+                        }
+                    }
+                    int mClID = mOrder.ClID; //関連するIDを取得
+                    int mSoID = mOrder.SoID; //上記同様
+                    textBoxClID.Text = mClID.ToString(); //取得したIDを自動入力
+                    textBoxSoID.Text = mSoID.ToString(); //上記同様
+                    context.Dispose();
+                }
+                catch
+                {
+                    labelFlag.Visible = false;
+                    labelStateFlag.Visible = true;
+                    labelStateFlag.Text = "“UnknownID”";
+                    context.Dispose();
+                    return;
+                }
+            }
+            else
+            {
+                textBoxClID.Text = "";
+                textBoxSoID.Text = "";
+                labelFlag.Visible = false;
+                labelStateFlag.Visible = false;
+                labelStateFlag.Text = "確定済";
+            }
+        }
+
+        private void label顧客ID_MouseEnter(object sender, EventArgs e)
+        {
+            label顧客ID.BackColor = Color.Aqua;
+        }
+
+        private void label顧客ID_MouseLeave(object sender, EventArgs e)
+        {
+            label顧客ID.BackColor = Color.Transparent;
+        }
+
+        private void label2_MouseEnter(object sender, EventArgs e)
+        {
+            label2.BackColor = Color.Aqua;
+        }
+
+        private void label2_MouseLeave(object sender, EventArgs e)
+        {
+            label2.BackColor = Color.Transparent;
+        }
+
+        private void label2営業所ID_MouseEnter(object sender, EventArgs e)
+        {
+            label2営業所ID.BackColor = Color.Aqua;
+        }
+
+        private void label2営業所ID_MouseLeave(object sender, EventArgs e)
+        {
+            label2営業所ID.BackColor = Color.Transparent;
+        }
+
+        private void label6_MouseEnter(object sender, EventArgs e)
+        {
+            label6.BackColor = Color.Aqua;
+        }
+
+        private void label6_MouseLeave(object sender, EventArgs e)
+        {
+            label6.BackColor = Color.Transparent;
+        }
+
+        private void label商品ID_MouseEnter(object sender, EventArgs e)
+        {
+            label商品ID.BackColor = Color.Aqua;
+        }
+
+        private void label商品ID_MouseLeave(object sender, EventArgs e)
+        {
+            label商品ID.BackColor = Color.Transparent;
+        }
+
+        private void F_Shipment_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (frm2 != null)
+                frm2.Close();
+        }
+
+        private void buttonClose_Click(object sender, EventArgs e)
+        {
+            if (frm2 != null)
+                frm2.Close();
+            this.Close();
+        }
+
+        private void F_Shipment_Activated(object sender, EventArgs e)
+        {
+            labelEmpName.Text = F_menu.loginName;
+            labelEmpID.Text = F_menu.loginEmID;
+            labelOfficeName.Text = F_menu.loginSalesOffice;
+            if (F_menu.loginSalesOffice == "本社")
+            {
+                buttonDelete.Enabled = false;
+                buttonDelete.BackgroundImage = Properties.Resources.Fixed_キャンセル使用不可;
+                buttonConfirmForm.Enabled = false;
+                buttonConfirmForm.BackgroundImage = Properties.Resources.Fixed_キャンセル使用不可;
+            }
+            if (stflg == 1)
+            {
+                GetDataGridView();
+                stflg = 0;
+            }
         }
     }
 }

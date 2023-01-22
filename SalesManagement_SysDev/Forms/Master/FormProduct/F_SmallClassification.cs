@@ -46,7 +46,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
         private void SetFormDataGridView()
         {
             //dataGridViewのページサイズ指定
-            textBoxPageSize.Text = "10";
+            textBoxPageSize.Text = "15";
             //dataGridViewのページ番号指定
             textBoxPageNo.Text = "1";
             //読み取り専用に指定
@@ -84,20 +84,40 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
         ///////////////////////////////
         private void SetDataGridView()
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
+            if (textBoxPageNo.Text == "" || textBoxPageNo.Text == "0" || int.Parse(textBoxPageSize.Text) > 9)
+            {
+                textBoxPageNo.Text = "1";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             int pageNo = int.Parse(textBoxPageNo.Text) - 1;
             dataGridViewSmallClassification.DataSource = SmallClassification.Skip(pageSize * pageNo).Take(pageSize).ToList();
+
+            if (SmallClassification.Count == 0)
+            {
+                labelNoTable.Visible = true;
+            }
+            else
+            {
+                labelNoTable.Visible = false;
+            }
+
             //各列幅の指定
-            dataGridViewSmallClassification.Columns[0].Width = 100;
-            dataGridViewSmallClassification.Columns[1].Width = 200;
-            dataGridViewSmallClassification.Columns[2].Width = 120;
-            dataGridViewSmallClassification.Columns[3].Width = 400;
+            dataGridViewSmallClassification.Columns[0].Width = 140;
+            dataGridViewSmallClassification.Columns[1].Width = 140;
+            dataGridViewSmallClassification.Columns[2].Width = 220;
+            dataGridViewSmallClassification.Columns[3].Width = 150;
+            dataGridViewSmallClassification.Columns[4].AutoSizeMode = (DataGridViewAutoSizeColumnMode)DataGridViewAutoSizeColumnsMode.Fill;
 
             //各列の文字位置の指定
             dataGridViewSmallClassification.Columns[0].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewSmallClassification.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewSmallClassification.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewSmallClassification.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewSmallClassification.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewSmallClassification.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewSmallClassification.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
             //dataGridViewの総ページ数
             labelPage.Text = "/" + ((int)Math.Ceiling(SmallClassification.Count / (double)pageSize)) + "ページ";
@@ -112,6 +132,10 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
 
         private void buttonFirstPage_Click(object sender, EventArgs e)
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             dataGridViewSmallClassification.DataSource = SmallClassification.Take(pageSize).ToList();
 
@@ -123,6 +147,14 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
 
         private void buttonPreviousPage_Click(object sender, EventArgs e)
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
+            if (textBoxPageNo.Text == "" || textBoxPageNo.Text == "0" || int.Parse(textBoxPageSize.Text) > 9)
+            {
+                textBoxPageNo.Text = "1";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             int pageNo = int.Parse(textBoxPageNo.Text) - 2;
             dataGridViewSmallClassification.DataSource = SmallClassification.Skip(pageSize * pageNo).Take(pageSize).ToList();
@@ -138,6 +170,14 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
 
         private void buttonNextPage_Click(object sender, EventArgs e)
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
+            if (textBoxPageNo.Text == "" || textBoxPageNo.Text == "0" || int.Parse(textBoxPageSize.Text) > 9)
+            {
+                textBoxPageNo.Text = "1";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             int pageNo = int.Parse(textBoxPageNo.Text);
             //最終ページの計算
@@ -158,6 +198,14 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
 
         private void buttonLastPage_Click(object sender, EventArgs e)
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
+            if (textBoxPageNo.Text == "" || textBoxPageNo.Text == "0" || int.Parse(textBoxPageSize.Text) > 9)
+            {
+                textBoxPageNo.Text = "1";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             //最終ページの計算
             int pageNo = (int)Math.Ceiling(SmallClassification.Count / (double)pageSize) - 1;
@@ -171,20 +219,23 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
 
         private void dataGridViewSmallClassification_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            //クリックされた行データをテキストボックスへ
-            textBoxScID.Text = dataGridViewSmallClassification.Rows[dataGridViewSmallClassification.CurrentRow.Index].Cells[0].Value.ToString();
-            textBoxMcID.Text = dataGridViewSmallClassification.Rows[dataGridViewSmallClassification.CurrentRow.Index].Cells[1].Value.ToString();
-            textBoxScName.Text = dataGridViewSmallClassification.Rows[dataGridViewSmallClassification.CurrentRow.Index].Cells[2].Value.ToString();
-            int ScFlg2 = int.Parse(dataGridViewSmallClassification.Rows[dataGridViewSmallClassification.CurrentRow.Index].Cells[3].Value.ToString());
-            if (ScFlg2 == 0)
+            if (dataGridViewSmallClassification.CurrentRow != null)
             {
-                checkBoxScFlag.Checked = false;
+                //クリックされた行データをテキストボックスへ
+                textBoxScID.Text = dataGridViewSmallClassification.Rows[dataGridViewSmallClassification.CurrentRow.Index].Cells[0].Value.ToString();
+                textBoxMcID.Text = dataGridViewSmallClassification.Rows[dataGridViewSmallClassification.CurrentRow.Index].Cells[1].Value.ToString();
+                textBoxScName.Text = dataGridViewSmallClassification.Rows[dataGridViewSmallClassification.CurrentRow.Index].Cells[2].Value.ToString();
+                int ScFlg2 = int.Parse(dataGridViewSmallClassification.Rows[dataGridViewSmallClassification.CurrentRow.Index].Cells[3].Value.ToString());
+                if (ScFlg2 == 0)
+                {
+                    checkBoxScFlag.Checked = false;
+                }
+                else if (ScFlg2 == 2)
+                {
+                    checkBoxScFlag.Checked = true;
+                }
+                textBoxScHidden.Text = dataGridViewSmallClassification.Rows[dataGridViewSmallClassification.CurrentRow.Index].Cells[4].Value.ToString();
             }
-            else if (ScFlg2 == 2)
-            {
-                checkBoxScFlag.Checked = true;
-            }
-            textBoxScHidden.Text = dataGridViewSmallClassification.Rows[dataGridViewSmallClassification.CurrentRow.Index].Cells[4].Value.ToString();
         }
 
         private void buttonClear_Click(object sender, EventArgs e)
@@ -236,7 +287,6 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
         ///////////////////////////////
         private bool GetValidDataAtRegistration()
         {
-
             // 小分類IDの適否
             if (!String.IsNullOrEmpty(textBoxScID.Text.Trim()))
             {
@@ -295,7 +345,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
                 // 小分類名の文字数チェック
                 if (textBoxScName.TextLength > 50)
                 {
-                    //MessageBox.Show("小分類名は25文字以下です");
+                    //MessageBox.Show("小分類名は50文字以下です");
                     messageDsp.DspMsg("M8006");
                     textBoxScName.Focus();
                     return false;
@@ -306,6 +356,43 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
                 //MessageBox.Show("小分類名が入力されていません");
                 messageDsp.DspMsg("M8007");
                 textBoxScName.Focus();
+                return false;
+            }
+
+            // 大分類IDの適否
+            if (!String.IsNullOrEmpty(textBoxMcID.Text.Trim()))
+            {
+                // 大分類IDの半角数字チェック
+                if (!dataInputFormCheck.CheckNumeric(textBoxMcID.Text.Trim()))
+                {
+                    //MessageBox.Show("大分類IDは全て半角数字入力です");
+                    messageDsp.DspMsg("M8024");
+                    textBoxMcID.Focus();
+                    return false;
+                }
+                // 大分類IDの文字数チェック
+                if (textBoxMcID.TextLength > 2)
+                {
+                    //MessageBox.Show("大分類IDは2文字までです");
+                    messageDsp.DspMsg("M8010");
+                    textBoxMcID.Focus();
+                    return false;
+                }
+
+                // 大分類IDに一致するレコードの存在チェック
+                if (labelMcName.Text == "“UnknownID”")
+                {
+                    //MessageBox.Show("入力された大分類IDは存在しません");
+                    messageDsp.DspMsg("M8025");
+                    textBoxMcID.Focus();
+                    return false;
+                }
+            }
+            else
+            {
+                //MessageBox.Show("大分類IDが入力されていません");
+                messageDsp.DspMsg("M8026");
+                textBoxMcID.Focus();
                 return false;
             }
 
@@ -322,7 +409,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             if (checkBoxScFlag.Checked == true)
             {
                 //MessageBox.Show("登録では管理フラグは適用されません");
-                messageDsp.DspMsg("M8024");
+                messageDsp.DspMsg("M8027");
                 checkBoxScFlag.Focus();
                 return false;
             }
@@ -377,19 +464,40 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
 
             // データグリッドビューの表示
             GetDataGridView();
-
         }
 
         private void checkBoxScFlag_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBoxScFlag.Checked)
             {
+                if (buttonUpdate.Enabled == false)
+                {
+                    BackColor = Color.Tomato;
+                    buttonUpdate.Text = "削除";
+                }
+                else
+                {
+                    BackColor = Color.Tomato;
+                    buttonUpdate.BackgroundImage = Properties.Resources.Fixed_削除;
+                    buttonUpdate.Text = "削除";
+                }
                 ScFlg = 2;
                 textBoxScHidden.Enabled = true;
                 return;
             }
             else
             {
+                if (buttonUpdate.Enabled == false)
+                {
+                    BackColor = Color.Gold;
+                    buttonUpdate.Text = "更新";
+                }
+                else
+                {
+                    BackColor = Color.Gold;
+                    buttonUpdate.BackgroundImage = Properties.Resources.Fixed_更新;
+                    buttonUpdate.Text = "更新";
+                }
                 ScFlg = 0;
                 textBoxScHidden.Enabled = false;
                 textBoxScHidden.Text = "";
@@ -442,6 +550,42 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
                     return false;
                 }
             }
+            // 大分類IDの適否
+            if (!String.IsNullOrEmpty(textBoxMcID.Text.Trim()))
+            {
+                // 大分類IDの半角数字チェック
+                if (!dataInputFormCheck.CheckNumeric(textBoxMcID.Text.Trim()))
+                {
+                    //MessageBox.Show("大分類IDは全て半角英数字入力です");
+                    messageDsp.DspMsg("M8024");
+                    textBoxMcID.Focus();
+                    return false;
+                }
+                // 大分類IDの文字数チェック
+                if (textBoxMcID.TextLength > 2)
+                {
+                    //MessageBox.Show("大分類IDは2文字です");
+                    messageDsp.DspMsg("M8010");
+                    textBoxMcID.Focus();
+                    return false;
+                }
+                // 大分類IDが0ではないかチェック
+                if (int.Parse(textBoxMcID.Text.Trim()) == 0)
+                {
+                    //MessageBox.Show("大分類IDは01から割り当ててください");
+                    messageDsp.DspMsg("M8028");
+                    textBoxMcID.Focus();
+                    return false;
+                }
+                // 大分類IDに一致するレコードの存在チェック
+                if (labelMcName.Text == "“UnknownID”")
+                {
+                    //MessageBox.Show("入力された大分類IDは存在しません");
+                    messageDsp.DspMsg("M8029");
+                    textBoxMcID.Focus();
+                    return false;
+                }
+            }
             // 小分類名入力時チェック
             if (!String.IsNullOrEmpty(textBoxScName.Text.Trim()))
             {
@@ -462,10 +606,13 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
                     return false;
                 }
             }
-            if (textBoxScID.Text == "" && textBoxScName.Text == "" && checkBoxScFlag.Checked == false)
+
+            // 管理フラグの適否
+            if (checkBoxScFlag.CheckState == CheckState.Indeterminate)
             {
-                // データグリッドビューの表示
-                SetFormDataGridView();
+                //MessageBox.Show("管理フラグが不確定の状態です");
+                messageDsp.DspMsg("M8008");
+                checkBoxScFlag.Focus();
                 return false;
             }
             return true;
@@ -555,13 +702,21 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             int pageSize = int.Parse(textBoxPageSize.Text);
 
             dataGridViewSmallClassification.DataSource = SmallClassification;
+            if (SmallClassification.Count == 0)
+            {
+                labelNoTable.Visible = true;
+            }
+            else
+            {
+                labelNoTable.Visible = false;
+            }
 
             labelPage.Text = "/" + ((int)Math.Ceiling(SmallClassification.Count / (double)pageSize)) + "ページ";
             dataGridViewSmallClassification.Refresh();
 
             if (SmallClassification.Count == 0) //検索結果のデータ数が0ならエラー
             {
-                messageDsp.DspMsg("M8025");
+                messageDsp.DspMsg("M8030");
                 SetFormDataGridView();
             }
         }
@@ -656,6 +811,43 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
                 return false;
             }
 
+            // 大分類IDの適否
+            if (!String.IsNullOrEmpty(textBoxMcID.Text.Trim()))
+            {
+                // 大分類IDの半角数字チェック
+                if (!dataInputFormCheck.CheckNumeric(textBoxMcID.Text.Trim()))
+                {
+                    //MessageBox.Show("大分類IDは全て半角数字入力です");
+                    messageDsp.DspMsg("M8024");
+                    textBoxMcID.Focus();
+                    return false;
+                }
+                // 大分類IDの文字数チェック
+                if (textBoxMcID.TextLength > 2)
+                {
+                    //MessageBox.Show("大分類IDは2文字までです");
+                    messageDsp.DspMsg("M8010");
+                    textBoxMcID.Focus();
+                    return false;
+                }
+
+                // 大分類IDに一致するレコードの存在チェック
+                if (labelMcName.Text == "“UnknownID”")
+                {
+                    //MessageBox.Show("入力された大分類IDは存在しません");
+                    messageDsp.DspMsg("M8025");
+                    textBoxMcID.Focus();
+                    return false;
+                }
+            }
+            else
+            {
+                //MessageBox.Show("大分類IDが入力されていません");
+                messageDsp.DspMsg("M8026");
+                textBoxMcID.Focus();
+                return false;
+            }
+
             // 管理フラグの適否
             if (checkBoxScFlag.CheckState == CheckState.Indeterminate)
             {
@@ -671,7 +863,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
                 if (textBoxScHidden.Text == "")
                 {
                     //MessageBox.Show("非表示理由の入力が必要です");
-                    messageDsp.DspMsg("M8026");
+                    messageDsp.DspMsg("M8009");
                     textBoxScHidden.Focus();
                     return false;
                 }
@@ -772,17 +964,18 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             this.Close();
         }
 
-        private void buttonMajorClassForm_Click(object sender, EventArgs e)
+        private void label大分類ID_Click(object sender, EventArgs e)
         {
-            OpenForm(((Button)sender).Text);
+            OpenForm(((Label)sender).Text);
         }
+
         private void OpenForm(string formName)
         {
             Form frm = new Form();
             //引数より、開くフォームを設定
             switch (formName)
             {
-                case "大分類検索":
+                case "大分類ID":
                     frm = new F_MajorCassification();
                     break;
             }
@@ -810,11 +1003,6 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             {
                 frm.Show();
             }
-        }
-
-        private void buttonLogout_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void textBoxMcID_TextChanged(object sender, EventArgs e)
@@ -853,6 +1041,37 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             {
                 labelMcName.Visible = false;
                 labelMcName.Text = "大分類名";
+            }
+        }
+
+        private void label大分類ID_MouseEnter(object sender, EventArgs e)
+        {
+            label大分類ID.BackColor = Color.Aqua;
+        }
+
+        private void label大分類ID_MouseLeave(object sender, EventArgs e)
+        {
+            label大分類ID.BackColor = Color.Transparent;
+        }
+
+        private void F_SmallClassification_Activated(object sender, EventArgs e)
+        {
+            labelEmpName.Text = F_menu.loginName;
+            labelEmpID.Text = F_menu.loginEmID;
+            labelOfficeName.Text = F_menu.loginSalesOffice;
+            if (F_menu.loginSalesOffice != "本社")
+            {
+                buttonRegist.Enabled = false;
+                buttonUpdate.Enabled = false;
+                buttonRegist.BackgroundImage = Properties.Resources.Fixed_キャンセル使用不可;
+                buttonUpdate.BackgroundImage = Properties.Resources.Fixed_キャンセル使用不可;
+            }
+            if (F_Login.SysMode == 1) //開発者モード
+            {
+                buttonRegist.Enabled = true;
+                buttonUpdate.Enabled = true;
+                buttonRegist.BackgroundImage = Properties.Resources.Fixed_登録;
+                buttonUpdate.BackgroundImage = Properties.Resources.Fixed_更新;
             }
         }
     }

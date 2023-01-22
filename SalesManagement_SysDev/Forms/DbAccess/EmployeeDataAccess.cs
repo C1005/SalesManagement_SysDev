@@ -92,6 +92,14 @@ namespace SalesManagement_SysDev.Forms.DbAccess
                                                         x.EmFlag.ToString().Contains(selectcondition.EmFlag.ToString())).ToList();
                     context.Dispose();
                 }
+                else if (Master.FormEmployee.F_Employee.mPoID != "")
+                {
+                    var context = new SalesManagement_DevContext();
+                    Employee = context.M_Employees.Where(x =>
+                                                        x.PoID.ToString().Contains(selectcondition.PoID.ToString()) &&
+                                                        x.EmFlag.ToString().Contains(selectcondition.EmFlag.ToString())).ToList();
+                    context.Dispose();
+                }
                 else if (Master.FormEmployee.F_Employee.mEmFlg == true)
                 {
                     var context = new SalesManagement_DevContext();

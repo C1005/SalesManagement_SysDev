@@ -46,7 +46,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormEmployee
         private void SetFormDataGridView()
         {
             //dataGridViewのページサイズ指定
-            textBoxPageSize.Text = "10";
+            textBoxPageSize.Text = "15";
             //dataGridViewのページ番号指定
             textBoxPageNo.Text = "1";
             //読み取り専用に指定
@@ -83,18 +83,36 @@ namespace SalesManagement_SysDev.Forms.Master.FormEmployee
         ///////////////////////////////
         private void SetDataGridView()
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
+            if (textBoxPageNo.Text == "" || textBoxPageNo.Text == "0" || int.Parse(textBoxPageSize.Text) > 9)
+            {
+                textBoxPageNo.Text = "1";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             int pageNo = int.Parse(textBoxPageNo.Text) - 1;
             dataGridViewPosition.DataSource = Position.Skip(pageSize * pageNo).Take(pageSize).ToList();
+
+            if (Position.Count == 0)
+            {
+                labelNoTable.Visible = true;
+            }
+            else
+            {
+                labelNoTable.Visible = false;
+            }
+
             //各列幅の指定
-            dataGridViewPosition.Columns[0].Width = 100;
-            dataGridViewPosition.Columns[1].Width = 200;
-            dataGridViewPosition.Columns[2].Width = 110;
-            dataGridViewPosition.Columns[3].Width = 400;
+            dataGridViewPosition.Columns[0].Width = 140;
+            dataGridViewPosition.Columns[1].Width = 230;
+            dataGridViewPosition.Columns[2].Width = 150;
+            dataGridViewPosition.Columns[3].AutoSizeMode = (DataGridViewAutoSizeColumnMode)DataGridViewAutoSizeColumnsMode.Fill;
 
             //各列の文字位置の指定
             dataGridViewPosition.Columns[0].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewPosition.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewPosition.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewPosition.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewPosition.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
@@ -122,6 +140,10 @@ namespace SalesManagement_SysDev.Forms.Master.FormEmployee
         ///////////////////////////////
         private void buttonFirstPage_Click_1(object sender, EventArgs e)
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             dataGridViewPosition.DataSource = Position.Take(pageSize).ToList();
 
@@ -138,6 +160,14 @@ namespace SalesManagement_SysDev.Forms.Master.FormEmployee
         ///////////////////////////////
         private void buttonPreviousPage_Click_1(object sender, EventArgs e)
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
+            if (textBoxPageNo.Text == "" || textBoxPageNo.Text == "0" || int.Parse(textBoxPageSize.Text) > 9)
+            {
+                textBoxPageNo.Text = "1";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             int pageNo = int.Parse(textBoxPageNo.Text) - 2;
             dataGridViewPosition.DataSource = Position.Skip(pageSize * pageNo).Take(pageSize).ToList();
@@ -159,6 +189,14 @@ namespace SalesManagement_SysDev.Forms.Master.FormEmployee
 
         private void buttonNextPage_Click_1(object sender, EventArgs e)
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
+            if (textBoxPageNo.Text == "" || textBoxPageNo.Text == "0" || int.Parse(textBoxPageSize.Text) > 9)
+            {
+                textBoxPageNo.Text = "1";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             int pageNo = int.Parse(textBoxPageNo.Text);
             //最終ページの計算
@@ -185,6 +223,14 @@ namespace SalesManagement_SysDev.Forms.Master.FormEmployee
         
         private void buttonLastPage_Click_1(object sender, EventArgs e)
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
+            if (textBoxPageNo.Text == "" || textBoxPageNo.Text == "0" || int.Parse(textBoxPageSize.Text) > 9)
+            {
+                textBoxPageNo.Text = "1";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             //最終ページの計算
             int pageNo = (int)Math.Ceiling(Position.Count / (double)pageSize) - 1;
@@ -389,12 +435,34 @@ namespace SalesManagement_SysDev.Forms.Master.FormEmployee
         {
             if (checkBoxPoFlag.Checked)
             {
+                if (buttonUpdate.Enabled == false)
+                {
+                    BackColor = Color.Tomato;
+                    buttonUpdate.Text = "削除";
+                }
+                else
+                {
+                    BackColor = Color.Tomato;
+                    buttonUpdate.BackgroundImage = Properties.Resources.Fixed_削除;
+                    buttonUpdate.Text = "削除";
+                }
                 PoFlg = 2;
                 textBoxPoHidden.Enabled = true;
                 return;
             }
             else
             {
+                if (buttonUpdate.Enabled == false)
+                {
+                    BackColor = Color.Gold;
+                    buttonUpdate.Text = "更新";
+                }
+                else
+                {
+                    BackColor = Color.Gold;
+                    buttonUpdate.BackgroundImage = Properties.Resources.Fixed_更新;
+                    buttonUpdate.Text = "更新";
+                }
                 PoFlg = 0;
                 textBoxPoHidden.Enabled = false;
                 textBoxPoHidden.Text = "";
@@ -465,12 +533,6 @@ namespace SalesManagement_SysDev.Forms.Master.FormEmployee
                     textBoxPoName.Focus();
                     return false;
                 }
-            }
-            if (textBoxPoID.Text == "" && textBoxPoName.Text == "" && checkBoxPoFlag.Checked == false)
-            {
-                // データグリッドビューの表示
-                SetFormDataGridView();
-                return false;
             }
             // 管理フラグの適否
             if (checkBoxPoFlag.CheckState == CheckState.Indeterminate)
@@ -553,6 +615,14 @@ namespace SalesManagement_SysDev.Forms.Master.FormEmployee
             int pageSize = int.Parse(textBoxPageSize.Text);
 
             dataGridViewPosition.DataSource = Position;
+            if (Position.Count == 0)
+            {
+                labelNoTable.Visible = true;
+            }
+            else
+            {
+                labelNoTable.Visible = false;
+            }
 
             labelPage.Text = "/" + ((int)Math.Ceiling(Position.Count / (double)pageSize)) + "ページ";
             dataGridViewPosition.Refresh();
@@ -639,7 +709,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormEmployee
                 // 役職名の文字数チェック
                 if (textBoxPoName.TextLength > 50)
                 {
-                    //MessageBox.Show("役職名は25文字以下です");
+                    //MessageBox.Show("役職名は50文字以下です");
                     messageDsp.DspMsg("M1006");
                     textBoxPoName.Focus();
                     return false;
@@ -765,24 +835,48 @@ namespace SalesManagement_SysDev.Forms.Master.FormEmployee
 
         private void dataGridViewPosition_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            //クリックされた行データをテキストボックスへ
-            textBoxPoID.Text = dataGridViewPosition.Rows[dataGridViewPosition.CurrentRow.Index].Cells[0].Value.ToString();
-            textBoxPoName.Text = dataGridViewPosition.Rows[dataGridViewPosition.CurrentRow.Index].Cells[1].Value.ToString();
-            int PoFlg2 = int.Parse(dataGridViewPosition.Rows[dataGridViewPosition.CurrentRow.Index].Cells[2].Value.ToString());
-            if (PoFlg2 == 0)
+            if (dataGridViewPosition.CurrentRow != null)
             {
-                checkBoxPoFlag.Checked = false;
+                //クリックされた行データをテキストボックスへ
+                textBoxPoID.Text = dataGridViewPosition.Rows[dataGridViewPosition.CurrentRow.Index].Cells[0].Value.ToString();
+                textBoxPoName.Text = dataGridViewPosition.Rows[dataGridViewPosition.CurrentRow.Index].Cells[1].Value.ToString();
+                int PoFlg2 = int.Parse(dataGridViewPosition.Rows[dataGridViewPosition.CurrentRow.Index].Cells[2].Value.ToString());
+                if (PoFlg2 == 0)
+                {
+                    checkBoxPoFlag.Checked = false;
+                }
+                else if (PoFlg2 == 2)
+                {
+                    checkBoxPoFlag.Checked = true;
+                }
+                textBoxPoHidden.Text = dataGridViewPosition.Rows[dataGridViewPosition.CurrentRow.Index].Cells[3].Value.ToString();
             }
-            else if (PoFlg2 == 2)
-            {
-                checkBoxPoFlag.Checked = true;
-            }
-            textBoxPoHidden.Text = dataGridViewPosition.Rows[dataGridViewPosition.CurrentRow.Index].Cells[3].Value.ToString();
         }
 
         private void buttonClose_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void F_Position_Activated(object sender, EventArgs e)
+        {
+            labelEmpName.Text = F_menu.loginName;
+            labelEmpID.Text = F_menu.loginEmID;
+            labelOfficeName.Text = F_menu.loginSalesOffice;
+            if (F_menu.loginSalesOffice != "本社")
+            {
+                buttonRegist.Enabled = false;
+                buttonUpdate.Enabled = false;
+                buttonRegist.BackgroundImage = Properties.Resources.Fixed_キャンセル使用不可;
+                buttonUpdate.BackgroundImage = Properties.Resources.Fixed_キャンセル使用不可;
+            }
+            if (F_Login.SysMode == 1) //開発者モード
+            {
+                buttonRegist.Enabled = true;
+                buttonUpdate.Enabled = true;
+                buttonRegist.BackgroundImage = Properties.Resources.Fixed_登録;
+                buttonUpdate.BackgroundImage = Properties.Resources.Fixed_更新;
+            }
         }
     }
 

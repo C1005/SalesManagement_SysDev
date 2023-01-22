@@ -76,7 +76,7 @@ namespace SalesManagement_SysDev
                 context.T_OperationHistorys.Create();
                 context.T_Orders.Create();
                 context.T_OrderDetails.Create();
-                context.T_Sale.Create();
+                context.T_Sales.Create();
                 context.T_SaleDetails.Create();
                 context.T_Shipments.Create();
                 context.T_ShipmentDetails.Create();
@@ -98,25 +98,25 @@ namespace SalesManagement_SysDev
                 ImportData("M_Product");
                 ImportData("M_SalesOffice");
                 ImportData("M_SmallClassification");
-                ImportData("T_Arrival");
-                ImportData("T_ArrivalDetail");
-                ImportData("T_Chumon");
-                ImportData("T_ChumonDetail");
+                //ImportData("T_Arrival");
+                //ImportData("T_ArrivalDetail");
+                //ImportData("T_Chumon");
+                //ImportData("T_ChumonDetail");
                 ImportData("T_Hattyu");
                 ImportData("T_HattyuDetail");
                 ImportData("T_LoginHistory");
                 ImportData("T_OperationHistory");
-                ImportData("T_Order");
-                ImportData("T_OrderDetail");
-                ImportData("T_Sale");
-                ImportData("T_SaleDetail");
-                ImportData("T_Shipment");
-                ImportData("T_ShipmentDetail");
+                //ImportData("T_Order");
+                //ImportData("T_OrderDetail");
+                //ImportData("T_Sale");
+                //ImportData("T_SaleDetail");
+                //ImportData("T_Shipment");
+                //ImportData("T_ShipmentDetail");
                 ImportData("T_Stock");
-                ImportData("T_Syukko");
-                ImportData("T_SyukkoDetail");
-                ImportData("T_Warehousing");
-                ImportData("T_WarehousingDetail");
+                //ImportData("T_Syukko");
+                //ImportData("T_SyukkoDetail");
+                //ImportData("T_Warehousing");
+                //ImportData("T_WarehousingDetail");
             }
             catch (Exception ex)
             {

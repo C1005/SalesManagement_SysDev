@@ -46,7 +46,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
         private void SetFormDataGridView()
         {
             //dataGridViewのページサイズ指定
-            textBoxPageSize.Text = "10";
+            textBoxPageSize.Text = "15";
             //dataGridViewのページ番号指定
             textBoxPageNo.Text = "1";
             //読み取り専用に指定
@@ -68,7 +68,6 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
         ///////////////////////////////
         private void GetDataGridView()
         {
-
             // メーカデータの取得
             Maker = makerDataAccess.GetMakerData();
 
@@ -83,20 +82,46 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
         ///////////////////////////////
         private void SetDataGridView()
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
+            if (textBoxPageNo.Text == "" || textBoxPageNo.Text == "0" || int.Parse(textBoxPageSize.Text) > 9)
+            {
+                textBoxPageNo.Text = "1";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             int pageNo = int.Parse(textBoxPageNo.Text) - 1;
             dataGridViewMaker.DataSource = Maker.Skip(pageSize * pageNo).Take(pageSize).ToList();
+
+            if (Maker.Count == 0)
+            {
+                labelNoTable.Visible = true;
+            }
+            else
+            {
+                labelNoTable.Visible = false;
+            }
+
             //各列幅の指定
             dataGridViewMaker.Columns[0].Width = 100;
-            dataGridViewMaker.Columns[1].Width = 200;
-            dataGridViewMaker.Columns[2].Width = 110;
-            dataGridViewMaker.Columns[3].Width = 400;
+            dataGridViewMaker.Columns[1].Width = 130;
+            dataGridViewMaker.Columns[2].Width = 300;
+            dataGridViewMaker.Columns[3].Width = 110;
+            dataGridViewMaker.Columns[4].Width = 100;
+            dataGridViewMaker.Columns[5].Width = 110;
+            dataGridViewMaker.Columns[6].Width = 120;
+            dataGridViewMaker.Columns[7].AutoSizeMode = (DataGridViewAutoSizeColumnMode)DataGridViewAutoSizeColumnsMode.Fill;
 
             //各列の文字位置の指定
             dataGridViewMaker.Columns[0].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewMaker.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewMaker.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewMaker.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewMaker.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewMaker.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewMaker.Columns[5].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewMaker.Columns[6].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewMaker.Columns[7].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
             //dataGridViewの総ページ数
             labelPage.Text = "/" + ((int)Math.Ceiling(Maker.Count / (double)pageSize)) + "ページ";
@@ -111,6 +136,10 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
 
         private void buttonFirstPage_Click(object sender, EventArgs e)
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             dataGridViewMaker.DataSource = Maker.Take(pageSize).ToList();
 
@@ -122,6 +151,14 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
 
         private void buttonPreviousPage_Click(object sender, EventArgs e)
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
+            if (textBoxPageNo.Text == "" || textBoxPageNo.Text == "0" || int.Parse(textBoxPageSize.Text) > 9)
+            {
+                textBoxPageNo.Text = "1";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             int pageNo = int.Parse(textBoxPageNo.Text) - 2;
             dataGridViewMaker.DataSource = Maker.Skip(pageSize * pageNo).Take(pageSize).ToList();
@@ -137,6 +174,14 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
 
         private void buttonNextPage_Click(object sender, EventArgs e)
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
+            if (textBoxPageNo.Text == "" || textBoxPageNo.Text == "0" || int.Parse(textBoxPageSize.Text) > 9)
+            {
+                textBoxPageNo.Text = "1";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             int pageNo = int.Parse(textBoxPageNo.Text);
             //最終ページの計算
@@ -157,6 +202,14 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
 
         private void buttonLastPage_Click(object sender, EventArgs e)
         {
+            if (textBoxPageSize.Text == "" || textBoxPageSize.Text == "0" || textBoxPageSize.TextLength > 9) //Int32の最大値は 2,147,483,647
+            {
+                textBoxPageSize.Text = "15";
+            }
+            if (textBoxPageNo.Text == "" || textBoxPageNo.Text == "0" || int.Parse(textBoxPageSize.Text) > 9)
+            {
+                textBoxPageNo.Text = "1";
+            }
             int pageSize = int.Parse(textBoxPageSize.Text);
             //最終ページの計算
             int pageNo = (int)Math.Ceiling(Maker.Count / (double)pageSize) - 1;
@@ -189,7 +242,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             textBoxMaName.Text = "";
             textBoxMaHidden.Text = "";
             textBoxMaPostal.Text = "";
-            textBoxMaAdress.Text = "";
+            textBoxMaAddress.Text = "";
             textBoxMaFAX.Text = "";
             textBoxMaPhone.Text = "";
             checkBoxMaFlag.Checked = false;
@@ -219,51 +272,6 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
         ///////////////////////////////
         private bool GetValidDataAtRegistration()
         {
-
-            // メーカIDの適否
-            if (!String.IsNullOrEmpty(textBoxMaID.Text.Trim()))
-            {
-                // メーカIDの半角数字チェック
-                if (!dataInputFormCheck.CheckNumeric(textBoxMaID.Text.Trim()))
-                {
-                    //MessageBox.Show("メーカIDは全て半角数字入力です");
-                    messageDsp.DspMsg("M1001");
-                    textBoxMaID.Focus();
-                    return false;
-                }
-                // メーカIDの文字数チェック
-                if (textBoxMaID.TextLength > 2)
-                {
-                    //MessageBox.Show("メーカIDは2文字です");
-                    messageDsp.DspMsg("M1002");
-                    textBoxMaID.Focus();
-                    return false;
-                }
-                // メーカIDの重複チェック
-                if (makerDataAccess.CheckMakerCDExistence(textBoxMaID.Text.Trim()))
-                {
-                    //MessageBox.Show("入力されたメーカIDは既に存在します");
-                    messageDsp.DspMsg("M1003");
-                    textBoxMaID.Focus();
-                    return false;
-                }
-                // メーカIDが0ではないかチェック
-                if (int.Parse(textBoxMaID.Text.Trim()) == 0)
-                {
-                    //MessageBox.Show("メーカIDは01から割り当ててください");
-                    messageDsp.DspMsg("M1024");
-                    textBoxMaID.Focus();
-                    return false;
-                }
-            }
-            else
-            {
-                //MessageBox.Show("メーカIDが入力されていません");
-                messageDsp.DspMsg("M1004");
-                textBoxMaID.Focus();
-                return false;
-            }
-
             // メーカ名の適否
             if (!String.IsNullOrEmpty(textBoxMaName.Text.Trim()))
             {
@@ -271,15 +279,15 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
                 if (!dataInputFormCheck.CheckFullWidth(textBoxMaName.Text.Trim()))
                 {
                     //MessageBox.Show("メーカ名は全て全角入力です");
-                    messageDsp.DspMsg("M1005");
+                    messageDsp.DspMsg("M2005");
                     textBoxMaName.Focus();
                     return false;
                 }
                 // メーカ名の文字数チェック
                 if (textBoxMaName.TextLength > 50)
                 {
-                    //MessageBox.Show("メーカ名は25文字以下です");
-                    messageDsp.DspMsg("M1006");
+                    //MessageBox.Show("メーカ名は50文字以下です");
+                    messageDsp.DspMsg("M2006");
                     textBoxMaName.Focus();
                     return false;
                 }
@@ -287,7 +295,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             else
             {
                 //MessageBox.Show("メーカ名が入力されていません");
-                messageDsp.DspMsg("M1007");
+                messageDsp.DspMsg("M2007");
                 textBoxMaName.Focus();
                 return false;
             }
@@ -295,10 +303,10 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             // 郵便番号の数値チェック
             if (!String.IsNullOrEmpty(textBoxMaPostal.Text.Trim()))
             {
-                if (!dataInputFormCheck.CheckNumeric(textBoxMaPostal.Text.Trim()))
+                if (!dataInputFormCheck.CheckNumericWithHyphen(textBoxMaPostal.Text.Trim()))
                 {
                     //MessageBox.Show("郵便番号は半角数値です");
-                    messageDsp.DspMsg("M3025");
+                    messageDsp.DspMsg("M2032");
                     textBoxMaPostal.Focus();
                     return false;
                 }
@@ -306,29 +314,45 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
                 if (textBoxMaPostal.TextLength != 7)
                 {
                     //MessageBox.Show("郵便番号は7文字です");
-                    messageDsp.DspMsg("M3028");
+                    messageDsp.DspMsg("M2011");
                     textBoxMaPostal.Focus();
                     return false;
                 }
             }
-            // 住所の文字数チェック
-            if (!String.IsNullOrEmpty(textBoxMaAdress.Text.Trim()))
+            else
             {
-                if (textBoxMaAdress.TextLength > 50)
+                //MessageBox.Show("郵便番号が入力されていません");
+                messageDsp.DspMsg("M2033");
+                textBoxMaPostal.Focus();
+                return false;
+            }
+
+            // 住所の文字数チェック
+            if (!String.IsNullOrEmpty(textBoxMaAddress.Text.Trim()))
+            {
+                if (textBoxMaAddress.TextLength > 50)
                 {
                     //MessageBox.Show("住所は50文字以下です");
-                    messageDsp.DspMsg("M3013");
-                    textBoxMaAdress.Focus();
+                    messageDsp.DspMsg("M2014");
+                    textBoxMaAddress.Focus();
                     return false;
                 }
             }
+            else
+            {
+                //MessageBox.Show("住所が入力されていません");
+                messageDsp.DspMsg("M2034");
+                textBoxMaAddress.Focus();
+                return false;
+            }
+
             // FAXの半角数値チェック
             if (!String.IsNullOrEmpty(textBoxMaFAX.Text.Trim()))
             {
-                if (!dataInputFormCheck.CheckNumeric(textBoxMaFAX.Text.Trim()))
+                if (!dataInputFormCheck.CheckNumericWithHyphen(textBoxMaFAX.Text.Trim()))
                 {
                     //MessageBox.Show("FAXは半角数値です");
-                    messageDsp.DspMsg("M3029");
+                    messageDsp.DspMsg("M2035");
                     textBoxMaFAX.Focus();
                     return false;
                 }
@@ -336,18 +360,26 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
                 if (textBoxMaFAX.TextLength > 13)
                 {
                     //MessageBox.Show("FAXは13文字以下です");
-                    messageDsp.DspMsg("M3012");
+                    messageDsp.DspMsg("M2013");
                     textBoxMaFAX.Focus();
                     return false;
                 }
             }
+            else
+            {
+                //MessageBox.Show("FAXが入力されていません");
+                messageDsp.DspMsg("M2036");
+                textBoxMaFAX.Focus();
+                return false;
+            }
+
             // 電話番号の半角数値チェック
             if (!String.IsNullOrEmpty(textBoxMaPhone.Text.Trim()))
             {
-                if (!dataInputFormCheck.CheckNumeric(textBoxMaPhone.Text.Trim()))
+                if (!dataInputFormCheck.CheckNumericWithHyphen(textBoxMaPhone.Text.Trim()))
                 {
                     //MessageBox.Show("電話番号は半角数値です");
-                    messageDsp.DspMsg("M3030");
+                    messageDsp.DspMsg("M2037");
                     textBoxMaPhone.Focus();
                     return false;
                 }
@@ -355,17 +387,24 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
                 if (textBoxMaPhone.TextLength > 13)
                 {
                     //MessageBox.Show("電話番号は13文字以下です");
-                    messageDsp.DspMsg("M3011");
+                    messageDsp.DspMsg("M2012");
                     textBoxMaPhone.Focus();
                     return false;
                 }
+            }
+            else
+            {
+                //MessageBox.Show("電話番号が入力されていません");
+                messageDsp.DspMsg("M2038");
+                textBoxMaPhone.Focus();
+                return false;
             }
 
             // 管理フラグの適否
             if (checkBoxMaFlag.CheckState == CheckState.Indeterminate)
             {
                 //MessageBox.Show("管理フラグが不確定の状態です");
-                messageDsp.DspMsg("M1008");
+                messageDsp.DspMsg("M2008");
                 checkBoxMaFlag.Focus();
                 return false;
             }
@@ -374,7 +413,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             if (checkBoxMaFlag.Checked == true)
             {
                 //MessageBox.Show("登録では管理フラグは適用されません");
-                messageDsp.DspMsg("M1022");
+                messageDsp.DspMsg("M2039");
                 checkBoxMaFlag.Focus();
                 return false;
             }
@@ -392,12 +431,11 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
         {
             return new M_Maker
             {
-                MaID = int.Parse(textBoxMaID.Text.Trim()),
                 MaName = textBoxMaName.Text.Trim(),
                 MaFlag = MaFlg,
                 MaHidden = textBoxMaHidden.Text.Trim(),
                 MaPostal = textBoxMaPostal.Text.Trim(),
-                MaAdress = textBoxMaAdress.Text.Trim(),
+                MaAdress = textBoxMaAddress.Text.Trim(),
                 MaFAX = textBoxMaFAX.Text.Trim(),
                 MaPhone = textBoxMaPhone.Text.Trim(),
             };
@@ -412,7 +450,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
         private void RegistrationMaker(M_Maker regMaker)
         {
             // 登録確認メッセージ
-            DialogResult result = messageDsp.DspMsg("M1010");
+            DialogResult result = messageDsp.DspMsg("M2015");
             if (result == DialogResult.Cancel)
                 return;
 
@@ -420,10 +458,10 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             bool flg = makerDataAccess.AddMakerData(regMaker);
             if (flg == true)
                 //MessageBox.Show("データを登録しました。");
-                messageDsp.DspMsg("M1011");
+                messageDsp.DspMsg("M2016");
             else
                 //MessageBox.Show("データの登録に失敗しました。");
-                messageDsp.DspMsg("M1012");
+                messageDsp.DspMsg("M2017");
 
             textBoxMaID.Focus();
 
@@ -467,15 +505,15 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
                 if (!dataInputFormCheck.CheckNumeric(textBoxMaID.Text.Trim()))
                 {
                     //MessageBox.Show("メーカIDは全て半角数字入力です");
-                    messageDsp.DspMsg("M1001");
+                    messageDsp.DspMsg("M2001");
                     textBoxMaID.Focus();
                     return false;
                 }
                 // メーカIDの文字数チェック
                 if (textBoxMaID.TextLength > 4)
                 {
-                    //MessageBox.Show("メーカIDは2文字までです");
-                    messageDsp.DspMsg("M1002");
+                    //MessageBox.Show("メーカIDは4文字までです");
+                    messageDsp.DspMsg("M2002");
                     textBoxMaID.Focus();
                     return false;
                 }
@@ -487,7 +525,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
                 if (!dataInputFormCheck.CheckFullWidth(textBoxMaName.Text.Trim()))
                 {
                     //MessageBox.Show("メーカ名は全て全角入力です");
-                    messageDsp.DspMsg("M1005");
+                    messageDsp.DspMsg("M2005");
                     textBoxMaName.Focus();
                     return false;
                 }
@@ -495,22 +533,50 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
                 if (textBoxMaName.TextLength > 50)
                 {
                     //MessageBox.Show("メーカ名は50文字以下です");
-                    messageDsp.DspMsg("M1006");
+                    messageDsp.DspMsg("M2006");
                     textBoxMaName.Focus();
                     return false;
                 }
             }
-            if (textBoxMaID.Text == "" && textBoxMaName.Text == "" && checkBoxMaFlag.Checked == false)
+
+            //郵便番号の検索不可チェック
+            if (textBoxMaPostal.Text != "")
             {
-                // データグリッドビューの表示
-                SetFormDataGridView();
+                //MessageBox.Show("郵便番号は検索対象外です");
+                messageDsp.DspMsg("M2027");
+                textBoxMaPostal.Focus();
                 return false;
             }
+            //住所の検索不可チェック
+            if (textBoxMaAddress.Text != "")
+            {
+                //MessageBox.Show("住所は検索対象外です");
+                messageDsp.DspMsg("M2028");
+                textBoxMaAddress.Focus();
+                return false;
+            }
+            //FAXの検索不可チェック
+            if (textBoxMaFAX.Text != "")
+            {
+                //MessageBox.Show("FAXは検索対象外です");
+                messageDsp.DspMsg("M2029");
+                textBoxMaFAX.Focus();
+                return false;
+            }
+            //電話番号の検索不可チェック
+            if (textBoxMaPhone.Text != "")
+            {
+                //MessageBox.Show("電話番号は検索対象外です");
+                messageDsp.DspMsg("M2030");
+                textBoxMaPhone.Focus();
+                return false;
+            }
+
             // 管理フラグの適否
             if (checkBoxMaFlag.CheckState == CheckState.Indeterminate)
             {
                 //MessageBox.Show("管理フラグが不確定の状態です");
-                messageDsp.DspMsg("M1008");
+                messageDsp.DspMsg("M2008");
                 checkBoxMaFlag.Focus();
                 return false;
             }
@@ -590,13 +656,21 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             int pageSize = int.Parse(textBoxPageSize.Text);
 
             dataGridViewMaker.DataSource = Maker;
+            if (Maker.Count == 0)
+            {
+                labelNoTable.Visible = true;
+            }
+            else
+            {
+                labelNoTable.Visible = false;
+            }
 
             labelPage.Text = "/" + ((int)Math.Ceiling(Maker.Count / (double)pageSize)) + "ページ";
             dataGridViewMaker.Refresh();
 
             if (Maker.Count == 0) //検索結果のデータ数が0ならエラー
             {
-                messageDsp.DspMsg("M1025");
+                messageDsp.DspMsg("M2031");
                 SetFormDataGridView();
             }
         }
@@ -625,7 +699,6 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
         ///////////////////////////////
         private bool GetValidDataAtUpdate()
         {
-
             // メーカIDの未入力チェック
             if (!String.IsNullOrEmpty(textBoxMaID.Text.Trim()))
             {
@@ -633,15 +706,15 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
                 if (!dataInputFormCheck.CheckNumeric(textBoxMaID.Text.Trim()))
                 {
                     //MessageBox.Show("メーカIDは全て半角英数字入力です");
-                    messageDsp.DspMsg("M1001");
+                    messageDsp.DspMsg("M2001");
                     textBoxMaID.Focus();
                     return false;
                 }
                 // メーカIDの文字数チェック
                 if (textBoxMaID.TextLength > 4)
                 {
-                    //MessageBox.Show("メーカIDは2文字です");
-                    messageDsp.DspMsg("M1002");
+                    //MessageBox.Show("メーカIDは4文字です");
+                    messageDsp.DspMsg("M2002");
                     textBoxMaID.Focus();
                     return false;
                 }
@@ -649,7 +722,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
                 if (!makerDataAccess.CheckMakerCDExistence(textBoxMaID.Text.Trim()))
                 {
                     //MessageBox.Show("入力されたメーカIDは存在しません");
-                    messageDsp.DspMsg("M1013");
+                    messageDsp.DspMsg("M2018");
                     textBoxMaID.Focus();
                     return false;
                 }
@@ -657,11 +730,10 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             else
             {
                 //MessageBox.Show("メーカIDが入力されていません");
-                messageDsp.DspMsg("M1004");
+                messageDsp.DspMsg("M2004");
                 textBoxMaID.Focus();
                 return false;
             }
-
 
             // メーカ名の適否
             if (!String.IsNullOrEmpty(textBoxMaName.Text.Trim()))
@@ -670,15 +742,15 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
                 if (!dataInputFormCheck.CheckFullWidth(textBoxMaName.Text.Trim()))
                 {
                     //MessageBox.Show("メーカ名は全て全角入力です");
-                    messageDsp.DspMsg("M1005");
+                    messageDsp.DspMsg("M2005");
                     textBoxMaName.Focus();
                     return false;
                 }
                 // メーカ名の文字数チェック
                 if (textBoxMaName.TextLength > 50)
                 {
-                    //MessageBox.Show("メーカ名は25文字以下です");
-                    messageDsp.DspMsg("M1006");
+                    //MessageBox.Show("メーカ名は50文字以下です");
+                    messageDsp.DspMsg("M2006");
                     textBoxMaName.Focus();
                     return false;
                 }
@@ -686,7 +758,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             else
             {
                 //MessageBox.Show("メーカ名が入力されていません");
-                messageDsp.DspMsg("M1007");
+                messageDsp.DspMsg("M2007");
                 textBoxMaName.Focus();
                 return false;
             }
@@ -694,10 +766,10 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             // 郵便番号の数値チェック
             if (!String.IsNullOrEmpty(textBoxMaPostal.Text.Trim()))
             {
-                if (!dataInputFormCheck.CheckNumeric(textBoxMaPostal.Text.Trim()))
+                if (!dataInputFormCheck.CheckNumericWithHyphen(textBoxMaPostal.Text.Trim()))
                 {
                     //MessageBox.Show("郵便番号は半角数値です");
-                    messageDsp.DspMsg("M3025");
+                    messageDsp.DspMsg("M2032");
                     textBoxMaPostal.Focus();
                     return false;
                 }
@@ -705,60 +777,45 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
                 if (textBoxMaPostal.TextLength != 7)
                 {
                     //MessageBox.Show("郵便番号は7文字です");
-                    messageDsp.DspMsg("M3028");
-                    textBoxMaPostal.Focus();
-                    return false;
-                }
-                // メーカ郵便番号の存在チェック
-                if (!makerDataAccess.CheckMakerCDExistence(textBoxMaPostal.Text.Trim()))
-                {
-                    //MessageBox.Show("入力されたメーカIDは存在しません");
-                    messageDsp.DspMsg("M1013");
+                    messageDsp.DspMsg("M2011");
                     textBoxMaPostal.Focus();
                     return false;
                 }
             }
             else
             {
-                //MessageBox.Show("メーカ郵便番号が入力されていません");
-                messageDsp.DspMsg("M1004");
+                //MessageBox.Show("郵便番号が入力されていません");
+                messageDsp.DspMsg("M2033");
                 textBoxMaPostal.Focus();
                 return false;
             }
+
             // 住所の文字数チェック
-            if (!String.IsNullOrEmpty(textBoxMaAdress.Text.Trim()))
+            if (!String.IsNullOrEmpty(textBoxMaAddress.Text.Trim()))
             {
-                if (textBoxMaAdress.TextLength > 50)
+                if (textBoxMaAddress.TextLength > 50)
                 {
                     //MessageBox.Show("住所は50文字以下です");
-                    messageDsp.DspMsg("M3013");
-                    textBoxMaAdress.Focus();
-                    return false;
-                }
-                // メーカ住所の存在チェック
-                if (!makerDataAccess.CheckMakerCDExistence(textBoxMaAdress.Text.Trim()))
-                {
-                    //MessageBox.Show("入力されたメーカ住所は存在しません");
-                    messageDsp.DspMsg("M1013");
-                    textBoxMaAdress.Focus();
+                    messageDsp.DspMsg("M2014");
+                    textBoxMaAddress.Focus();
                     return false;
                 }
             }
             else
             {
-                //MessageBox.Show("メーカ住所が入力されていません");
-                messageDsp.DspMsg("M1004");
-                textBoxMaAdress.Focus();
+                //MessageBox.Show("住所が入力されていません");
+                messageDsp.DspMsg("M2034");
+                textBoxMaAddress.Focus();
                 return false;
             }
 
             // FAXの半角数値チェック
             if (!String.IsNullOrEmpty(textBoxMaFAX.Text.Trim()))
             {
-                if (!dataInputFormCheck.CheckNumeric(textBoxMaFAX.Text.Trim()))
+                if (!dataInputFormCheck.CheckNumericWithHyphen(textBoxMaFAX.Text.Trim()))
                 {
                     //MessageBox.Show("FAXは半角数値です");
-                    messageDsp.DspMsg("M3029");
+                    messageDsp.DspMsg("M2035");
                     textBoxMaFAX.Focus();
                     return false;
                 }
@@ -766,33 +823,26 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
                 if (textBoxMaFAX.TextLength > 13)
                 {
                     //MessageBox.Show("FAXは13文字以下です");
-                    messageDsp.DspMsg("M3012");
-                    textBoxMaFAX.Focus();
-                    return false;
-                }
-                // メーカFAXの存在チェック
-                if (!makerDataAccess.CheckMakerCDExistence(textBoxMaFAX.Text.Trim()))
-                {
-                    //MessageBox.Show("入力されたメーカIDは存在しません");
-                    messageDsp.DspMsg("M1013");
+                    messageDsp.DspMsg("M2013");
                     textBoxMaFAX.Focus();
                     return false;
                 }
             }
             else
             {
-                //MessageBox.Show("メーカFAXが入力されていません");
-                messageDsp.DspMsg("M1004");
+                //MessageBox.Show("FAXが入力されていません");
+                messageDsp.DspMsg("M2036");
                 textBoxMaFAX.Focus();
                 return false;
             }
+
             // 電話番号の半角数値チェック
             if (!String.IsNullOrEmpty(textBoxMaPhone.Text.Trim()))
             {
-                if (!dataInputFormCheck.CheckNumeric(textBoxMaPhone.Text.Trim()))
+                if (!dataInputFormCheck.CheckNumericWithHyphen(textBoxMaPhone.Text.Trim()))
                 {
                     //MessageBox.Show("電話番号は半角数値です");
-                    messageDsp.DspMsg("M3030");
+                    messageDsp.DspMsg("M2037");
                     textBoxMaPhone.Focus();
                     return false;
                 }
@@ -800,31 +850,24 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
                 if (textBoxMaPhone.TextLength > 13)
                 {
                     //MessageBox.Show("電話番号は13文字以下です");
-                    messageDsp.DspMsg("M3011");
-                    textBoxMaPhone.Focus();
-                    return false;
-                }
-                // メーカ電話番号の存在チェック
-                if (!makerDataAccess.CheckMakerCDExistence(textBoxMaPhone.Text.Trim()))
-                {
-                    //MessageBox.Show("入力されたメーカ電話番号は存在しません");
-                    messageDsp.DspMsg("M1013");
+                    messageDsp.DspMsg("M2012");
                     textBoxMaPhone.Focus();
                     return false;
                 }
             }
             else
             {
-                //MessageBox.Show("メーカ電話番号が入力されていません");
-                messageDsp.DspMsg("M1004");
+                //MessageBox.Show("電話番号が入力されていません");
+                messageDsp.DspMsg("M2038");
                 textBoxMaPhone.Focus();
                 return false;
             }
+
             // 管理フラグの適否
             if (checkBoxMaFlag.CheckState == CheckState.Indeterminate)
             {
                 //MessageBox.Show("管理フラグが不確定の状態です");
-                messageDsp.DspMsg("M1008");
+                messageDsp.DspMsg("M2008");
                 checkBoxMaFlag.Focus();
                 return false;
             }
@@ -835,7 +878,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
                 if (textBoxMaHidden.Text == "")
                 {
                     //MessageBox.Show("非表示理由の入力が必要です");
-                    messageDsp.DspMsg("M1023");
+                    messageDsp.DspMsg("M2009");
                     textBoxMaHidden.Focus();
                     return false;
                 }
@@ -858,7 +901,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
                 MaFlag = MaFlg,
                 MaHidden = textBoxMaHidden.Text.Trim(),
                 MaPostal = textBoxMaPostal.Text.Trim(),
-                MaAdress = textBoxMaAdress.Text.Trim(),
+                MaAdress = textBoxMaAddress.Text.Trim(),
                 MaFAX = textBoxMaFAX.Text.Trim(),
                 MaPhone = textBoxMaPhone.Text.Trim(),
             };
@@ -875,7 +918,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             if (MaFlg == 0)
             {
                 // 更新確認メッセージ
-                DialogResult result = messageDsp.DspMsg("M1014");
+                DialogResult result = messageDsp.DspMsg("M2019");
                 if (result == DialogResult.Cancel)
                     return;
 
@@ -883,10 +926,10 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
                 bool flg = makerDataAccess.UpdateMakerData(updMaker);
                 if (flg == true)
                     //MessageBox.Show("データを更新しました。");
-                    messageDsp.DspMsg("M1015");
+                    messageDsp.DspMsg("M2020");
                 else
                     //MessageBox.Show("データの更新に失敗しました。");
-                    messageDsp.DspMsg("M1016");
+                    messageDsp.DspMsg("M2021");
 
                 textBoxMaID.Focus();
 
@@ -906,7 +949,7 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
         {
 
             // 更新確認メッセージ
-            DialogResult result = messageDsp.DspMsg("M1018");
+            DialogResult result = messageDsp.DspMsg("M2023");
             if (result == DialogResult.Cancel)
                 return;
 
@@ -914,10 +957,10 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
             bool flg = makerDataAccess.DeleteMakerData(delMaker);
             if (flg == true)
                 //MessageBox.Show("データを削除しました。");
-                messageDsp.DspMsg("M1019");
+                messageDsp.DspMsg("M2024");
             else
                 //MessageBox.Show("データの削除に失敗しました。");
-                messageDsp.DspMsg("M1020");
+                messageDsp.DspMsg("M2025");
 
             textBoxMaID.Focus();
 
@@ -936,28 +979,27 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
 
         private void dataGridViewMaker_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            //クリックされた行データをテキストボックスへ
-            textBoxMaID.Text = dataGridViewMaker.Rows[dataGridViewMaker.CurrentRow.Index].Cells[0].Value.ToString();
-            textBoxMaName.Text = dataGridViewMaker.Rows[dataGridViewMaker.CurrentRow.Index].Cells[1].Value.ToString();
-            textBoxMaPostal.Text = dataGridViewMaker.Rows[dataGridViewMaker.CurrentRow.Index].Cells[2].Value.ToString();
-            textBoxMaAdress.Text = dataGridViewMaker.Rows[dataGridViewMaker.CurrentRow.Index].Cells[3].Value.ToString();
-            textBoxMaFAX.Text = dataGridViewMaker.Rows[dataGridViewMaker.CurrentRow.Index].Cells[4].Value.ToString();
-            textBoxMaPhone.Text = dataGridViewMaker.Rows[dataGridViewMaker.CurrentRow.Index].Cells[5].Value.ToString();
-            int MaFlg2 = int.Parse(dataGridViewMaker.Rows[dataGridViewMaker.CurrentRow.Index].Cells[6].Value.ToString());
-            if (MaFlg2 == 0)
+            if (dataGridViewMaker.CurrentRow != null)
             {
-                checkBoxMaFlag.Checked = false;
-            }
-            else if (MaFlg2 == 2)
-            {
-                checkBoxMaFlag.Checked = true;
-            }
-            textBoxMaHidden.Text = dataGridViewMaker.Rows[dataGridViewMaker.CurrentRow.Index].Cells[7].Value.ToString();
-        }
+                //クリックされた行データをテキストボックスへ
+                textBoxMaID.Text = dataGridViewMaker.Rows[dataGridViewMaker.CurrentRow.Index].Cells[0].Value.ToString();
+                textBoxMaName.Text = dataGridViewMaker.Rows[dataGridViewMaker.CurrentRow.Index].Cells[1].Value.ToString();
+                textBoxMaAddress.Text = dataGridViewMaker.Rows[dataGridViewMaker.CurrentRow.Index].Cells[2].Value.ToString();
+                textBoxMaPhone.Text = dataGridViewMaker.Rows[dataGridViewMaker.CurrentRow.Index].Cells[3].Value.ToString();
+                textBoxMaPostal.Text = dataGridViewMaker.Rows[dataGridViewMaker.CurrentRow.Index].Cells[4].Value.ToString();
+                textBoxMaFAX.Text = dataGridViewMaker.Rows[dataGridViewMaker.CurrentRow.Index].Cells[5].Value.ToString();
 
-        private void buttonLogout_Click(object sender, EventArgs e)
-        {
-
+                int MaFlg2 = int.Parse(dataGridViewMaker.Rows[dataGridViewMaker.CurrentRow.Index].Cells[6].Value.ToString());
+                if (MaFlg2 == 0)
+                {
+                    checkBoxMaFlag.Checked = false;
+                }
+                else if (MaFlg2 == 2)
+                {
+                    checkBoxMaFlag.Checked = true;
+                }
+                textBoxMaHidden.Text = dataGridViewMaker.Rows[dataGridViewMaker.CurrentRow.Index].Cells[7].Value.ToString();
+            }
         }
 
         private void buttonClose_Click(object sender, EventArgs e)
@@ -969,16 +1011,59 @@ namespace SalesManagement_SysDev.Forms.Master.FormProduct
         {
             if (checkBoxMaFlag.Checked)
             {
+                if (buttonUpdate.Enabled == false)
+                {
+                    BackColor = Color.Tomato;
+                    buttonUpdate.Text = "削除";
+                }
+                else
+                {
+                    BackColor = Color.Tomato;
+                    buttonUpdate.BackgroundImage = Properties.Resources.Fixed_削除;
+                    buttonUpdate.Text = "削除";
+                }
                 MaFlg = 2;
                 textBoxMaHidden.Enabled = true;
                 return;
             }
             else
             {
+                if (buttonUpdate.Enabled == false)
+                {
+                    BackColor = Color.Gold;
+                    buttonUpdate.Text = "更新";
+                }
+                else
+                {
+                    BackColor = Color.Gold;
+                    buttonUpdate.BackgroundImage = Properties.Resources.Fixed_更新;
+                    buttonUpdate.Text = "更新";
+                }
                 MaFlg = 0;
                 textBoxMaHidden.Enabled = false;
                 textBoxMaHidden.Text = "";
                 return;
+            }
+        }
+
+        private void F_Maker_Activated(object sender, EventArgs e)
+        {
+            labelEmpName.Text = F_menu.loginName;
+            labelEmpID.Text = F_menu.loginEmID;
+            labelOfficeName.Text = F_menu.loginSalesOffice;
+            if (F_menu.loginSalesOffice != "本社")
+            {
+                buttonRegist.Enabled = false;
+                buttonUpdate.Enabled = false;
+                buttonRegist.BackgroundImage = Properties.Resources.Fixed_キャンセル使用不可;
+                buttonUpdate.BackgroundImage = Properties.Resources.Fixed_キャンセル使用不可;
+            }
+            if (F_Login.SysMode == 1) //開発者モード
+            {
+                buttonRegist.Enabled = true;
+                buttonUpdate.Enabled = true;
+                buttonRegist.BackgroundImage = Properties.Resources.Fixed_登録;
+                buttonUpdate.BackgroundImage = Properties.Resources.Fixed_更新;
             }
         }
     }

@@ -73,5 +73,26 @@ namespace SalesManagement_SysDev
 
             return flg;
         }
+
+        ///////////////////////////////
+        //メソッド名：CheckNumericWithHyphen()
+        //引　数   ：文字列
+        //戻り値   ：True or False
+        //機　能   ：数値のチェック(ハイフンを使う電話番号用)
+        //          ：数値の場合True
+        //          ：数値でない場合False
+        ///////////////////////////////
+        public bool CheckNumericWithHyphen(string text)
+        {
+            bool flg;
+
+            Regex regex = new Regex("^[0-9-]+$");
+            if (!regex.IsMatch(text))
+                flg = false;
+            else
+                flg = true;
+
+            return flg;
+        }
     }
 }

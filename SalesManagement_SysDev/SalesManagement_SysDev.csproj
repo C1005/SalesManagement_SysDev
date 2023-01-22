@@ -35,6 +35,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>販売管理システム-アイコン.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
@@ -77,6 +80,7 @@
     <Compile Include="Forms\DbAccess\EmployeeDataAccess.cs" />
     <Compile Include="Forms\DbAccess\HattyuDataAccess.cs" />
     <Compile Include="Forms\DbAccess\HattyuUpdateDataAccess.cs" />
+    <Compile Include="Forms\DbAccess\LoginDataAccess.cs" />
     <Compile Include="Forms\DbAccess\MajorCassificationDataAccess.cs" />
     <Compile Include="Forms\DbAccess\MakerDataAccess.cs" />
     <Compile Include="Forms\DbAccess\MessageDataAccess.cs" />
@@ -391,12 +395,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Fixed_top_panel1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Fixed_top_panel2.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Fixed_top_枠線.png" />
   </ItemGroup>
   <ItemGroup>
@@ -479,6 +477,32 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Fixed_マスタ用ボタン2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fixed_マスタ用ボタン-閉じる.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fixed_キャンセル使用不可.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fixed_Menu_ログイン制限.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fixed_ログイン画面.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fixed_マスタ以外panel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fixed_確定panel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\詳細欄用ラベルpanel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fixed_マスタ以外用ボタン%28発注関連%29.png" />
+    <None Include="Resources\Fixed_集計panel.png" />
+    <Content Include="販売管理システム-アイコン.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

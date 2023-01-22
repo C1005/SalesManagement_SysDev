@@ -33,6 +33,28 @@ namespace SalesManagement_SysDev.Forms.DbAccess
             }
             return flg;
         }
+        public bool CheckProductIDExistence(string stockID, string productID)
+        {
+            bool flg = false;
+            try
+            {
+                var context = new SalesManagement_DevContext();
+
+                //現在選択されている在庫IDを除く処理(同じ在庫IDで数量だけを更新するとき、重複エラーを出さないようにするための処理)
+                var a = AllGetStockData();
+                var b = a.Single(x => x.StID.ToString() == stockID);
+                a.Remove(b);
+
+                //商品IDで一致するデータが存在するか
+                flg = a.Any(x => x.PrID.ToString() == productID);
+                context.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "例外エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return flg;
+        }
 
         ///////////////////////////////
         //メソッド名：GetT_StockData()
@@ -47,6 +69,53 @@ namespace SalesManagement_SysDev.Forms.DbAccess
             {
                 var context = new SalesManagement_DevContext();
                 Stock = context.T_Stocks.Where(x => x.StFlag == 0).ToList();
+                context.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "例外エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return Stock;
+
+        }
+
+        ///////////////////////////////
+        //メソッド名：AllGetT_StockData()
+        //引　数   ：なし
+        //戻り値   ：在庫データ
+        //機　能   ：在庫データの取得
+        ///////////////////////////////
+        public List<T_Stock> AllGetStockData()
+        {
+            List<T_Stock> Stock = new List<T_Stock>();
+            try
+            {
+                var context = new SalesManagement_DevContext();
+                // tbはIEnumerable型
+                var tb = from t1 in context.T_Stocks
+
+                         select new
+                         {
+                             t1.StID,
+                             t1.PrID,
+                             t1.StQuantity,
+                             t1.StFlag,
+                             t1.StHidden
+                         };
+
+                // IEnumerable型のデータをList型へ
+
+                foreach (var p in tb)
+                {
+                    Stock.Add(new T_Stock()
+                    {
+                        StID = p.StID,
+                        PrID = p.PrID,
+                        StQuantity = p.StQuantity,
+                        StFlag = p.StFlag,
+                        StHidden = p.StHidden
+                    });
+                }
                 context.Dispose();
             }
             catch (Exception ex)
@@ -138,6 +207,8 @@ namespace SalesManagement_SysDev.Forms.DbAccess
                 var Stock = context.T_Stocks.Single(x => x.StID == updStock.StID);
                 Stock.PrID = updStock.PrID;
                 Stock.StQuantity = updStock.StQuantity;
+                Stock.StFlag = updStock.StFlag;
+                Stock.StHidden = updStock.StHidden;
 
                 context.SaveChanges();
                 context.Dispose();
@@ -167,6 +238,7 @@ namespace SalesManagement_SysDev.Forms.DbAccess
                 var Stock = context.T_Stocks.Single(x => x.StID == delStock.StID);
                 Stock.PrID = delStock.PrID;
                 Stock.StQuantity = delStock.StQuantity;
+                Stock.StFlag = delStock.StFlag;
                 Stock.StHidden = delStock.StHidden;
 
                 context.SaveChanges();

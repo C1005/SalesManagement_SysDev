@@ -30,6 +30,7 @@ namespace SalesManagement_SysDev
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(F_start));
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.labelLoad = new System.Windows.Forms.Label();
@@ -70,7 +71,7 @@ namespace SalesManagement_SysDev
             // timer2
             // 
             this.timer2.Enabled = true;
-            this.timer2.Interval = 2700;
+            this.timer2.Interval = 2500;
             this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
             // 
             // F_start
@@ -84,6 +85,7 @@ namespace SalesManagement_SysDev
             this.Controls.Add(this.pictureBox1);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "F_start";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "￥￥";
