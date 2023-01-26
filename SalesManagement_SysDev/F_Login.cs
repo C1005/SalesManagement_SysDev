@@ -83,7 +83,7 @@ namespace SalesManagement_SysDev
                 if (!dataInputFormCheck.CheckNumeric(textBoxUserID.Text.Trim()))
                 {
                     //MessageBox.Show("社員IDは全て半角数字入力です");
-                    messageDsp.DspMsg("M1001");
+                    messageDsp.DspMsg("M5001");
                     textBoxUserID.Focus();
                     return false;
                 }
@@ -91,7 +91,7 @@ namespace SalesManagement_SysDev
                 if (textBoxUserID.TextLength > 6)
                 {
                     //MessageBox.Show("社員IDは6文字までです");
-                    messageDsp.DspMsg("M1002");
+                    messageDsp.DspMsg("M5002");
                     textBoxUserID.Focus();
                     return false;
                 }
@@ -99,7 +99,7 @@ namespace SalesManagement_SysDev
             else
             {
                 //MessageBox.Show("社員IDが入力されていません");
-                messageDsp.DspMsg("M1004");
+                messageDsp.DspMsg("M5004");
                 textBoxUserID.Focus();
                 return false;
             }
@@ -111,7 +111,7 @@ namespace SalesManagement_SysDev
                 if (!dataInputFormCheck.CheckHalfAlphabetNumeric(textBoxPassword.Text.Trim()))
                 {
                     //MessageBox.Show("ログインPWは全て半角英数字入力です");
-                    messageDsp.DspMsg("M3044");
+                    messageDsp.DspMsg("M5043");
                     textBoxPassword.Focus();
                     return false;
                 }
@@ -119,7 +119,7 @@ namespace SalesManagement_SysDev
                 if (textBoxPassword.TextLength > 13)
                 {
                     //MessageBox.Show("ログインPWは13文字以下です");
-                    messageDsp.DspMsg("M3045");
+                    messageDsp.DspMsg("M5044");
                     textBoxPassword.Focus();
                     return false;
                 }
@@ -127,7 +127,7 @@ namespace SalesManagement_SysDev
             else
             {
                 //MessageBox.Show("ログインPWが入力されていません");
-                messageDsp.DspMsg("M3046");
+                messageDsp.DspMsg("M5045");
                 textBoxPassword.Focus();
                 return false;
             }
@@ -245,7 +245,7 @@ namespace SalesManagement_SysDev
                 if (!dataInputFormCheck.CheckHalfAlphabetNumeric(textBoxPassword.Text.Trim()))
                 {
                     //MessageBox.Show("ログインPWは全て半角英数字入力です");
-                    messageDsp.DspMsg("M3044");
+                    messageDsp.DspMsg("M5043");
                     textBoxPassword.Focus();
                     return false;
                 }
@@ -253,7 +253,7 @@ namespace SalesManagement_SysDev
                 if (textBoxPassword.TextLength > 13)
                 {
                     //MessageBox.Show("ログインPWは13文字以下です");
-                    messageDsp.DspMsg("M3045");
+                    messageDsp.DspMsg("M5044");
                     textBoxPassword.Focus();
                     return false;
                 }
@@ -304,7 +304,7 @@ namespace SalesManagement_SysDev
         private void RegistrationEmployee(M_Employee regEmployee)
         {
             // 登録確認メッセージ
-            DialogResult result = messageDsp.DspMsg("M1010");
+            DialogResult result = messageDsp.DspMsg("M5014");
             if (result == DialogResult.Cancel)
                 return;
 
@@ -313,7 +313,7 @@ namespace SalesManagement_SysDev
             if (flg == true)
             {
                 //MessageBox.Show("データを登録しました。");
-                messageDsp.DspMsg("M1011");
+                messageDsp.DspMsg("M5015");
                 var context = new SalesManagement_DevContext();
                 int emID = context.M_Employees.Max(x => x.EmID);
                 MessageBox.Show($"あなたの社員番号は{emID}です。", "確認", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -322,7 +322,7 @@ namespace SalesManagement_SysDev
             else
             {
                 //MessageBox.Show("データの登録に失敗しました。");
-                messageDsp.DspMsg("M1012");
+                messageDsp.DspMsg("M5016");
             }
 
             textBoxUserID.Focus();

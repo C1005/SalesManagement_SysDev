@@ -121,6 +121,15 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormHattyu
             if (provisionalMode == true)
             {
                 dataGridViewHattyu.DataSource = HattyuProvisional.Skip(pageSize * pageNo).Take(pageSize).ToList();
+
+                if (HattyuProvisional.Count == 0)
+                {
+                    labelNoTable.Visible = true;
+                }
+                else
+                {
+                    labelNoTable.Visible = false;
+                }
             }
             else
             {

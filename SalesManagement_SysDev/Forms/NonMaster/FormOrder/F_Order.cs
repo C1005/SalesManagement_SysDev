@@ -121,6 +121,14 @@ namespace SalesManagement_SysDev.Forms.NonMaster.FormOrder
             if(provisionalMode == true)
             {
                 dataGridViewOrder.DataSource = OrderProvisional.Skip(pageSize * pageNo).Take(pageSize).ToList();
+                if (OrderProvisional.Count == 0)
+                {
+                    labelNoTable.Visible = true;
+                }
+                else
+                {
+                    labelNoTable.Visible = false;
+                }
             }
             else
             {

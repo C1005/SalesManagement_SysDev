@@ -137,6 +137,7 @@ namespace SalesManagement_SysDev.Forms.DbAccess
                         ChQuantity = p.ChQuantity,
                     });
                 }
+
                 context.Dispose();
             }
             catch (Exception ex)
